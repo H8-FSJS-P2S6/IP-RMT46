@@ -1,12 +1,13 @@
 const express = require('express');
+const UserController = require('../controller/UserController');
 const router = express.Router();
 
 router.get('/', (req, res) => {
     res.json({ message: `Welcome to Branded Things Server Apps [Arief Rahman Rizaldhi]` })
 })
 
-router.post('/login');
-router.post('/register');
+router.post('/register', UserController.registerUser);
+router.post('/login', UserController.loginUser);
 
 router.get('/home');
 router.post('/hunt/');
