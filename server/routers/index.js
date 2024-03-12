@@ -1,5 +1,7 @@
 const express = require('express');
 const UserController = require('../controller/UserController');
+const errorHandler = require('../middlewares/errorHandler');
+const authentication = require('../middlewares/authentication');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -9,6 +11,8 @@ router.get('/', (req, res) => {
 router.post('/register', UserController.registerUser);
 router.post('/login', UserController.loginUser);
 
+router.use(authentication);
+
 router.get('/home');
 router.post('/hunt/');
 router.post('/shop/:id');
@@ -17,5 +21,7 @@ router.get('/pokedex');
 router.get('/pokedex/:id');
 router.put('/pokedex/:id');
 router.delete('/pokedex/:id');
+
+router.use(errorHandler);
 
 module.exports = router;
