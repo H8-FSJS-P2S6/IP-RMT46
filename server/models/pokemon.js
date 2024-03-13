@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: "name must be unique"
+      },
       validate: {
         notNull: {
           msg: "Name is required"
@@ -36,7 +40,15 @@ module.exports = (sequelize, DataTypes) => {
     pokedex: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: "Pokedex must be unique"
+      },
       validate: {
+        unique: {
+          args: true,
+          msg: "Pokedex must be unique"
+        },
         notNull: {
           msg: "Pokedex is required"
         },
@@ -57,15 +69,15 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    defense: {
+    hp: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Defense is required"
+          msg: "HP is required"
         },
         notEmpty: {
-          msg: "Defense is required"
+          msg: "HP is required"
         },
       },
     },
@@ -126,30 +138,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "Image battle back side is required"
-        },
-      },
-    },
-    rarity: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Rarity is required"
-        },
-        notEmpty: {
-          msg: "Rarity is required"
-        },
-      },
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Description is required"
-        },
-        notEmpty: {
-          msg: "Description is required"
         },
       },
     },

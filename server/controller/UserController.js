@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const { User } = require('../models');
 const { signToken } = require('../helpers/jwt');
+const { comparePassword } = require('../helpers/bcrypt');
 
 module.exports = class UserController {
     static async registerUser(req, res, next) {
@@ -27,7 +28,7 @@ module.exports = class UserController {
         }
     }
 
-    static async loginUser(req, res) {
+    static async loginUser(req, res, next) {
         try {
             const { credential, password } = req.body;
 
@@ -60,10 +61,15 @@ module.exports = class UserController {
                 access_token: token,
             });
         } catch (error) {
-            if (error.name === "CustomError") {
-                return res.status(error.status).json({ message: error.message });
-            }
-            res.status(500).json({ message: "Internal server error" });
+            next(error);
+        }
+    }
+
+    static async googleLoginUser(req, res) {
+        try {
+
+        } catch (error) {
+            next(error);
         }
     }
 }

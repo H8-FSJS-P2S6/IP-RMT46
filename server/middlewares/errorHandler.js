@@ -4,6 +4,10 @@ module.exports = (error, req, res, next) => {
     let message = error.message || "Internal server error";
 
     switch (error.name) {
+        case "CustomError":
+            status = error.status;
+            message = error.message;
+            break;
         case "SequelizeValidationError":
         case "SequelizeUniqueConstraintError":
             status = 400;

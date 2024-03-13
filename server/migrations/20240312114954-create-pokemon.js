@@ -10,18 +10,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique:true,
       },
       type: {
         type: Sequelize.STRING
       },
       pokedex: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unique:true,
       },
       attack: {
         type: Sequelize.INTEGER
       },
-      defense: {
+      hp: {
         type: Sequelize.INTEGER
       },
       weight: {
@@ -30,9 +32,6 @@ module.exports = {
       height: {
         type: Sequelize.INTEGER
       },
-      rarity: {
-        type: Sequelize.STRING
-      },
       imagePokedex: {
         type: Sequelize.STRING
       },
@@ -40,9 +39,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       imageBattleBack: {
-        type: Sequelize.STRING
-      },
-      description: {
         type: Sequelize.STRING
       },
       UserId: {
