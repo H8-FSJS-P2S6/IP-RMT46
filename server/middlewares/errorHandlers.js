@@ -22,6 +22,7 @@ function errorHandling(err, req, res, next) {
       errorMessage = "Invalid token";
       break;
     case "Unauthorized":
+    case "Unauthenticated":
       statusCode = 401;
       errorMessage = err.message || "Invalid token";
       break;

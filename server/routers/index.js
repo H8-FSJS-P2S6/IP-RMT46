@@ -9,12 +9,11 @@ const timeLog = (req, res, next) => {
 router.use(timeLog);
 
 router.get("/", (req, res) => {
-  res.send("Hello World");
+  // res.send("Hello World");
+  res.json([{ message: "hello world" }]);
 });
-router.get("/register", (req, res) => {
-  res.send("Hello World");
-});
-
 router.post("/login", Controller.login);
+
+router.post("/register", Controller.register);
 
 module.exports = router;
