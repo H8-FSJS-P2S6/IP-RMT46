@@ -1,10 +1,9 @@
 'use strict';
-const {hashPassword} = require("../helpers/bcrypt")
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Burger extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Cart, {foreignKey: "UserId"})
+      Burger.hasMany(models.Cart, {foreignKey: "BurgerId"})
     }
   }
-  User.init({
+  Burger.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -28,54 +27,57 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: {
-        args: true,
-        msg: "Email is already registered"
-      },
-      validate: {
-        notNull: {
-          msg: "Email is required"
-        },
-        notEmpty: {
-          msg: "Email is required"
-        },
-        isEmail: {
-          args: true,
-          msg: "Invalid email format"
-        }
-      }
-    },
-    password: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Password is required"
+          msg: "Description is required"
         },
         notEmpty: {
-          msg: "Password is required"
-        },
-        len: {
-          args: [5],
-          msg: "Password is too short"
+          msg: "Description is required"
         }
       }
     },
-    role: {
-      type: DataTypes.STRING,
-      defaultValue: "Customer"
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Price is required"
+        },
+        notEmpty: {
+          msg: "Price is required"
+        }
+      }
     },
-  }, {
-    sequelize,
-    modelName: 'User',
-    hooks: {
-      beforeCreate (value, option) {
-        value.password = hashPassword(value.password)
+    veg: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Veg status is required"
+        },
+        notEmpty: {
+          msg: "Veg status is required"
+        }
+      }
+    },
+    images: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Image is required"
+        },
+        notEmpty: {
+          msg: "Image is required"
+        }
       }
     }
+  }, {
+    sequelize,
+    modelName: 'Burger',
   });
-  return User;
+  return Burger;
 };

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Meal extends Model {
+  class Cart extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,49 +11,58 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Meal.hasMany(models.OrderDetail, {foreignKey: "MealId"})
+      Cart.belongsTo(models.User, {foreignKey: "UserId"})
+      Cart.belongsTo(models.Burger, {foreignKey: "BurgerId"})
     }
   }
-  Meal.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Name is required"
-        },
-        notEmpty: {
-          msg: "Name is required"
-        }
-      }
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Description is required"
-        },
-        notEmpty: {
-          msg: "Description is required"
-        }
-      }
-    },
-    price: {
+  Cart.init({
+    quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Price is required"
+          msg: "Quantity is required"
         },
         notEmpty: {
-          msg: "Price is required"
+          msg: "Quantity is required"
         }
       }
     },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "User is required"
+        },
+        notEmpty: {
+          msg: "User is required"
+        }
+      }
+    },
+    BurgerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Burger is required"
+        },
+        notEmpty: {
+          msg: "Burger is required"
+        }
+      }
+    },
+    purchased: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    purchasedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
   }, {
     sequelize,
-    modelName: 'Meal',
+    modelName: 'Cart',
   });
-  return Meal;
+  return Cart;
 };
