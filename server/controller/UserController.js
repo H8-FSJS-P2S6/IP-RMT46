@@ -2,6 +2,8 @@ const { Op } = require('sequelize');
 const { User } = require('../models');
 const { signToken } = require('../helpers/jwt');
 const { comparePassword } = require('../helpers/bcrypt');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client();
 
 module.exports = class UserController {
     static async registerUser(req, res, next) {
@@ -65,9 +67,24 @@ module.exports = class UserController {
         }
     }
 
-    static async googleLoginUser(req, res) {
+    static async googleLoginUser(req, res, next) {
+        const { googleToken } = req.body
         try {
+            const ticket = await client.verifyIdToken({
+                idToken: googleToken,
+                audience: process.env.CLIENT_ID
+            });
+            const { email, name } = ticket.getPayload();
+            const [user, created] = await User.findOrCreate({
+                where: { email },
+                defaults: {
+                    name,
+                    email,
+                    password: Math.random().toString(),
+                },
+            });
 
+            res.status(200).json({ message: "Login from google success", payload })
         } catch (error) {
             next(error);
         }
