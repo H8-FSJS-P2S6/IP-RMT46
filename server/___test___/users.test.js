@@ -2,7 +2,6 @@ const app = require('../app.js');
 const request = require('supertest');
 
 const { hashPassword } = require('../helpers/bcrypt.js');
-const { signToken } = require('../helpers/jwt.js');
 const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
