@@ -45,10 +45,6 @@ module.exports = (sequelize, DataTypes) => {
         msg: "Pokedex must be unique"
       },
       validate: {
-        unique: {
-          args: true,
-          msg: "Pokedex must be unique"
-        },
         notNull: {
           msg: "Pokedex is required"
         },

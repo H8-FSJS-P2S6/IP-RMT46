@@ -29,48 +29,6 @@ const user_test_2 = {
     age: 18,
 }
 
-const pokemon_test_1 = {
-    "name": "pokemon 4",
-    "type": "water",
-    "pokedex": 4,
-    "attack": 90,
-    "hp": 70,
-    "weight": 67,
-    "height": 4,
-    "imagePokedex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-    "imageBattleFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-    "imageBattleBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif",
-    "UserId": 1
-}
-
-const pokemon_test_2 = {
-    "name": "pokemon 5",
-    "type": "fire",
-    "pokedex": 5,
-    "attack": 70,
-    "hp": 80,
-    "weight": 70,
-    "height": 7,
-    "imagePokedex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
-    "imageBattleFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
-    "imageBattleBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/5.gif",
-    "UserId": 1
-}
-
-const pokemon_test_3 = {
-    "name": "pokemon 6",
-    "type": "ground",
-    "pokedex": 6,
-    "attack": 89,
-    "hp": 106,
-    "weight": 80,
-    "height": 14,
-    "imagePokedex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
-    "imageBattleFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
-    "imageBattleBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif",
-    "UserId": 1
-}
-
 describe("DELETE /pokedex/:id", () => {
     describe("Success", () => {
         test("should return status 200 and array of product", async () => {
