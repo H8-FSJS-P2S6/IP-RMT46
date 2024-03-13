@@ -33,6 +33,15 @@ module.exports = {
       rarity: {
         type: Sequelize.STRING
       },
+      imagePokedex: {
+        type: Sequelize.STRING
+      },
+      imageBattleFront: {
+        type: Sequelize.STRING
+      },
+      imageBattleBack: {
+        type: Sequelize.STRING
+      },
       description: {
         type: Sequelize.STRING
       },

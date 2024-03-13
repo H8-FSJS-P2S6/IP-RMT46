@@ -93,6 +93,42 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    imagePokedex: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Image Pokedex is required"
+        },
+        notEmpty: {
+          msg: "Image Pokedex is required"
+        },
+      },
+    },
+    imageBattleFront: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Image battle front side is required"
+        },
+        notEmpty: {
+          msg: "Image battle front side is required"
+        },
+      },
+    },
+    imageBattleBack: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Image battle back side is required"
+        },
+        notEmpty: {
+          msg: "Image battle back side is required"
+        },
+      },
+    },
     rarity: {
       type: DataTypes.STRING,
       allowNull: false,
