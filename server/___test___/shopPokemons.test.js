@@ -73,7 +73,7 @@ describe("POST /shop", () => {
     describe("Success", () => {
         test("should return status 201 and object create new pokemon", async () => {
             let { status, body } = await request(app)
-                .post("/shop")
+                .post("/shop?quantity=1")
                 .set("Authorization", "Bearer " + access_token_user_1)
                 .send(pokemon_test_1)
 
@@ -97,7 +97,7 @@ describe("POST /shop", () => {
     describe("Failed", () => {
         test("should return status 500 and internal server error", async () => {
             let { status, body } = await request(app)
-                .post("/shop")
+                .post("/shop?quantity=1")
                 .send(pokemon_test_2)
 
             expect(status).toBe(500)
@@ -106,7 +106,7 @@ describe("POST /shop", () => {
 
         test("should return status 401 and invalid token", async () => {
             let { status, body } = await request(app)
-                .post("/shop")
+                .post("/shop?quantity=1")
                 .set("Authorization", "Bearer " + "randomtokensalah")
                 .send(pokemon_test_2)
 
@@ -116,7 +116,7 @@ describe("POST /shop", () => {
 
         test("should return status 400 and required a name", async () => {
             let { status, body } = await request(app)
-                .post("/shop")
+                .post("/shop?quantity=1")
                 .set("Authorization", "Bearer " + access_token_user_1)
                 .send({
                     name: "",

@@ -59,22 +59,21 @@ describe("POST /hunt", () => {
     describe("Success", () => {
         test("should return status 201 and object create new pokemon", async () => {
             let { status, body } = await request(app)
-                .post("/hunt")
+                .post("/hunt?type=water")
                 .set("Authorization", "Bearer " + access_token_user_1)
-                .send(pokemon_test_1)
 
             expect(status).toBe(201)
             expect(body).toHaveProperty("id", expect.any(Number));
-            expect(body).toHaveProperty("name", pokemon_test_1.name);
-            expect(body).toHaveProperty("type", pokemon_test_1.type);
-            expect(body).toHaveProperty("pokedex", pokemon_test_1.pokedex);
-            expect(body).toHaveProperty("attack", pokemon_test_1.attack);
-            expect(body).toHaveProperty("hp", pokemon_test_1.hp);
-            expect(body).toHaveProperty("weight", pokemon_test_1.weight);
-            expect(body).toHaveProperty("height", pokemon_test_1.height);
-            expect(body).toHaveProperty("imagePokedex", pokemon_test_1.imagePokedex);
-            expect(body).toHaveProperty("imageBattleFront", pokemon_test_1.imageBattleFront);
-            expect(body).toHaveProperty("imageBattleBack", pokemon_test_1.imageBattleBack);
+            expect(body).toHaveProperty("name", expect.any(String));
+            expect(body).toHaveProperty("type", expect.any(String));
+            expect(body).toHaveProperty("pokedex", expect.any(String));
+            expect(body).toHaveProperty("attack", expect.any(String));
+            expect(body).toHaveProperty("hp", expect.any(String));
+            expect(body).toHaveProperty("weight", expect.any(String));
+            expect(body).toHaveProperty("height", expect.any(String));
+            expect(body).toHaveProperty("imagePokedex", expect.any(String));
+            expect(body).toHaveProperty("imageBattleFront", expect.any(String));
+            expect(body).toHaveProperty("imageBattleBack", expect.any(String));
             expect(body).toHaveProperty("UserId", expect.any(Number));
         })
 
@@ -83,7 +82,7 @@ describe("POST /hunt", () => {
     describe("Failed", () => {
         test("should return status 500 and internal server error", async () => {
             let { status, body } = await request(app)
-                .post("/hunt")
+                .post("/hunt?type=water")
                 .send(pokemon_test_2)
 
             expect(status).toBe(500)
@@ -92,7 +91,7 @@ describe("POST /hunt", () => {
 
         test("should return status 401 and invalid token", async () => {
             let { status, body } = await request(app)
-                .post("/hunt")
+                .post("/hunt?type=water")
                 .set("Authorization", "Bearer " + "randomtokensalah")
                 .send(pokemon_test_2)
 
@@ -102,7 +101,7 @@ describe("POST /hunt", () => {
 
         test("should return status 400 and required a name", async () => {
             let { status, body } = await request(app)
-                .post("/hunt")
+                .post("/hunt?type=water")
                 .set("Authorization", "Bearer " + access_token_user_1)
                 .send({
                     name: "",
