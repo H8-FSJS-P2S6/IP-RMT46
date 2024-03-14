@@ -5,7 +5,11 @@ module.exports = class CategoryController {
     try {
       const { name } = req.body;
       if (!name) {
-        throw (error)
+        throw {
+          name: "ErrorCustom",
+          status: 400,
+          message: "Name cannot be empty!",
+        };
       }
       const existingCategory = await Category.findOne({
         where: { name: name },
@@ -21,9 +25,7 @@ module.exports = class CategoryController {
       const createCategory = await Category.create({ name });
       res.status(201).json(createCategory);
     } catch (error) {
-      console.log(error);
-      // res.status(400).json(error.errors[0].message)
-      // next(error);
+      next(error);
     }
   }
 
