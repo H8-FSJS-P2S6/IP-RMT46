@@ -91,7 +91,7 @@ module.exports = class UserController {
             });
 
             // console.log(user, created)
-            res.status(200).json({ message: "Login from google success" })
+            res.status(201).json({ message: "Login from google success" })
         } catch (error) {
             next(error);
         }
