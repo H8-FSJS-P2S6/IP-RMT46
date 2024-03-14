@@ -34,19 +34,21 @@ describe("POST /shop", () => {
                 .set("Authorization", "Bearer " + access_token_user_1)
 
             expect(status).toBe(201)
-            expect(body).toEqual(expect.any(Array));
-            expect(body[0]).toHaveProperty("id", expect.any(Number));
-            expect(body[0]).toHaveProperty("name", expect.any(String));
-            expect(body[0]).toHaveProperty("type", expect.any(String));
-            expect(body[0]).toHaveProperty("pokedex", expect.any(Number));
-            expect(body[0]).toHaveProperty("attack", expect.any(Number));
-            expect(body[0]).toHaveProperty("hp", expect.any(Number));
-            expect(body[0]).toHaveProperty("weight", expect.any(Number));
-            expect(body[0]).toHaveProperty("height", expect.any(Number));
-            expect(body[0]).toHaveProperty("imagePokedex", expect.any(String));
-            expect(body[0]).toHaveProperty("imageBattleFront", expect.any(String));
-            expect(body[0]).toHaveProperty("imageBattleBack", expect.any(String));
-            expect(body[0]).toHaveProperty("UserId", expect.any(Number));
+            expect(body).toEqual(expect.any(Object));
+            expect(body).toHaveProperty("coins", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("id", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("name", expect.any(String));
+            expect(body.pokemons[0]).toHaveProperty("type", expect.any(String));
+            expect(body.pokemons[0]).toHaveProperty("pokedex", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("attack", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("hp", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("weight", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("height", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("captureRate", expect.any(Number));
+            expect(body.pokemons[0]).toHaveProperty("imagePokedex", expect.any(String));
+            expect(body.pokemons[0]).toHaveProperty("imageBattleFront", expect.any(String));
+            expect(body.pokemons[0]).toHaveProperty("imageBattleBack", expect.any(String));
+            expect(body.pokemons[0]).toHaveProperty("UserId", expect.any(Number));
         })
 
     })

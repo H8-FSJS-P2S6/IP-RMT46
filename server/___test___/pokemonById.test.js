@@ -57,6 +57,24 @@ describe("GET /pokedex/:id", () => {
             expect(status).toBe(401)
             expect(body).toHaveProperty("message", "Invalid Token");
         })
+
+        test("should return status 403 and forbidden Access", async () => {
+            let { status, body } = await request(app)
+                .get("/pokedex/" + 1)
+                .set("Authorization", "Bearer " + access_token_user_2)
+
+            expect(status).toBe(403)
+            expect(body).toHaveProperty("message", "Forbidden Access");
+        })
+
+        test("should return status 404 and data not found", async () => {
+            let { status, body } = await request(app)
+                .get("/pokedex/" + 99)
+                .set("Authorization", "Bearer " + access_token_user_1)
+
+            expect(status).toBe(404)
+            expect(body).toHaveProperty("message", "Data not found");
+        })
     })
 });
 
@@ -93,6 +111,7 @@ beforeAll(async () => {
             "hp": 44,
             "weight": 90,
             "height": 9,
+            "captureRate": 190,
             "imagePokedex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
             "imageBattleFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
             "imageBattleBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/1.gif",
@@ -107,6 +126,7 @@ beforeAll(async () => {
             "hp": 60,
             "weight": 62,
             "height": 12,
+            "captureRate": 120,
             "imagePokedex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
             "imageBattleFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
             "imageBattleBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/2.gif",
@@ -121,14 +141,14 @@ beforeAll(async () => {
             "hp": 98,
             "weight": 24,
             "height": 6,
+            "captureRate": 76,
             "imagePokedex": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
             "imageBattleFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
             "imageBattleBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/3.gif",
             "UserId": 1,
             "createdAt": new Date(),
             "updatedAt": new Date()
-        }
-        ], {});
+        }], {});
 
 });
 

@@ -101,6 +101,18 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    captureRate: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Capture Rate is required"
+        },
+        notEmpty: {
+          msg: "Capture Rate is required"
+        },
+      },
+    },
     imagePokedex: {
       type: DataTypes.STRING,
       allowNull: false,

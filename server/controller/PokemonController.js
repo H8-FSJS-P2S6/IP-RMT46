@@ -5,24 +5,9 @@ module.exports = class PokemonController {
     static async huntPokemon(req, res, next) {
         const { type } = req.query;
 
-        if (type !== 'water' &&
-            type !== 'bug' &&
-            type !== 'dark' &&
-            type !== 'dragon' &&
-            type !== 'electric' &&
-            type !== 'fairy' &&
-            type !== 'fighting' &&
-            type !== 'fire' &&
-            type !== 'flying' &&
-            type !== 'ghost' &&
-            type !== 'grass' &&
-            type !== 'ground' &&
-            type !== 'ice' &&
-            type !== 'normal' &&
-            type !== 'poison' &&
-            type !== 'psychic' &&
-            type !== 'rock' &&
-            type !== 'steel') {
+        const types = ['water', 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel'];
+
+        if (!types.includes(type)) {
             throw { name: "CustomError", status: 400, message: 'Invalid type pokemon.' };
         }
 
@@ -33,7 +18,7 @@ module.exports = class PokemonController {
             const randomPokemon = pokemon[Math.floor(Math.random() * pokemon.length)].pokemon.url;
 
             const pokemonResponse = await axios.get(randomPokemon);
-            const { name, id, types, stats, weight, height, sprites } = pokemonResponse.data;
+            const { name, id, types, stats, weight, height, sprites, base_experience } = pokemonResponse.data;
 
             const pokemonData = {
                 name,
@@ -43,15 +28,36 @@ module.exports = class PokemonController {
                 hp: stats.find((stat) => stat.stat.name === 'hp').base_stat,
                 weight,
                 height,
+                captureRate: base_experience,
                 imagePokedex: sprites.other["official-artwork"].front_default,
                 imageBattleFront: sprites.other.showdown.front_default,
                 imageBattleBack: sprites.other.showdown.back_default,
                 UserId: req.user.id
             };
 
-            const huntPokemon = await Pokemon.create(pokemonData);
 
-            res.status(201).json(huntPokemon);
+            if (pokemonData) {
+                const isCaptured = (probability) => {
+                    const randomValue = Math.random() * 100;
+                    return (randomValue <= probability);
+                };
+
+                const captureProbability = (1 + pokemonData.hp * pokemonData.hp * 7 * 1) / (pokemonData.captureRate * 3) / 256 * 100;
+
+                if (!pokemonData.captureRate || !pokemonData.imageBattleBack || !pokemonData.name) {
+                    throw { name: "CustomError", status: 400, message: "Pokemon escaped. Find again!" };
+                }
+
+                const captured = isCaptured(captureProbability);
+
+                if (captured) {
+                    const capturedPokemon = await Pokemon.create(pokemonData);
+                    res.status(201).json(capturedPokemon);
+                } else {
+                    throw { name: "CustomError", status: 400, message: "Pokemon escaped. Find again!" };
+                }
+            }
+
         } catch (error) {
             next(error);
         }
@@ -66,13 +72,13 @@ module.exports = class PokemonController {
 
         try {
             const pokemons = [];
+            const coins = 0;
 
             for (let x = 0; x < parseInt(quantity); x++) {
 
                 const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 900) + 1}`);
-                const { name, types, id, stats, weight, height, sprites } = response.data;
+                const { name, types, id, stats, weight, height, sprites, base_experience } = response.data;
 
-                console.log(types.map((type) => type.type.name)[0])
                 const pokemonData = {
                     name,
                     type: types.map((type) => type.type.name)[0],
@@ -81,6 +87,7 @@ module.exports = class PokemonController {
                     hp: stats.find((stat) => stat.stat.name === 'hp').base_stat,
                     weight,
                     height,
+                    captureRate: base_experience,
                     imagePokedex: sprites.other["official-artwork"].front_default,
                     imageBattleFront: sprites.other.showdown.front_default,
                     imageBattleBack: sprites.other.showdown.back_default,
@@ -91,26 +98,7 @@ module.exports = class PokemonController {
                 pokemons.push(gachaPokemon);
             }
 
-            res.status(201).json(pokemons);
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    static async battlePokemons(req, res, next) {
-        try {
-            const pokemons = await Pokemon.findAll({
-                where: {
-                    UserId: req.params.UserId
-                },
-                include: [
-                    {
-                        model: User,
-                        attributes: ["username", "email", "gender", "age"],
-                    }
-                ],
-            });
-            res.status(200).json(pokemons);
+            res.status(201).json({ pokemons, coins });
         } catch (error) {
             next(error);
         }

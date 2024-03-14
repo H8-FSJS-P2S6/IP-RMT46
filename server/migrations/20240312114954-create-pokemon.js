@@ -32,6 +32,9 @@ module.exports = {
       height: {
         type: Sequelize.INTEGER
       },
+      captureRate: {
+        type: Sequelize.INTEGER
+      },
       imagePokedex: {
         type: Sequelize.STRING
       },
