@@ -13,7 +13,7 @@ function App() {
       // const { data } = await axios.get("http://localhost:3000/");
       const { data } = await axios.get("https://api.clashofclans.com/v1/players/%232290UCLVV", {
         headers: {
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImI5NWU2ZDQyLWY5YmMtNGMxMi05MDRhLWU0YzM5MDczZGRjYiIsImlhdCI6MTcxMDM0MjMyNSwic3ViIjoiZGV2ZWxvcGVyLzgyMjQ0MGM4LTI3M2MtMDJlZC1kNmZhLWM5ZjljNTM5NzBiYiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE4Mi4xLjIzMi4xMTEiXSwidHlwZSI6ImNsaWVudCJ9XX0.RRMLM6hf0fAa5cMybw4av-V4qfYRod4HMm0UrAVtr4H5CYcbsjN2EMkYP3Ko3plDMC8jG28fqsZeTwsjJB6lPA`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImIxM2IyOWFhLTA1NDgtNDZkOS1iMDBiLWJhYWI4MzUxMzYwZCIsImlhdCI6MTcxMDQwMDM1Nywic3ViIjoiZGV2ZWxvcGVyLzgyMjQ0MGM4LTI3M2MtMDJlZC1kNmZhLWM5ZjljNTM5NzBiYiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE4Mi4xLjIzNC40NSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.EhFWdnv8YdCKWyVFBeyL6jK_4BOnAvNhxapNlusDiPYlRH97WJH_759C-bzG162ZqjvXTbNJPNnSL0TEfeHDNA`,
         },
       });
       setTester(data);

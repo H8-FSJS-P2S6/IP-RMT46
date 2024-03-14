@@ -1,6 +1,7 @@
 const { User, GameAccount, ProfileImage } = require("../models");
 const { signToken } = require("../helpers/jwt");
-const { comparePassword } = require("../helpers/bcrypt");
+const { comparePassword, hashPassword } = require("../helpers/bcrypt");
+const axios = require("axios");
 
 class Controller {
   static async login(req, res, next) {
@@ -56,6 +57,126 @@ class Controller {
       next(error);
     }
   }
+
+  static async findPlayerByTag(req, res, next) {
+    const { tag } = req.body;
+    let accountTag = "";
+    try {
+      if (tag[0] === "#") {
+        const [theTag, str] = tag.split("#");
+        console.log({ theTag, str });
+        accountTag = str;
+      } else {
+        accountTag = tag;
+      }
+
+      const { data } = await axios.get(`https://api.clashofclans.com/v1/players/%23${accountTag}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
+        },
+      });
+      res.json(data);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async findClanByTag(req, res, next) {
+    const { tag } = req.body;
+    let clanTag = "";
+    try {
+      if (tag[0] === "#") {
+        const [theTag, str] = tag.split("#");
+        console.log({ theTag, str });
+        clanTag = str;
+      } else {
+        clanTag = tag;
+      }
+
+      const { data } = await axios.get(`https://api.clashofclans.com/v1/clans/%23${clanTag}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
+        },
+      });
+      res.json(data);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async playerRankings(req, res, next) {
+    // const { locationId } = req.params;
+
+    const { items } = require("../data/locationId.json");
+    let location = "";
+
+    items.forEach((element) => {
+      if (element.name === "Indonesia") {
+        location = element.id;
+      }
+    });
+    console.log(location);
+    // res.json(location);
+    const { limit, after, before } = req.query;
+
+    let locationId = location;
+
+    try {
+      let queryParams = `limit=${limit || 10}`;
+      if (after) queryParams += `&after=${after}`;
+      if (before) queryParams += `&before=${before}`;
+
+      const { data } = await axios.get(`https://api.clashofclans.com/v1/locations/${locationId}/rankings/players?${queryParams}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
+        },
+      });
+
+      res.json(data);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+
+  static async verifyToken(req, res, next) {
+    const { tag, token } = req.body;
+    let accountTag = "";
+    try {
+      if (tag[0] === "#") {
+        const [theTag, str] = tag.split("#");
+        console.log({ theTag, str });
+        accountTag = str;
+      } else {
+        accountTag = tag;
+      }
+
+      const url = `https://api.clashofclans.com/v1/players/%23${accountTag}/verifytoken`;
+
+      const data = {
+        token: token,
+      };
+
+      const bearerToken = process.env.CLASH_OF_CLANS_API;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      };
+
+      const response = await axios.post(url, data, config);
+      console.log("Response:", response.data);
+      res.json(response.data);
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
   static async addAccount(req, res, next) {
     const { playerTag } = req.body;
 
@@ -77,22 +198,16 @@ class Controller {
       next(error);
     }
   }
-  // static async addImage(req, res, next) {
-  //   try {
-  //     res.json("Test");
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     next(error);
-  //   }
-  // }
+
   static async addImages(req, res, next) {
+    console.log("tester");
     try {
       const cloudinary = require("cloudinary").v2;
 
       cloudinary.config({
-        cloud_name: "dkuq6sef1",
-        api_key: "624519455673126",
-        api_secret: "G3nfuOCqH-8AO3qqqrM5d3c6-dI",
+        cloud_name: process.env.CLOUND_NAME,
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET,
       });
 
       const uploadPromises = req.files.map(async (file) => {
@@ -131,14 +246,29 @@ class Controller {
     }
   }
 
-  // static async register(req, res, next) {
-  //   try {
-  //     res.json("Test");
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     next(error);
-  //   }
-  // }
+  static async changePassword(req, res, next) {
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+    const { id } = req.params;
+    try {
+      const user = await User.findByPk(id);
+
+      if (confirmNewPassword != newPassword) {
+        throw { name: "Unauthenticated", message: "Password not match" };
+      }
+
+      const passwordMatch = comparePassword(currentPassword, user.password);
+      if (!passwordMatch) {
+        throw { name: "Unauthenticated", message: "Invalid current password" };
+      }
+
+      await user.update({ password: hashPassword(newPassword) });
+
+      res.json("Test");
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;

@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   ProfileImage.init(
     {
       imgUrl: DataTypes.STRING,
+      vipImg: DataTypes.BOOLEAN,
     },
     {
       sequelize,
