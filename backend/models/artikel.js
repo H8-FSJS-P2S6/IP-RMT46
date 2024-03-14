@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { args: true, msg: "title is required" },
           notNull: { args: true, msg: "title is required" },
         },
+        unique: {
+          args: true,
+          msg: "title must be unique",
+        },
       },
       description: {
         type: DataTypes.STRING,
