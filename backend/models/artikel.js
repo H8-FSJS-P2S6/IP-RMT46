@@ -23,6 +23,15 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { args: true, msg: "title is required" },
         },
       },
+      description: {
+        type: DataTypes.STRING,
+        validate: {
+          len: {
+            args: [50],
+            msg: "descriptions must be at least 50 characters!",
+          },
+        },
+      },
       UserId: DataTypes.INTEGER,
       imgUrl: DataTypes.STRING,
       CategoryId: DataTypes.INTEGER,

@@ -12,6 +12,9 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      description: {
+        type: Sequelize.STRING
+      },
       UserId: {
         type: Sequelize.INTEGER
       },
