@@ -3,8 +3,9 @@ module.exports = (error, req, res, next) => {
   let message = error.message || "Internal Server Error";
 
   switch (error.name) {
-    case "SequelizeUniqueConstraintError":
+    case "SequelzeUniqueConstraintError":
     case "SequelizeValidationError":
+    case "BadRequest":
       status = 400;
       message = error.errors[0].message;
       break;
@@ -20,10 +21,6 @@ module.exports = (error, req, res, next) => {
     case "Not Found":
       status = 404;
       message = "Not Found";
-      break;
-    case "Conflict":
-      status = 409;
-      message = "Username already exists";
       break;
     default:
       break;
