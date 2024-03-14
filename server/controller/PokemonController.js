@@ -8,7 +8,7 @@ module.exports = class PokemonController {
         const types = ['water', 'bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel'];
 
         if (!types.includes(type)) {
-            throw { name: "CustomError", status: 400, message: 'Invalid type pokemon.' };
+            throw { name: "NotFound", status: 400, message: 'Invalid type pokemon.' };
         }
 
         try {
@@ -54,7 +54,8 @@ module.exports = class PokemonController {
                     const capturedPokemon = await Pokemon.create(pokemonData);
                     res.status(201).json(capturedPokemon);
                 } else {
-                    throw { name: "CustomError", status: 400, message: "Pokemon escaped. Find again!" };
+                    res.status(200).json({ message: "Pokemon escaped. Find again!" });
+                    // throw { name: "CustomError", status: 400, message: "Pokemon escaped. Find again!" };
                 }
             }
 
@@ -71,8 +72,18 @@ module.exports = class PokemonController {
         }
 
         try {
+
+            const user = await User.findByPk(+req.user.id);
+            if (!user) {
+                throw { name: "NotFound" };
+            }
+
+            const coinsForGacha = quantity === '1' ? 10 : 100;
+            if (user.coins < coinsForGacha) {
+                throw { name: "CustomError", status: 400, message: `Sorry ${user.username}, you need more coins.` };
+            }
+
             const pokemons = [];
-            const coins = 0;
 
             for (let x = 0; x < parseInt(quantity); x++) {
 
@@ -98,7 +109,9 @@ module.exports = class PokemonController {
                 pokemons.push(gachaPokemon);
             }
 
-            res.status(201).json({ pokemons, coins });
+            await user.decrement({ coins: +coinsForGacha });
+
+            res.status(201).json(pokemons);
         } catch (error) {
             next(error);
         }

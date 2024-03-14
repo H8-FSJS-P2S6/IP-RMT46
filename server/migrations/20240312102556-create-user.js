@@ -23,6 +23,9 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
+      coins: {
+        type: Sequelize.INTEGER
+      },
       gender: {
         type: Sequelize.STRING
       },

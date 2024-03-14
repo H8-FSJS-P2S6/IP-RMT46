@@ -24,7 +24,6 @@ const user_test_2 = {
     username: "kocakbener",
     email: "yakaligagal@gmail.com",
     password: "testskuy",
-    role: "Trainer",
     gender: "male",
     age: 18,
 }
@@ -185,6 +184,7 @@ beforeAll(async () => {
         email: user_test_1.email,
         password: hashPassword(user_test_1.password),
         role: user_test_1.role,
+        coins: user_test_1.coins,
         gender: user_test_1.gender,
         age: user_test_1.age,
         createdAt: new Date(),
@@ -193,7 +193,6 @@ beforeAll(async () => {
         username: user_test_2.username,
         email: user_test_2.email,
         password: hashPassword(user_test_2.password),
-        role: user_test_2.role,
         gender: user_test_2.gender,
         age: user_test_2.age,
         createdAt: new Date(),

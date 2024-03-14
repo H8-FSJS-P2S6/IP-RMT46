@@ -4,6 +4,12 @@ const { signToken } = require('../helpers/jwt');
 const { comparePassword } = require('../helpers/bcrypt');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client();
+const midtransClient = require('midtrans-client')
+
+let snap = new midtransClient.Snap({
+    isProduction: false,
+    serverKey: process.env.MIDTRANS_SERVER_KEY,
+});
 
 module.exports = class UserController {
     static async registerUser(req, res, next) {
@@ -86,6 +92,40 @@ module.exports = class UserController {
 
             // console.log(user, created)
             res.status(200).json({ message: "Login from google success" })
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async topUpCoins(req, res, next) {
+        const { coinsToPurchase } = req.body;
+
+        try {
+            const findUser = await User.findByPk(+req.user.id)
+            if (!findUser) throw { name: "NotFound" }
+            let price = coinsToPurchase * 10_000;
+
+            let parameter = {
+                "transaction_details": {
+                    "order_id": "TRANSACTION_" + Math.floor(1_000_000 + Math.random() * 9_000_000),
+                    "gross_amount": parseInt(price),
+                    "currency": 'IDR'
+                },
+                "credit_card": {
+                    "secure": true
+                },
+                "customer_details": {
+                    "username": findUser.username,
+                    "email": findUser.email,
+                }
+            };
+
+
+            await findUser.increment({ coins: +coinsToPurchase });
+
+            const midtransToken = await snap.createTransaction(parameter)
+
+            res.status(200).json({ message: `Payment successfully. You add ${coinsToPurchase} coins`, midtransToken })
         } catch (error) {
             next(error);
         }

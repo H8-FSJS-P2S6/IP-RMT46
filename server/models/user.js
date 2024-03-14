@@ -66,6 +66,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: "Trainer"
     },
+    coins: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     gender: {
       type: DataTypes.STRING,
       allowNull: false,

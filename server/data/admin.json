@@ -4,7 +4,8 @@
         "email": "wadesu@gmail.com",
         "password": "admin123",
         "role": "Admin",
+        "coins": 999999,
         "gender": "male",
-        "age": "99"
+        "age": 99
     }
 ]

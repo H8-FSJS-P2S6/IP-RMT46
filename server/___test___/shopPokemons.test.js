@@ -13,6 +13,7 @@ const user_test_1 = {
     email: "yakali@gmail.com",
     password: "testazah",
     role: "Admin",
+    coins: 1000,
     gender: "female",
     age: 25,
 }
@@ -21,7 +22,6 @@ const user_test_2 = {
     username: "kocakbener",
     email: "yakaligagal@gmail.com",
     password: "testskuy",
-    role: "Trainer",
     gender: "male",
     age: 18,
 }
@@ -35,20 +35,19 @@ describe("POST /shop", () => {
 
             expect(status).toBe(201)
             expect(body).toEqual(expect.any(Object));
-            expect(body).toHaveProperty("coins", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("id", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("name", expect.any(String));
-            expect(body.pokemons[0]).toHaveProperty("type", expect.any(String));
-            expect(body.pokemons[0]).toHaveProperty("pokedex", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("attack", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("hp", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("weight", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("height", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("captureRate", expect.any(Number));
-            expect(body.pokemons[0]).toHaveProperty("imagePokedex", expect.any(String));
-            expect(body.pokemons[0]).toHaveProperty("imageBattleFront", expect.any(String));
-            expect(body.pokemons[0]).toHaveProperty("imageBattleBack", expect.any(String));
-            expect(body.pokemons[0]).toHaveProperty("UserId", expect.any(Number));
+            expect(body[0]).toHaveProperty("id", expect.any(Number));
+            expect(body[0]).toHaveProperty("name", expect.any(String));
+            expect(body[0]).toHaveProperty("type", expect.any(String));
+            expect(body[0]).toHaveProperty("pokedex", expect.any(Number));
+            expect(body[0]).toHaveProperty("attack", expect.any(Number));
+            expect(body[0]).toHaveProperty("hp", expect.any(Number));
+            expect(body[0]).toHaveProperty("weight", expect.any(Number));
+            expect(body[0]).toHaveProperty("height", expect.any(Number));
+            expect(body[0]).toHaveProperty("captureRate", expect.any(Number));
+            expect(body[0]).toHaveProperty("imagePokedex", expect.any(String));
+            expect(body[0]).toHaveProperty("imageBattleFront", expect.any(String));
+            expect(body[0]).toHaveProperty("imageBattleBack", expect.any(String));
+            expect(body[0]).toHaveProperty("UserId", expect.any(Number));
         })
 
     })
@@ -80,6 +79,7 @@ beforeAll(async () => {
         email: user_test_1.email,
         password: hashPassword(user_test_1.password),
         role: user_test_1.role,
+        coins: user_test_1.coins,
         gender: user_test_1.gender,
         age: user_test_1.age,
         createdAt: new Date(),
@@ -88,7 +88,6 @@ beforeAll(async () => {
         username: user_test_2.username,
         email: user_test_2.email,
         password: hashPassword(user_test_2.password),
-        role: user_test_2.role,
         gender: user_test_2.gender,
         age: user_test_2.age,
         createdAt: new Date(),
