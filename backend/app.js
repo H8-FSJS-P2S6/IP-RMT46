@@ -4,15 +4,14 @@ const port = 3000;
 
 const errorHandler = require("./middlewares/errorHandling");
 const categoryRouter = require("./routers/category");
+const publicRouter = require("./routers/public");
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/categories", categoryRouter);
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/", publicRouter);
 
 app.use(errorHandler);
 

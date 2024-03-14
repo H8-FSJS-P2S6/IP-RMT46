@@ -31,8 +31,9 @@ module.exports = class CategoryController {
 
   static async getCategory(req, res, next) {
     try {
-      const categories = await Category.findAll();
-      res.status(200).json(categories);
+      const { id } = req.params;
+      const category = await Category.findByPk(id);
+      res.status(200).json(category);
     } catch (error) {
       next(error);
     }
@@ -48,28 +49,38 @@ module.exports = class CategoryController {
   }
 
   static async updateCategory(req, res, next) {
-    const categoryId = req.params.id;
-    const Categories = await Category.findByPk(categoryId);
-    if (!Categories) {
-      throw {
-        name: "ErrorCustom",
-        status: 404,
-        message: `Category id ${categoryId} not found`,
-      };
+    try {
+      const { name } = req.body;
+      if (!name) {
+        throw {
+          name: "ErrorCustom",
+          status: 400,
+          message: "Name cannot be empty!",
+        };
+      }
+      const { id } = req.params;
+      const category = await Category.findByPk(id);
+      if (!category) {
+        throw {name: "Not Found"}
+      }
+      await Category.update({name}, {
+        where: { id: id },
+      });
+      res.status(200).json({ message: `Category id ${id} has been updated!` });
+    } catch (error) {
+      next(error);
     }
-    const updateCategory = await Category.update(req.body, {
-      where: { id: categoryId },
-    });
-    console.log(updateCategory);
-    res
-      .status(200)
-      .json({ message: `Products id ${categoryId} has been updated!` });
   }
 
   static async deleteCategory(req, res, next) {
     try {
-      const categories = await Category.findAll();
-      res.status(200).json(categories);
+      const { id } = req.params;
+      const category = await Category.findByPk(id);
+      if (!category) {
+        throw {name: "Not Found"}
+      }
+      await category.destroy();
+      res.status(200).json({ message: `Category id ${id} has been deleted!` });
     } catch (error) {
       next(error);
     }
