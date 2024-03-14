@@ -106,7 +106,13 @@ class Controller {
       });
 
       const results = await Promise.all(uploadPromises);
-      res.json(results);
+
+      const images = results.map((element) => {
+        return { imgUrl: element.url };
+      });
+
+      await ProfileImage.bulkCreate(images);
+      res.json(images);
     } catch (error) {
       console.error(error);
       next(error);
