@@ -19,7 +19,6 @@ module.exports = {
       element.createdAt = element.updatedAt = new Date();
       return element;
     });
-    console.log(users);
     await queryInterface.bulkInsert("Users", users, {});
   },
 
@@ -31,6 +30,16 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     await queryInterface.bulkDelete("Users", null, {
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await queryInterface.bulkDelete("GameAccounts", null, {
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await queryInterface.bulkDelete("ProfileImages", null, {
       truncate: true,
       cascade: true,
       restartIdentity: true,

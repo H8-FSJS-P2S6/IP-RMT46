@@ -1,6 +1,11 @@
 const { sign, verify } = require("jsonwebtoken");
 const secret = "rahasia";
-module.exports = {
-  signToken: (payload) => sign(payload, secret),
-  verifyToken: (token) => verify(token, secret),
-};
+
+function signToken(payload) {
+  return sign(payload, secret);
+}
+function veirifyToken(token) {
+  return verify(token, secret);
+}
+
+module.exports = { signToken, veirifyToken };

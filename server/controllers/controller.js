@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, GameAccount, ProfileImage } = require("../models");
 const { signToken } = require("../helpers/jwt");
 const { comparePassword } = require("../helpers/bcrypt");
 
@@ -52,10 +52,75 @@ class Controller {
         email: user.email,
       });
     } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+  static async addAccount(req, res, next) {
+    const { playerTag } = req.body;
+
+    try {
+      const account = await GameAccount.create({ playerTag: playerTag, playerId: req.user.id });
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+  static async deleteAccount(req, res, next) {
+    const { id } = req.params;
+    try {
+      const account = await GameAccount.findByPk(id);
+      account.destroy();
+      res.json("Test");
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+  // static async addImage(req, res, next) {
+  //   try {
+  //     res.json("Test");
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     next(error);
+  //   }
+  // }
+  static async addImages(req, res, next) {
+    try {
+      const cloudinary = require("cloudinary").v2;
+
+      cloudinary.config({
+        cloud_name: "dkuq6sef1",
+        api_key: "624519455673126",
+        api_secret: "G3nfuOCqH-8AO3qqqrM5d3c6-dI",
+      });
+
+      const uploadPromises = req.files.map(async (file) => {
+        const mimeType = file.mimetype;
+        const data = Buffer.from(file.buffer).toString("base64");
+        const dataURI = `data:${mimeType};base64,${data}`;
+        return cloudinary.uploader.upload(dataURI, {
+          overwrite: false,
+          unique_filename: true,
+        });
+      });
+
+      const results = await Promise.all(uploadPromises);
+      res.json(results);
+    } catch (error) {
       console.error(error);
       next(error);
     }
   }
+
+  // static async register(req, res, next) {
+  //   try {
+  //     res.json("Test");
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     next(error);
+  //   }
+  // }
 }
 
 module.exports = Controller;

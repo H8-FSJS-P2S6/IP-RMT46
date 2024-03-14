@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.GameAccount, { foreignKey: "playerId" });
     }
   }
   User.init(
@@ -44,6 +45,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      role: DataTypes.STRING,
+      vip: DataTypes.BOOLEAN,
     },
     {
       sequelize,
@@ -52,6 +55,8 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.beforeCreate(async (user, options) => {
     user.password = hashPassword(user.password);
+    user.role = "user";
+    user.vip = false;
   });
   return User;
 };
