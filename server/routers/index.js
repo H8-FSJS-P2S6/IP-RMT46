@@ -24,4 +24,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 router.patch("/add-images", upload.array("images", 5), Controller.addImages);
 
+router.delete("/delete-image/:id", Controller.deleteImage);
+
 module.exports = router;

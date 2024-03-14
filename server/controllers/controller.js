@@ -119,6 +119,18 @@ class Controller {
     }
   }
 
+  static async deleteImage(req, res, next) {
+    const { id } = req.params;
+    try {
+      const account = await ProfileImage.findByPk(id);
+      account.destroy();
+      res.json("Test");
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
   // static async register(req, res, next) {
   //   try {
   //     res.json("Test");
