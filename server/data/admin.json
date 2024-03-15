@@ -5,7 +5,7 @@
         "password": "admin123",
         "role": "Admin",
         "coins": 999999,
-        "gender": "male",
+        "gender": "Male",
         "age": 99
     }
 ]

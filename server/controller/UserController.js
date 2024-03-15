@@ -81,17 +81,21 @@ module.exports = class UserController {
                 audience: process.env.CLIENT_ID
             });
             const { email, name } = ticket.getPayload();
+            console.log(ticket.getPayload())
             const [user, created] = await User.findOrCreate({
                 where: { email },
                 defaults: {
                     name,
                     email,
                     password: Math.random().toString(),
+                    username: `${name} ${email.split("@")[0]} ${Math.floor(Math.random() * 1e6)}`,
+                    gender: null,
+                    age: null
                 },
             });
 
-            // console.log(user, created)
-            res.status(201).json({ message: "Login from google success" })
+            const access_token = signToken({ id: user.id })
+            res.status(201).json({ message: `Logged in as ${user.email}`, access_token })
         } catch (error) {
             next(error);
         }

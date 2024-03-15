@@ -72,11 +72,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
-        notNull: {
-          msg: "Gender is required"
-        },
         notEmpty: {
           msg: "Gender is required"
         },
@@ -84,11 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     age: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       validate: {
-        notNull: {
-          msg: "Age is required"
-        },
         notEmpty: {
           msg: "Age is required"
         },
