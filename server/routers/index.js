@@ -11,7 +11,7 @@ router.post("/register", Controller.register);
 router.get("/find-player/:tag", Controller.findPlayerByTag);
 router.get("/find-clan/:tag", Controller.findClanByTag);
 router.get("/player-rankings/:country", Controller.playerRankings);
-// router.use(authentication);
+router.use(authentication);
 router.post("/players/:playerTag/verifytoken", Controller.verifyToken);
 router.post("/add-account", Controller.addAccount);
 router.get("/get-account", Controller.getAccount);
