@@ -3,10 +3,12 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
+var cors = require("cors");
 const app = express();
 const port = 3000;
 
 // middleware
+app.use(cors())
 const errorHandler = require("./middlewares/errorHandling");
 const authentication = require("./middlewares/authentication");
 
