@@ -2,16 +2,20 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../views/Home";
 import Layouts from "../views/Layouts";
 import PlayerDetail from "../views/PlayerDetail";
+import PlayerRankings from "../views/PlayerRankings";
+import ClanDetail from "../views/ClanDetail";
 
 const router = createBrowserRouter([
   {
-    // element: <Home />,
     element: <PlayerDetail />,
-    path: "detail/:playerTag",
+    path: "/player/detail/:playerTag",
   },
   {
-    // element: <Home />,
-    element: <Home />,
+    element: <ClanDetail />,
+    path: "clan/detail/:clanTag",
+  },
+  {
+    element: <PlayerRankings />,
     path: "/player/rankings/:country",
   },
   // {

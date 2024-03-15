@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 router.post("/login", Controller.login);
 router.post("/register", Controller.register);
 router.get("/find-player/:tag", Controller.findPlayerByTag);
-router.get("/find-clan", Controller.findClanByTag);
+router.get("/find-clan/:tag", Controller.findClanByTag);
 router.get("/player-rankings/:country", Controller.playerRankings);
 router.use(authentication);
 router.post("/players/:playerTag/verifytoken", Controller.verifyToken);

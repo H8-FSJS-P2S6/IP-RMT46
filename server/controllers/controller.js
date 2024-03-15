@@ -84,7 +84,7 @@ class Controller {
   }
 
   static async findClanByTag(req, res, next) {
-    const { tag } = req.body;
+    const { tag } = req.params;
     let clanTag = "";
     try {
       if (tag[0] === "#") {
