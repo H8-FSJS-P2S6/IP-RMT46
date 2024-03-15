@@ -59,12 +59,13 @@ class Controller {
   }
 
   static async findPlayerByTag(req, res, next) {
-    const { tag } = req.body;
+    const { tag } = req.params;
     let accountTag = "";
+    // console.log(tag, "......");
     try {
       if (tag[0] === "#") {
         const [theTag, str] = tag.split("#");
-        console.log({ theTag, str });
+        // console.log({ theTag, str });
         accountTag = str;
       } else {
         accountTag = tag;
@@ -108,19 +109,23 @@ class Controller {
 
   static async playerRankings(req, res, next) {
     // const { locationId } = req.params;
+    const { country } = req.params;
 
     const { items } = require("../data/locationId.json");
     let location = "";
 
-    items.forEach((element) => {
-      if (element.name === "Indonesia") {
-        location = element.id;
-      }
-    });
-    console.log(location);
+    if (country != "global") {
+      items.forEach((element) => {
+        if (element.name === country) {
+          location = element.id;
+        }
+      });
+    } else {
+      location = "global";
+    }
+    // console.log(location);
     // res.json(location);
     const { limit, after, before } = req.query;
-
     let locationId = location;
 
     try {
@@ -182,11 +187,36 @@ class Controller {
 
     try {
       const account = await GameAccount.create({ playerTag: playerTag, playerId: req.user.id });
+      res.json(account);
     } catch (error) {
       console.log(error.message);
       next(error);
     }
   }
+
+  static async getAccount(req, res, next) {
+    try {
+      const accounts = await GameAccount.findAll({ where: { playerId: req.user.id } });
+      res.json(accounts);
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
+  static async getCountry(req, res, next) {
+    try {
+      const { items } = require("../data/locationId.json");
+
+      const countries = items.filter((item) => item.isCountry);
+
+      res.json(countries);
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
   static async deleteAccount(req, res, next) {
     const { id } = req.params;
     try {
@@ -230,6 +260,16 @@ class Controller {
       res.json(images);
     } catch (error) {
       console.error(error);
+      next(error);
+    }
+  }
+
+  static async getImage(req, res, next) {
+    try {
+      const images = await ProfileImage.findAll();
+      res.json(images);
+    } catch (error) {
+      console.log(error.message);
       next(error);
     }
   }
