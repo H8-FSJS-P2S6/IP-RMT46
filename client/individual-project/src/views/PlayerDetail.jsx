@@ -12,7 +12,7 @@ function PlayerDetail() {
     const fetchPlayerDetails = async () => {
       try {
         console.log(playerTag, "tagar");
-        const response = await axios.get(`http://localhost:3000/find-player/${playerTag}`);
+        const response = await cocUrl.get(`/find-player/${playerTag}`);
         setPlayer(response.data);
         setLoading(false);
         console.log(response.data, "data");

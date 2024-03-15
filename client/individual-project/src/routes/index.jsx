@@ -4,11 +4,21 @@ import Layouts from "../views/Layouts";
 import PlayerDetail from "../views/PlayerDetail";
 import PlayerRankings from "../views/PlayerRankings";
 import ClanDetail from "../views/ClanDetail";
+import PlayerVerification from "../views/PlayerVerification";
+import Login from "../views/Login";
 
 const router = createBrowserRouter([
   {
+    element: <Login />,
+    path: "/login",
+  },
+  {
     element: <PlayerDetail />,
     path: "/player/detail/:playerTag",
+  },
+  {
+    element: <PlayerVerification />,
+    path: "/player/detail/:playerTag/verify",
   },
   {
     element: <ClanDetail />,

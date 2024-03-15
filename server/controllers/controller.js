@@ -147,15 +147,16 @@ class Controller {
   }
 
   static async verifyToken(req, res, next) {
-    const { tag, token } = req.body;
+    const { playerTag } = req.params;
+    const { token } = req.body;
     let accountTag = "";
     try {
-      if (tag[0] === "#") {
-        const [theTag, str] = tag.split("#");
+      if (playerTag[0] === "#") {
+        const [theTag, str] = playerTag.split("#");
         console.log({ theTag, str });
         accountTag = str;
       } else {
-        accountTag = tag;
+        accountTag = playerTag;
       }
 
       const url = `https://api.clashofclans.com/v1/players/%23${accountTag}/verifytoken`;
@@ -173,6 +174,7 @@ class Controller {
         },
       };
 
+      // const response = await axios.post(url, data, config);
       const response = await axios.post(url, data, config);
       console.log("Response:", response.data);
       res.json(response.data);
