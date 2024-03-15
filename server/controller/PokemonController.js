@@ -75,7 +75,7 @@ module.exports = class PokemonController {
 
             const user = await User.findByPk(+req.user.id);
             if (!user) {
-                throw { name: "NotFound" };
+                throw { name: "Unauthentication" };
             }
 
             const coinsForGacha = quantity === '1' ? 10 : 100;
