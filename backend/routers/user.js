@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const UserController = require("../controllers/user");
 
-router.post("/auth/register/basic", UserController.registerBasic);
-router.post("/auth/register/google", UserController.registerGoogle);
-router.post("/auth/login/basic", UserController.loginBasic);
-router.post("/auth/login/google", UserController.loginGoogle);
+router.post("/register", UserController.registerUserBasic);
+// router.post("/register/google", UserController.registerGoogle);
+router.post("/login", UserController.loginUserBasic);
+// router.post("/login/google", UserController.loginGoogle);
 
 module.exports = router;
