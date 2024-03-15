@@ -1,0 +1,219 @@
+// import { useState, useEffect } from "react"
+// import NavBar from "../components/NavBar"
+// import SearchBar from "../components/SearchBar"
+// import SortBy from "../components/SortBy"
+// import Card from "./Card"
+// import { localRequest } from "../../utils/axios"
+
+export default function Home() {
+    // const [jobsData, setJobsData] = useState([])
+    // const [filteredJobs, setFilteredJobs] = useState([])
+    // const [searchTerm, setSearchTerm] = useState("");
+    // const [sortOrder, setSortOrder] = useState("asc");
+    // const [currentPage, setCurrentpage] = useState(1);
+    // const [totalPages, setTotalPages] = useState(1);
+    // const [filterJobType, setFilterJobType] = useState("");
+    // const [companiesData, setCompaniesData] = useState([]);
+    // const [filterCompanyId, setFilterCompanyId] = useState("");
+    // useEffect(() => {
+    //     async function getJobs() {
+    //         try {
+    //             const response = await localRequest.get(`https://career-portal-api.dhirenkirpalani.com/pub/jobs?filter=${filterCompanyId}&search=${searchTerm}`);
+    //             setJobsData(response.data.data)
+    //             setFilteredJobs(response.data.data)
+    //             setTotalPages(response.data.totalPage)
+    //             console.log(response);
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    //     getJobs()
+    // }, [filterCompanyId, searchTerm]);
+
+    // useEffect(() => {
+    //     async function getCompanies() {
+    //         try {
+    //             const response = await localRequest.get('https://career-portal-api.dhirenkirpalani.com/pub/companies');
+    //             setCompaniesData(response.data)
+    //             console.log(response);
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    //     getCompanies()
+    // }, []);
+
+
+    // const handleSearch = (term) => {
+    //     setSearchTerm(term);
+    // }
+
+    // const handleSort = (order) => {
+    //     setSortOrder(order);
+    //     const sortedJobs = [...filteredJobs].sort((a, b) => {
+    //         if (order === "asc") {
+    //             return new Date(a.createdAt) - new Date(b.createdAt);
+    //         } else {
+    //             return new Date(b.createdAt) - new Date(a.createdAt);
+    //         }
+    //     });
+    //     setFilteredJobs(sortedJobs);
+    // };
+
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentpage(pageNumber);
+    //     window.scrollTo(0, 0)
+    // }
+
+    // const handleFilterJobType = (jobType) => {
+    //     setFilterJobType(jobType);
+    //     if (jobType === "") {
+    //         setFilteredJobs(jobsData);
+    //     } else {
+    //         const filtered = jobsData.filter((job) => job.jobType === jobType);
+    //         setFilteredJobs(filtered);
+    //     }
+    // }
+
+    // const handleFilterCompany = (companyId) => {
+    //     setFilterCompanyId(companyId);
+    // };
+
+    // const startIndex = (currentPage - 1) * 10
+    // const endIndex = startIndex + 10
+
+    // console.log({ companiesData });
+
+    return (
+        <>
+  <div className="navbar">
+    <nav>
+      <input type="checkbox" id="show-search" />
+      <input type="checkbox" id="show-menu" />
+      <label htmlFor="show-menu" className="menu-icon">
+        <i className="fa-solid fa-bars" />
+      </label>
+      <div className="content">
+        <div className="logo">
+          <img src="./images/logo" alt="" />
+        </div>
+        <ul className="links">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="#our-menu">Menu</a>
+          </li>
+          <li>
+            <a href="#about">About</a>
+          </li>
+          <li>
+            <a href="#order">Order</a>
+          </li>
+          <li>
+            <a href="#reviews">Reviews</a>
+          </li>
+        </ul>
+      </div>
+      <label htmlFor="show-search" className="search-icon">
+        <i className="fas fa-search" />
+      </label>
+      <form action="#" className="search-box">
+        <input
+          type="text"
+          placeholder="Type Something To Search..."
+          required=""
+        />
+        <button type="submit" className="go-icon">
+          <i className="fas fa-long-arrow-alt-right" />
+        </button>
+      </form>
+    </nav>
+  </div>
+  {/* Navbar End */}
+  {/* Reviews Start */}
+  <section
+    className="reviews"
+    id="reviews"
+    data-aos="fade-up"
+    data-aos-duration={1500}
+  >
+    <h3>
+      What's Our <span>Customers</span> Say
+    </h3>
+    <div className="review-card">
+      <div className="row">
+        <div className="rating">
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
+          repudiandae dolorum ab beatae perferendis asperiores rem corrupti
+          blanditiis commodi et?
+        </p>
+        <h6>
+          <img src="./images/Avatar Image.png" alt="" />
+          Elon Musk
+        </h6>
+      </div>
+      <div className="row">
+        <div className="rating">
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
+          repudiandae dolorum ab beatae perferendis asperiores rem corrupti
+          blanditiis commodi et?
+        </p>
+        <h6>
+          <img src="./images/Avatar Image (1).png" alt="" />
+          Elon Musk
+        </h6>
+      </div>
+      <div className="row">
+        <div className="rating">
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+          <i className="fa-solid fa-star checked" />
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
+          repudiandae dolorum ab beatae perferendis asperiores rem corrupti
+          blanditiis commodi et?
+        </p>
+        <h6>
+          <img src="./images/Avatar Image (2).png" alt="" />
+          Elon Musk
+        </h6>
+      </div>
+    </div>
+  </section>
+  {/* Reviews End */}
+  {/* Footer Start */}
+  <footer className="fixed-bottom">
+    <div className="footer-content">
+      <div className="copyright">
+        <p>
+          &copy; Copyright <strong>Burger Bites</strong>. All Rights Reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+      </script>
+</>
+
+    )
+}
