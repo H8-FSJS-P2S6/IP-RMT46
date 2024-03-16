@@ -46,7 +46,7 @@ export default function Hunt() {
                         <button key={index} className="transparent-bg text-white px-4 py-2" onClick={() => {
                             document.getElementById('my_modal_1').showModal();
                             handleOnHunt(type)
-                        }}>{type}</button>
+                        }}>{<img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${Math.floor(Math.random() * 300) + 1}.gif`} alt="pokedesu" />}</button>
                     ))}
                     <dialog id="my_modal_1" className="modal">
                         <div className="modal-box">
