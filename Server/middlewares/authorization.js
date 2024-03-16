@@ -7,7 +7,7 @@ async function authorization(req, res, next) {
             if(!burgerData) {
                 throw {name: "Not found"}
             }
-            if(burgerData.UserId !== req.user.id) {
+            if(req.user.role !== "Admin") {
                 throw {name: "Unauthorized"}
             }
 
@@ -15,7 +15,7 @@ async function authorization(req, res, next) {
 
     } catch (error) {
         console.log(error);
-        next(error)
+        next(error);
     }
 }
 

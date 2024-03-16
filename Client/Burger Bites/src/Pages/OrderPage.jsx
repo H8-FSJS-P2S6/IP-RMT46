@@ -1,12 +1,10 @@
-// import { useState, useEffect } from "react"
-// import NavBar from "../components/NavBar"
-// import SearchBar from "../components/SearchBar"
-// import SortBy from "../components/SortBy"
-// import Card from "./Card"
-// import { localRequest } from "../../utils/axios"
+import { useState, useEffect } from "react"
+import { localRequest } from "../utils/axios"
+import Card from "./Card";
 
 export default function Home() {
-    // const [jobsData, setJobsData] = useState([])
+    const [burgerData, setBurgerData] = useState([])
+    const [loading, setLoading] = useState(false);
     // const [filteredJobs, setFilteredJobs] = useState([])
     // const [searchTerm, setSearchTerm] = useState("");
     // const [sortOrder, setSortOrder] = useState("asc");
@@ -15,20 +13,35 @@ export default function Home() {
     // const [filterJobType, setFilterJobType] = useState("");
     // const [companiesData, setCompaniesData] = useState([]);
     // const [filterCompanyId, setFilterCompanyId] = useState("");
-    // useEffect(() => {
-    //     async function getJobs() {
-    //         try {
-    //             const response = await localRequest.get(`https://career-portal-api.dhirenkirpalani.com/pub/jobs?filter=${filterCompanyId}&search=${searchTerm}`);
-    //             setJobsData(response.data.data)
-    //             setFilteredJobs(response.data.data)
-    //             setTotalPages(response.data.totalPage)
-    //             console.log(response);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //     getJobs()
-    // }, [filterCompanyId, searchTerm]);
+    useEffect(() => {
+        async function getBurgers() {
+          setLoading(true);
+            try {
+                const response = await localRequest.get(`/burgers`);
+                setBurgerData(prevData => [...prevData, ...response.data]);
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
+            setLoading(false);
+        }
+        getBurgers()
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    const handleScroll = () => {
+      if (
+          window.innerHeight + document.documentElement.scrollTop ===
+          document.documentElement.offsetHeight
+      ) {
+        getBurgers();
+      }
+  };
 
     // useEffect(() => {
     //     async function getCompanies() {
@@ -86,53 +99,6 @@ export default function Home() {
 
     return (
         <>
-  <div className="navbar">
-    <nav>
-      <input type="checkbox" id="show-search" />
-      <input type="checkbox" id="show-menu" />
-      <label htmlFor="show-menu" className="menu-icon">
-        <i className="fa-solid fa-bars" />
-      </label>
-      <div className="content">
-        <div className="logo">
-          <img src="./images/logo" alt="" />
-        </div>
-        <ul className="links">
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="#about">About</a>
-          </li>
-          <li>
-            <a href="#order">Order</a>
-          </li>
-          <li>
-            <a href="#reviews">Reviews</a>
-          </li>
-        </ul>
-      </div>
-      <label htmlFor="show-search" className="search-icon">
-        <i className="fas fa-search" />
-      </label>
-      <form action="#" className="search-box">
-        <input
-          type="text"
-          placeholder="Type Something To Search..."
-          required=""
-        />
-        <button type="submit" className="go-icon">
-          <i className="fas fa-long-arrow-alt-right" />
-        </button>
-      </form>
-      <button className="cart-button" style={{fontSize: "20px"}}>
-      <i className="fas fa-shopping-cart cart-icon"></i>
-    </button>
-    </nav>
-  </div>
-  {/* Navbar End */}
-  {/* Home Section Start */}
-  
   {/* Offer Section Start */}
   <section
     className="offer"
@@ -167,178 +133,17 @@ export default function Home() {
         <span>Our</span> Burger Menu
       </h1>
     </div>
-    <div className="card-content" data-aos="fade-up" data-aos-duration={1500}>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-    </div>
-    <div className="card-content" data-aos="fade-up" data-aos-duration={1500}>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-          <h5>
-            $65 <button>Add to Cart</button>
-          </h5>
-        </div>
-      </div>
-    </div>
+      {burgerData.map((burger) => (
+        <Card 
+        id={burger.id}
+        name={burger.name}
+        desc={burger.desc}
+        price={burger.price}
+        veg={burger.veg}
+        images={burger.images}
+        />
+      ))}
+      {loading && <div>Loading...</div>}
   </section>
   {/* Our Menu End */}
   {/* Footer Start */}

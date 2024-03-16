@@ -86,51 +86,6 @@ export default function Home() {
 
     return (
         <>
-  <div className="navbar">
-    <nav>
-      <input type="checkbox" id="show-search" />
-      <input type="checkbox" id="show-menu" />
-      <label htmlFor="show-menu" className="menu-icon">
-        <i className="fa-solid fa-bars" />
-      </label>
-      <div className="content">
-        <div className="logo">
-          <img src="./images/logo" alt="" />
-        </div>
-        <ul className="links">
-          <li>
-            <a href="index.html">Home</a>
-          </li>
-          <li>
-            <a href="#our-menu">Menu</a>
-          </li>
-          <li>
-            <a href="#about">About</a>
-          </li>
-          <li>
-            <a href="#order">Order</a>
-          </li>
-          <li>
-            <a href="#reviews">Reviews</a>
-          </li>
-        </ul>
-      </div>
-      <label htmlFor="show-search" className="search-icon">
-        <i className="fas fa-search" />
-      </label>
-      <form action="#" className="search-box">
-        <input
-          type="text"
-          placeholder="Type Something To Search..."
-          required=""
-        />
-        <button type="submit" className="go-icon">
-          <i className="fas fa-long-arrow-alt-right" />
-        </button>
-      </form>
-    </nav>
-  </div>
-  {/* Navbar End */}
   {/* About Section Start */}
   <section
     className="about"
@@ -143,7 +98,7 @@ export default function Home() {
     </div>
     <div className="about-info">
       <h6>About us</h6>
-      <h3>Burger king</h3>
+      <h3>Burger Bites</h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sed
         repellat, cum, enim doloribus fugit incidunt aut sunt, autem doloremque
@@ -166,10 +121,6 @@ export default function Home() {
       </div>
     </div>
   </footer>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-      </script>
 </>
 
     )

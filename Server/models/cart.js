@@ -54,11 +54,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     purchased: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      defaultValue: false
     },
     purchasedAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
   }, {
     sequelize,

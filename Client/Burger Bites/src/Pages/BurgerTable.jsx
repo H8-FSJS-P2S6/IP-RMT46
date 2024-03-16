@@ -1,8 +1,10 @@
-// import { useState, useEffect } from "react"
-// import { localRequest } from "../../utils/axios"
-// import { Link, useNavigate, Outlet } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { localRequest } from "../utils/axios"
+import { Link, useNavigate, Outlet } from "react-router-dom"
+import { errorAlert, successToast } from "../utils/sweetAlert";
+import SideBar from "./SideBar";
 
-export default function JobsTable() {
+export default function BurgerTable() {
     function formatCreatedAt(createdAt) {
         const date = new Date(createdAt);
         return date.toLocaleDateString("en-us", {
@@ -11,75 +13,90 @@ export default function JobsTable() {
             day: "numeric"
         })
     }
-    // const [jobsData, setJobsData] = useState([])
-    // const [loading, setLoading] = useState(false)
-    // const [error, setError] = useState("")
 
-    // const navigate = useNavigate()
+    function formatCurrency(amount) {
+        
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        });
+    
+        
+        return formatter.format(amount);
+    }
 
-    // const fetchJobs = async () => {
-    //     setLoading("Loading...")
-    //     setError("")
-    //     try {
-    //         let { data } = await localRequest({
-    //             url: "/jobs",
-    //             headers: {
-    //                 Authorization: `Bearer ${localStorage.getItem("token")}`
-    //             }
-    //         })
-    //         setJobsData(data)
-    //         console.log(data)
-    //     } catch (error) {
-    //         console.log(error.response?.data.message || error.message)
-    //         setError(error)
-    //     } finally {
-    //         setLoading(false)
-    //     }
-    // }
+    const [burgersData, setBurgersData] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
 
-    // const deleteJob = async (jobId) => {
-    //     try {
-    //         let { data } = await localRequest({
-    //             url: `/jobs/${jobId}`,
-    //             method: "delete",
-    //             headers: {
-    //                 Authorization: `Bearer ${localStorage.getItem("token")}`
-    //             }
-    //         })
-    //         setJobsData(jobsData.filter((job) => job.id !== jobId))
-    //         console.log(data)
-    //     } catch (error) {
-    //         console.log(error.response?.data.message || error.message)
-    //         setError(error)
-    //     }
-    // }
+    const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     fetchJobs()
-    // }, []);
+    const fetchBurgers = async () => {
+        setLoading("Loading...")
+        setError("")
+        try {
+            let { data } = await localRequest({
+                url: "/burgers",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            setBurgersData(data)
+            console.log(data)
+        } catch (error) {
+            console.log(error.response?.data.message || error.message)
+            setError(error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-    // if (error) {
-    //     return <h3>{error.message ?? error}</h3>
-    // }
+    const deleteBurger = async (burgerId) => {
+        try {
+            let { data } = await localRequest({
+                url: `/burgers/${burgerId}`,
+                method: "delete",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            setBurgersData(burgersData.filter((burger) => burger.id !== burgerId))
+            console.log(data)
+            successToast("Burger deleted successfully");
+        } catch (error) {
+            console.log(error.response?.data.message || error.message)
+            errorAlert("Unable to delete Burger");
+            setError(error)
+        }
+    }
 
-    // if (loading) {
-    //     return <h3>Loading...</h3>
-    // }
+    useEffect(() => {
+        fetchBurgers()
+    }, []);
+
+    if (error) {
+        return <h3>{error.message ?? error}</h3>
+    }
+
+    if (loading) {
+        return <h3>Loading...</h3>
+    }
 
     return (
         <>
+        <SideBar />
             {/* <Outlet /> */}
             <section
                 className="col-md-9 ms-sm-auto col-lg-10 px-md-4"
-                id="job-section"
+                id="burger-section"
             >
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 className="display-2">Jobs</h1>
-                    {/* <Link to="/cms/add"> */}
-                        <button className="btn btn-primary rounded-pill" id="new-job">
-                            <span className="icon material-symbols-outlined">add</span>New Job
+                    <h1 className="display-2">Burgers</h1>
+                    <Link to="/adminpanel/add">
+                        <button className="btn btn-primary rounded-pill" id="new-burger">
+                            <span className="icon material-symbols-outlined">add</span>New Burger
                         </button>
-                    {/* </Link> */}
+                    </Link>
                 </div>
                 <div className="row">
                     <div className="col-12 table-responsive">
@@ -103,46 +120,49 @@ export default function JobsTable() {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="table-job">
-                                {jobsData.map((job, index) => (
-                                    <tr key={job.id}>
+                            <tbody id="table-burger">
+                                {burgersData.map((burger, index) => (
+                                    <tr key={burger.id}>
                                         <td scope="row">{index + 1}</td>
-                                        <td className="fw-bold">{job.title}</td>
+                                        <td className="fw-bold">{burger.name}</td>
                                         <td>
-                                            {job.description}
+                                            {burger.desc}
                                         </td>
+                                        <td>{formatCurrency(burger.price)}</td>
+                                        <td>{burger.veg.toString()}</td>
                                         <td>
                                             <img
-                                                src={job.imgUrl}
+                                                src={burger.images}
                                                 className="img-fluid"
                                             />
                                         </td>
-                                        <td>{job.jobType}</td>
-                                        <td className="fw-bold">{job.CompanyId}</td>
-                                        <td className="fw-bold">{job.AuthorId}</td>
-                                        <td className="fw-bold">{formatCreatedAt(job.createdAt)}</td>
-                                        <td className="fw-bold">{formatCreatedAt(job.updatedAt)}</td>
+                                
+                                        
+                                        <td className="fw-bold">{formatCreatedAt(burger.createdAt)}</td>
+                                        <td className="fw-bold">{formatCreatedAt(burger.updatedAt)}</td>
                                         <td>
                                             <span className="d-flex">
-                                                <a href="" className="ms-3" onClick={() => deleteJob(job.id)}>
+                                                <a href="" className="ms-3" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    deleteBurger(burger.id)}}>
                                                     <span className="icon material-symbols-outlined text-danger">
                                                         delete
                                                     </span>
                                                 </a>
-                                                {/* <Link to={`/cms/update/${job.id}`}> */}
+                                                <Link to={`/adminpanel/update/${burger.id}`}>
                                                     <a href="" className="ms-3">
                                                         <span className="icon material-symbols-outlined text-primary">
                                                             edit
                                                         </span>
                                                     </a>
-                                                {/* </Link> */}
-                                                {/* <Link to={`/cms/updateImgUrl/${job.id}`}> */}
+                                                </Link>
+                                                <Link to={`/adminpanel/updateImgUrl/${burger.id}`}>
                                                     <a href="" className="ms-3">
                                                         <span className="icon material-symbols-outlined text-success">
                                                             image
                                                         </span>
                                                     </a>
-                                                {/* </Link> */}
+                                                </Link>
                                             </span>
                                         </td>
                                     </tr>

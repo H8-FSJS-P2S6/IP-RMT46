@@ -9,9 +9,10 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn("Carts", "Purchased", { 
+    await queryInterface.addColumn("Carts", "purchased", { 
       type: Sequelize.DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      defaultValue: false
      });
   },
 
@@ -22,6 +23,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn("Carts", "Purchased");
+    await queryInterface.removeColumn("Carts", "purchased");
   }
 };

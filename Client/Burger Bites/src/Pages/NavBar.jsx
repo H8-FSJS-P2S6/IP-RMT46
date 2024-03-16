@@ -16,32 +16,49 @@ export default function NavBar() {
             </div>
             <ul className="links">
               <li>
-              <Link to="/">
-                <a>Home</a>
+                <Link to="/">
+                  <a>Home</a>
                 </Link>
               </li>
               <li>
-              <Link to="/about">
-              <a>About</a>
+                <Link to="/about">
+                  <a>About</a>
                 </Link>
-                
+
               </li>
               <li>
-              <Link to="/orders">
-              <a>Order</a>
-    </Link>
-                
+                <Link to="/orders">
+                  <a>Order</a>
+                </Link>
+
               </li>
               <li>
-              <Link to="/reviews">
-              <a>Reviews</a>
-</Link>
-                
+                <Link to="/reviews">
+                  <a>Reviews</a>
+                </Link>
+
               </li>
               <div className="ml-auto">
+              <Link to="/profile">
+                  <a className="nav-link">
+
+                    <span className="icon material-symbols-outlined me-2">
+                      person
+                    </span>
+                  </a>
+                </Link>
+              </div>
+              <div className="ml-auto">
                 <Link to="/login">
-                <button type="button" className="btn btn-primary custom-login-btn">
-                  Login
+                  <button className="btn btn-primary custom-login-btn">
+                    Login
+                  </button>
+                </Link>
+              </div>
+              <div className="ml-auto">
+                <Link to="/adminpanel">
+                <button className="icon material-symbols-outlined">
+                  admin_panel_settings
                 </button>
                 </Link>
               </div>
@@ -60,6 +77,11 @@ export default function NavBar() {
               <i className="fas fa-long-arrow-alt-right" />
             </button>
           </form>
+          <Link to="/cart">
+          <button className="cart-button" style={{fontSize: "20px"}}>
+      <i className="fas fa-shopping-cart cart-icon"></i>
+    </button>
+          </Link>
         </nav>
       </div>
       {/* Navbar End */}

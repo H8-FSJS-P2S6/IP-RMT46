@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: "Burger already exists"
+      },
       validate: {
         notNull: {
           msg: "Name is required"
@@ -27,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    description: {
+    desc: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

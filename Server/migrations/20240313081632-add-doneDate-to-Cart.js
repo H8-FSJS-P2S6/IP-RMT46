@@ -11,8 +11,7 @@ module.exports = {
      */
     await queryInterface.addColumn("Carts", "purchasedAt", { 
       type: Sequelize.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: null
+      allowNull: true
      });
   },
 

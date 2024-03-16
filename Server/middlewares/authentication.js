@@ -16,20 +16,13 @@ async function authentication(req, res, next) {
         if (!user) {
             throw { name: "Unauthenticated" }
         }
-        req.user = {
-            id: user.id,
-            email: user.email
-        }
+        req.user = user;
 
-        // next();
+        next();
 
     } catch (error) {
         console.log(error);
-        if(error.name === "Unauthenticated" || error.name === "JsonWebTokenError") {
-            return res.status(401).json({message: "Invalid token"});
-        }
-        return res.status(500).json({ message: "Internal server error" })
-        // next(error)
+        next(error);
     }
 }
 
