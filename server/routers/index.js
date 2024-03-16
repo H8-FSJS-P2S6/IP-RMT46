@@ -6,15 +6,15 @@ const router = express.Router();
 router.get("/", (req, res) => {
   res.json([{ message: "hello world" }]);
 });
-router.post("/login", Controller.login);
-router.post("/register", Controller.register);
-router.get("/find-player/:tag", Controller.findPlayerByTag);
-router.get("/find-clan/:tag", Controller.findClanByTag);
-router.get("/player-rankings/:country", Controller.playerRankings);
+router.post("/login", Controller.login); //
+router.post("/register", Controller.register); //
+router.get("/find-player/:tag", Controller.findPlayerByTag); //
+router.get("/find-clan/:tag", Controller.findClanByTag); //
+router.get("/player-rankings/:country", Controller.playerRankings); //
 router.use(authentication);
-router.post("/players/:playerTag/verifytoken", Controller.verifyToken);
+router.post("/players/:playerTag/verifytoken", Controller.verifyToken); //
 router.post("/add-account", Controller.addAccount);
-router.get("/get-account", Controller.getAccount);
+router.get("/get-account", Controller.getAccount); //
 router.get("/get-country", Controller.getCountry);
 router.delete("/delete-account/:id", Controller.deleteAccount);
 

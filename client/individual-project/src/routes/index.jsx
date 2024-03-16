@@ -7,11 +7,16 @@ import ClanDetail from "../views/ClanDetail";
 import PlayerVerification from "../views/PlayerVerification";
 import Login from "../views/Login";
 import MyAccounts from "../views/MyAccounts";
+import Register from "../views/Register";
 
 const router = createBrowserRouter([
   {
     element: <Login />,
     path: "/login",
+  },
+  {
+    element: <Register />,
+    path: "/register",
   },
   {
     element: <MyAccounts />,
