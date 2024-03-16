@@ -101,7 +101,7 @@ module.exports = class UserController {
         }
     }
 
-    static async topUpCoins(req, res, next) {
+    static async generateMidtransToken(req, res, next) {
         const { coinsToPurchase } = req.body;
 
         try {
@@ -126,9 +126,22 @@ module.exports = class UserController {
 
             const midtransToken = await snap.createTransaction(parameter)
 
+            res.status(201).json(midtransToken)
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async topUpCoins(req, res, next) {
+        const { coinsToPurchase } = req.body;
+
+        try {
+            const findUser = await User.findByPk(+req.user.id)
+            if (!findUser) throw { name: "NotFound" }
+           
             await findUser.increment({ coins: +coinsToPurchase });
 
-            res.status(201).json({ message: `Payment successfully. You add ${coinsToPurchase} coins`, midtransToken })
+            res.status(200).json({message:`Successfully payment. You add ${coinsToPurchase} coins`})
         } catch (error) {
             next(error);
         }

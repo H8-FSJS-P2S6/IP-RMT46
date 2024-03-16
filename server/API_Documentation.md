@@ -9,7 +9,8 @@ List of available endpoints:
 - `POST /google-login`
 - `POST /hunt`
 - `POST /shop`
-- `PATCH /top-up`
+- `PUT /top-up`
+- `POST /generate-midtrans-token`
 - `GET /pokedex`
 - `GET /pokedex/:id`
 - `PUT /pokedex/:id/`
@@ -289,7 +290,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 6. PATCH /top-up
+## 6. PUT /top-up
 
 Description:
 - PATCH top up coins into database
@@ -308,8 +309,32 @@ _Response (200 - OK)_
 
 ```json
 {
-    "message": "Payment successfully. You add 100 coins",
-    "midtransToken": {
+  "message": "Successfully payment. You add 1000 coins",
+}
+```
+
+&nbsp;
+
+## 7. PUT /generate-midtrans-token
+
+Description:
+- POST new token midtrans
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+    {
         "token": "5cf56e84-3e53-4b66-9555-39fbc9282952",
         "redirect_url": "https://app.sandbox.midtrans.com/snap/v3/redirection/5cf56e84-3e53-4b66-9555-39fbc9282952"
     }
@@ -318,7 +343,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 7. GET /pokedex
+## 8. GET /pokedex
 
 Description:
 - GET my pokemon from database
@@ -385,7 +410,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 8. GET /pokedex/:id
+## 9. GET /pokedex/:id
 
 Description:
 - GET pokemon by id from database
@@ -429,7 +454,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 9. PUT /pokedex/:id
+## 10. PUT /pokedex/:id
 
 Description:
 - PUT pokemon by id into database
@@ -474,7 +499,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 10. DELETE /pokedex/:id
+## 11. DELETE /pokedex/:id
 
 Description:
 - Delete pokemon by id
