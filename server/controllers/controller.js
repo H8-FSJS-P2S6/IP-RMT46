@@ -1,6 +1,10 @@
 const { User, GameAccount, ProfileImage } = require("../models");
 const { signToken } = require("../helpers/jwt");
 const { comparePassword, hashPassword } = require("../helpers/bcrypt");
+
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client();
+
 const axios = require("axios");
 
 class Controller {
@@ -32,6 +36,36 @@ class Controller {
       next(error);
     }
   }
+
+  static async googleLogin(req, res, next) {
+    // console.log(req.body);
+
+    const { googleToken } = req.body;
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: googleToken,
+        audience: "311311491871-asdh36mkpe95qjvlvm7frf04ngktqrjf.apps.googleusercontent.com", // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+      });
+      const { email } = ticket.getPayload();
+
+      const [user, created] = await User.findOrCreate({
+        where: { email },
+        defaults: { email, password: Math.random().toString() },
+      });
+
+      console.log({ user, created });
+
+      const access_token = signToken({ id: user.id });
+
+      res.json({ message: "Login Success", access_token });
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
   static async register(req, res, next) {
     const { email, password } = req.body;
 

@@ -7,6 +7,7 @@ router.get("/", (req, res) => {
   res.json([{ message: "hello world" }]);
 });
 router.post("/login", Controller.login); //
+router.post("/google-login", Controller.googleLogin);
 router.post("/register", Controller.register); //
 router.get("/find-player/:tag", Controller.findPlayerByTag); //
 router.get("/find-clan/:tag", Controller.findClanByTag); //
