@@ -1,0 +1,142 @@
+[
+    {
+        "name": "Paracetamol",
+        "price": 20000,
+        "description": "Paracetamol is used to treat mild to moderate pain. It is also used to treat mild to moderate fever.",
+        "imageUrl": "https://pimpharma.com/wp-content/uploads/2023/02/paracetamol-box-1.png",
+        "usage": "Take one tablet twice a day for a full 24 hours."
+    },
+    {
+        "name": "Ibuprofen",
+        "price": 25000,
+        "description": "Ibuprofen is a nonsteroidal anti-inflammatory drug (NSAID). It is used for relief of symptoms of arthritis, primary dysmenorrhea, fever, and as an analgesic, especially where there is an inflammatory component.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUBrGHYsejZ6ivD_zo03k4XtfPS_0tnXvklw&usqp=CAU",
+        "usage": "Take one tablet every 4 to 6 hours as needed."
+    },
+    {
+        "name": "Aspirin",
+        "price": 18000,
+        "description": "Aspirin is used to reduce fever and relieve mild to moderate pain from conditions such as muscle aches, toothaches, common cold, and headaches.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTidW2RhjwUP1jmsjhs8GITZ6CBhb5edeG3eQ&usqp=CAU",
+        "usage": "Take one tablet every 4 to 6 hours as needed."
+    },
+    {
+        "name": "Cetirizine",
+        "price": 30000,
+        "description": "Cetirizine is an antihistamine used to relieve allergy symptoms such as watery eyes, runny nose, itching eyes/nose, sneezing, hives, and itching.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfynZRtzlfaqpnzWdIiT7w3pOyGUCVHyMAkg&usqp=CAU",
+        "usage": "Take one tablet daily, preferably in the evening."
+    },
+    {
+        "name": "Loperamide",
+        "price": 22000,
+        "description": "Loperamide is used to control sudden diarrhea and symptoms of diarrhea, including traveler's diarrhea.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-smXY19ksm5gJYM4KysRKhoTpjaaC6cjQHw&usqp=CAU",
+        "usage": "Take 2 tablets initially, then 1 tablet after each loose stool."
+    },
+    {
+        "name": "Ranitidine",
+        "price": 28000,
+        "description": "Ranitidine is used to treat ulcers of the stomach and intestines and prevent them from coming back after they have healed. This medication is also used to treat certain stomach and throat (esophagus) problems (such as erosive esophagitis, gastroesophageal reflux disease-GERD, Zollinger-Ellison syndrome). It works by decreasing the amount of acid your stomach makes. It relieves symptoms such as cough that doesn't go away, stomach pain, heartburn, and difficulty swallowing.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHOe8UqV2C_ATjt8roMGqvaGCJsgBM25-k8Q&usqp=CAU",
+        "usage": "Take one tablet twice daily."
+    },
+    {
+        "name": "Omeprazole",
+        "price": 35000,
+        "description": "Omeprazole is used to treat certain stomach and esophagus problems (such as acid reflux, ulcers). It works by decreasing the amount of acid your stomach makes. It relieves symptoms such as heartburn, difficulty swallowing, and persistent cough.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZH7aUS1EFKxFzM5DTqDLUNf-LzV0KjG0iGg&usqp=CAU",
+        "usage": "Take one tablet daily, before a meal."
+    },
+    {
+        "name": "Diphenhydramine",
+        "price": 23000,
+        "description": "Diphenhydramine is an antihistamine used to relieve symptoms of allergy, hay fever, and the common cold. These symptoms include rash, itching, watery eyes, itchy eyes/nose/throat, cough, runny nose, and sneezing. It is also used to prevent and treat nausea, vomiting, and dizziness caused by motion sickness.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0zU1m4aTsoHAFlrwNuh5JHY8iDmX58RDsrw&usqp=CAU",
+        "usage": "Take one tablet every 4 to 6 hours as needed."
+    },
+    {
+        "name": "Loratadine",
+        "price": 32000,
+        "description": "Loratadine is an antihistamine used to relieve allergy symptoms such as watery eyes, runny nose, itching eyes/nose, sneezing, hives, and itching.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSrWFVi3jkYGqdPmVWJOv19xgu7RpROW6rzA&usqp=CAU",
+        "usage": "Take one tablet daily."
+    },
+    {
+        "name": "Fexofenadine",
+        "price": 34000,
+        "description": "Fexofenadine is an antihistamine used to relieve allergy symptoms such as watery eyes, runny nose, itching eyes/nose, sneezing, hives, and itching.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSknX52cLZQB1w6ySzvrzpDqW7taHIfYumovg&usqp=CAU",
+        "usage": "Take one tablet daily."
+    },
+    {
+        "name": "Simethicone",
+        "price": 25000,
+        "description": "Simethicone is used to relieve symptoms of extra gas such as belching, bloating, and feelings of pressure/discomfort in the stomach/gut. It is also used to relieve symptoms of gas-related stomach discomfort (such as heartburn, sour stomach, and acid indigestion).",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDOOeOELfyAg8U_dCggZif5lGQsh7LRirPWg&usqp=CAU",
+        "usage": "Take 1 to 2 tablets four times a day after meals and at bedtime, or as directed by your doctor."
+    },
+    {
+        "name": "Chlorpheniramine",
+        "price": 27000,
+        "description": "Chlorpheniramine is an antihistamine used to relieve symptoms of allergy, hay fever, and the common cold. These symptoms include rash, itching, watery eyes, itchy eyes/nose/throat, cough, runny nose, and sneezing. It is also used to prevent and treat nausea, vomiting, and dizziness caused by motion sickness.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS1gqkYYOzz3Mfz0-b9eXIY5OmSpbXvtkaeg&usqp=CAU",
+        "usage": "Take one tablet every 4 to 6 hours as needed."
+    },
+    {
+        "name": "Dextromethorphan",
+        "price": 26000,
+        "description": "Dextromethorphan is a cough suppressant used to relieve cough. It is usually used for a short term to control coughing associated with the flu, a cold, or due to inhaled irritants.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQXiosgRSZ7pLV1W7MLJuQVqBrqxbJCpyUzw&usqp=CAU",
+        "usage": "Take one tablet every 4 to 6 hours as needed."
+    },
+    {
+        "name": "Guaifenesin",
+        "price": 24000,
+        "description": "Guaifenesin is used to relieve chest congestion. It works by thinning and loosening mucus in the airways, clearing congestion, and making breathing easier.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3pal_1YsaFAjVuqVaVVPjZJHBNWhLEC3uwQ&usqp=CAU",
+        "usage": "Take one tablet every 4 hours as needed."
+    },
+    {
+        "name": "Hydrocortisone",
+        "price": 40000,
+        "description": "Hydrocortisone is used to treat redness, swelling, itching, and discomfort of various skin conditions. It is also used to treat conditions such as arthritis, blood/hormone/immune system disorders, allergic reactions, certain skin and eye conditions, breathing problems, certain bowel disorders, and certain cancers.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQom21EjqX-Tit2mC4JNfLTQNHsY-vi786Q0Q&usqp=CAU",
+        "usage": "Apply a thin film to the affected area 2 to 4 times daily."
+    },
+    {
+        "name": "Clotrimazole",
+        "price": 38000,
+        "description": "Clotrimazole is used to treat skin infections such as athlete's foot, jock itch, ringworm, and other fungal skin infections (candidiasis). This medication is also used to treat a skin condition known as pityriasis (tinea versicolor), a fungal infection that causes a lightening or darkening of the skin of the neck, chest, arms, or legs.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8eCTjyqWiTWhuP8nlAlPahrdfeL-l2BRLow&usqp=CAU",
+        "usage": "Apply a thin layer of cream to the affected area once or twice daily."
+    },
+    {
+        "name": "Mupirocin",
+        "price": 36000,
+        "description": "Mupirocin is used to treat certain skin infections (such as impetigo). It is an antibiotic. It works by stopping the growth of certain bacteria.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT89Nx4qht6c5nTXVf6bk68PVYGkHRT3ATnRg&usqp=CAU",
+        "usage": "Apply a small amount of ointment to the affected area 3 times daily for 10 days."
+    },
+    {
+        "name": "Benzoyl Peroxide",
+        "price": 30000,
+        "description": "Benzoyl peroxide is used to treat acne. It works by killing the bacteria that cause acne, drying the acne pimples, and helping the skin to peel.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQru8xntHgz_49C1Bz4EWuLqzRLwvdQHesZ0Q&usqp=CAU",
+        "usage": "Apply a thin layer to the affected area once or twice daily."
+    },
+    {
+        "name": "Salicylic Acid",
+        "price": 32000,
+        "description": "Salicylic acid is used to treat acne and other skin conditions. It works by causing the skin to swell, soften, and then peel, which helps to unclog pores, clear up pimples, and prevent new ones from forming.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVyzIMFP5X2Psv3Fs0kRHmZvYXyDZ53ldF-C8l-nsA4xFRcYqk8En9Dpz_fxY1iccxOSg&usqp=CAU",
+        "usage": "Apply a thin layer to the affected area once or twice daily."
+    },
+    {
+        "name": "Retinol",
+        "price": 38000,
+        "description": "Retinol is used to improve the appearance and texture of the skin. It promotes skin renewal and enhances collagen production, helping to reduce the appearance of wrinkles, fine lines, and other signs of aging.",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWHlceZQke-DVPOYWHkuvWyAg4ncd_HSSfXQ&usqp=CAU",
+        "usage": "Apply a small amount to the face and neck in the evening, after cleansing."
+    }
+]
