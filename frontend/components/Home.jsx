@@ -14,15 +14,22 @@ function Home() {
         setCurrentWeather(response.data);
       }
 
-      const responseArtikel = await baseURL.get(`/artikel`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchDataArtikel = async () => {
+    try {
+      const responseArtikel = await baseUrl.get(`/artikel`);
       if (responseArtikel.status === 200) {
         const artikel = responseArtikel.data;
         await Promise.all(artikel.map(async (perArtikel) => {
-          const responseCategory = await baseURL.get(`/categories/${perArtikel.CategoryId}`);
+          const responseCategory = await baseUrl.get(`/categories/${perArtikel.CategoryId}`);
           if (responseCategory.status === 200) {
             perArtikel.categoryName = responseCategory.data.name;
           }
-          const responseUser = await baseURL.get(`/auth/user/${perArtikel.UserId}`, {
+          const responseUser = await baseUrl.get(`/auth/user/${perArtikel.UserId}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -33,7 +40,6 @@ function Home() {
         }));  
         setArtikel(artikel);
       }
-
     } catch (error) {
       console.error(error);
     }
@@ -50,6 +56,7 @@ function Home() {
     if (search.trim()) {
       fetchData();
     }
+    fetchDataArtikel()
   }, [search]);
 
   return (
@@ -94,8 +101,7 @@ function Home() {
                 <h5 className="leading-loose">{`Author: ${perArtikel.userEmail}`}</h5>
                 <h5 className="leading-loose">{`Category: ${perArtikel.categoryName}`}</h5>
                 <p className="text-gray-600">{perArtikel.description}</p>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" onClick={() => window.location.href=`/dashboard/update-artikel/${perArtikel.id}`}>Update</button>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2" onClick={() => handleDelete(perArtikel.id)}>Delete</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">Detail</button>
               </div>
             </div>
           </div>
