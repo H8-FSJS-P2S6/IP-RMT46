@@ -8,6 +8,7 @@ import PlayerVerification from "../views/PlayerVerification";
 import Login from "../views/Login";
 import MyAccounts from "../views/MyAccounts";
 import Register from "../views/Register";
+import ChangePassword from "../views/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     element: <Register />,
     path: "/register",
+  },
+  {
+    element: <ChangePassword />,
+    path: "/changepassword",
   },
   {
     element: <MyAccounts />,

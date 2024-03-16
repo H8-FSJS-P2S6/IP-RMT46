@@ -303,9 +303,9 @@ class Controller {
         throw { name: "Unauthenticated", message: "Invalid current password" };
       }
 
-      await user.update({ password: hashPassword(newPassword) });
+      const account = await user.update({ password: hashPassword(newPassword) });
 
-      res.json("Test");
+      res.json({ email: account.email });
     } catch (error) {
       console.log(error.message);
       next(error);
