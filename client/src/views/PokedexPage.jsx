@@ -4,9 +4,10 @@ import axios from '../utils/axios'
 import { useEffect, useState } from "react";
 import Pagination from "../component/pagination";
 import FilterSortAndSearch from "../component/FilterSortandSearch";
+import { useDispatch, useSelector } from "react-redux"
+import { setMyPokemons } from "../features/pokemonSlice";
 
 function PokedexPage() {
-    const [myPokemons, setMyPokemons] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [paginationOption, setPaginationOption] = useState({ currentPage: 1, total: 0, totalPage: 0 });
     const [sort, setSort] = useState("");
@@ -14,38 +15,43 @@ function PokedexPage() {
     const [filter, setFilter] = useState("");
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+    const myPokemons = useSelector((state) => state.pokemons.list)
+
+    const fetchPokemon = async (pageNumber = 1) => {
+        let url = `/pokedex?page[size]=12&page[number]=${pageNumber}`;
+
+        if (sort) {
+            url += `&sort=${sort}`;
+        }
+
+        if (search) {
+            url += `&search=${search}`;
+        }
+
+        if (filter) {
+            url += `&filter[type]=${filter}`;
+        }
+
+        try {
+            const { data } = await axios({
+                url: url,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }
+            })
+            const { currentPage, total, totalPage, data: pokemonData } = data;
+
+            dispatch(setMyPokemons(pokemonData))
+
+            dispatch(setPaginationOption({ currentPage, total, totalPage }));
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    };
+
     useEffect(() => {
-        const fetchPokemon = async (pageNumber = 1) => {
-            let url = `/pokedex?page[size]=12&page[number]=${pageNumber}`;
-
-            if (sort) {
-                url += `&sort=${sort}`;
-            }
-
-            if (search) {
-                url += `&search=${search}`;
-            }
-
-            if (filter) {
-                url += `&filter[type]=${filter}`;
-            }
-
-            try {
-                const { data } = await axios({
-                    url: url,
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                    }
-                })
-                const { currentPage, total, totalPage, data: pokemonData } = data;
-                setMyPokemons(pokemonData);
-                setPaginationOption({ currentPage, total, totalPage });
-            } catch (error) {
-                console.log(error.response.data.message);
-            }
-        };
-
         fetchPokemon(searchParams.get("page[number]") || 1);
     }, [searchParams.get("page[number]"), sort, search, filter]);
 

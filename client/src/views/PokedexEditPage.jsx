@@ -3,28 +3,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "../utils/axios";
 import showToast from "../utils/toast";
 import CardForm from "../component/cardForm";
+import { useDispatch } from "react-redux";
+import { fetchUpdatePokemon } from "../features/pokemonSlice";
 
 export default function PokedexEdit() {
     const navigate = useNavigate();
     const [myPokemon, setMyPokemon] = useState([]);
     let { id } = useParams();
 
-    useEffect(() => {
-        const fetchPokemon = async () => {
-            try {
-                let { data } = await axios({
-                    url: `/pokedex/${id}`,
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                    }
-                })
-                setMyPokemon(data)
-            } catch (error) {
-                console.log(error.message)
-            }
-        }
+    const dispatch = useDispatch();
 
+    const fetchPokemon = async () => {
+        try {
+            let { data } = await axios({
+                url: `/pokedex/${id}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                }
+            })
+            setMyPokemon(data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
         fetchPokemon();
     }, [])
 
@@ -41,20 +45,8 @@ export default function PokedexEdit() {
 
     const handleOnUpdate = async (event) => {
         event.preventDefault();
-
-        try {
-            await axios({
-                url: `/pokedex/${id}`,
-                method: "PUT",
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                },
-                data: myPokemon,
-            });
-            navigate('/pokedex')
-        } catch (error) {
-            showToast(error.response?.data?.message || error.message, "error");
-        }
+        dispatch(fetchUpdatePokemon(myPokemon))
+        navigate('/pokedex')
     };
 
     return (

@@ -3,29 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import CardDetail from "../component/cardDetail";
 import axios from "../utils/axios";
 import showToast from "../utils/toast";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDetailPokemon } from "../features/pokemonSlice";
 
 export default function PokedexDetail() {
     const navigate = useNavigate();
-    const [myPokemon, setMyPokemon] = useState([]);
     let { id } = useParams();
 
-    const fetchPokemon = async () => {
-        try {
-            let { data } = await axios({
-                url: `/pokedex/${id}`,
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                }
-            })
-            setMyPokemon(data)
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
+    const dispatch = useDispatch();
+    const myPokemon = useSelector((state) => state.pokemons.detail)
 
     useEffect(() => {
-        fetchPokemon();
+        dispatch(fetchDetailPokemon(id))
     }, [])
 
     const changePageToDetail = (id) => {
@@ -43,11 +32,11 @@ export default function PokedexDetail() {
             })
             navigate("/pokedex")
             showToast(`Successfully deleted pokemon`);
-            fetchPokemon();
+            dispatch(fetchDetailPokemon(id));
         } catch (error) {
             showToast(error.response?.data?.message || error.message, "error");
         }
-    }  
+    }
     return (
         <>
             <div className="flex flex-col justify-center content-center size-full">

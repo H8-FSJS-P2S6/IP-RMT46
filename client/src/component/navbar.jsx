@@ -13,14 +13,12 @@ export default function Navbar() {
         <>
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
-                    <Link to="/">
-                        <div className="flex flex-row">
-                            <img src={logo} alt="logo" />
-                            <Link to="/" className="btn btn-ghost text-xl">
-                                PokeWorldDesu
-                            </Link>
-                        </div>
-                    </Link>
+                    <div className="flex flex-row">
+                        <img src={logo} alt="logo" />
+                        <Link to="/" className="btn btn-ghost text-xl">
+                            PokeWorldDesu
+                        </Link>
+                    </div>
                 </div>
                 <div className="navbar-end">
                     <div className="dropdown dropdown-end mx-5">
