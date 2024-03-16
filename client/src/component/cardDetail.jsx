@@ -1,4 +1,4 @@
-export default function CardDetail({ imagePokedex, pokedex, type, name, changePageToDetail, attack, hp, height, weight, imageFront, imageBack }) {
+export default function CardDetail({ imagePokedex, pokedex, type, name, changePageToDetail, attack, hp, height, weight, imageFront, imageBack, handleOnDelete }) {
 
     return (
         <>
@@ -34,6 +34,9 @@ export default function CardDetail({ imagePokedex, pokedex, type, name, changePa
                         </div>
                         <div className="flex justify-center mt-2">
                             <button onClick={changePageToDetail} className="btn bg-white rounded-full text-orange-400 text-xs font-bold leading-none">Give a nickname</button>
+                        </div>
+                        <div className="flex justify-center mt-2">
+                            <button onClick={handleOnDelete} className="btn bg-white rounded-full text-orange-400 text-xs font-bold leading-none">Delete</button>
                         </div>
                     </div>
                 </div>
