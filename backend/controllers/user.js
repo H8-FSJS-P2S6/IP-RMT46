@@ -94,4 +94,20 @@ module.exports = class UserController {
       next(error);
     }
   }
+  
+  static async getUser(req, res, next) {
+    try {
+      const { id } = req.params;
+      const user = await User.findByPk(id);
+      res.status(200).json({
+        id: user.id,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        sso: user.sso,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 };

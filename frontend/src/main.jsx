@@ -9,7 +9,12 @@ import Register from "../components/Register";
 import Login from "../components/Login";
 import Home from "../components/Home";
 import AdminDashboard from "../components/AdminDashboard";
-
+import Category from "../components/Category";
+import Artikel from "../components/Artikel";
+import AddCategory from "../components/AddCategory";
+import AddArtikel from "../components/AddArtikel";
+import UpdateCategory from "../components/UpdateCategory";
+import UpdateArtikel from "../components/UpdateArtikel";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +28,30 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <AdminDashboard></AdminDashboard>,
+  },
+  {
+    path: "/dashboard/artikel",
+    element: <Artikel></Artikel>,
+  },
+  {
+    path: "/dashboard/categories",
+    element: <Category></Category>,
+  },
+  {
+    path: "/dashboard/add-category",
+    element: <AddCategory></AddCategory>,
+  },
+  {
+    path: "/dashboard/add-artikel",
+    element: <AddArtikel></AddArtikel>,
+  },
+  {
+    path: "/dashboard/update-category/:id",
+    element: <UpdateCategory></UpdateCategory>,
+  },
+  {
+    path: "/dashboard/update-artikel/:id",
+    element: <UpdateArtikel></UpdateArtikel>,
   },
   {
     path: "/",

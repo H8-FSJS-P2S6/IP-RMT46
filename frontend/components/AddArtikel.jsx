@@ -1,27 +1,65 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import baseUrl from "../utils/baseUrl";
 
-function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+function AddArtikel() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [user, setUser] = useState(0);
 
-  const handleRegister = async (e) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseUser = await baseUrl.get(`/auth/userinfo`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        if (responseUser.status === 200) {
+          const user = await responseUser.data;
+          setUser(user);
+        } else {
+          window.location.href = '/login';
+        }
+
+        const responseCategory = await baseUrl.get(`/categories`);
+        if (responseCategory.status === 200) {
+          const artikel = await responseCategory.data;
+          setCategory(artikel);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const bodyData = {
-        email: email,
-        password: password,
-        address: address,
-        phoneNumber: phoneNumber,
+        title: title,
+        description: description,
+        imgUrl: imgUrl,
+        CategoryId: selectedCategory,
+        UserId: user.id,
       };
-      const response = await baseUrl.post("/auth/register", bodyData, {
-        headers: { "Content-Type": "application/json" },
+
+      const response = await baseUrl.post("/artikel", bodyData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
+
       if (response.status === 201) {
-        window.location.href = "/login";
-      }
+        window.location.href = "/dashboard/artikel";
+      } 
     } catch (error) {
       console.error("Error:", error.message);
       const errorContainer = document.getElementById("error-container");
@@ -36,14 +74,6 @@ function Register() {
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -52,91 +82,89 @@ function Register() {
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Register a new account
+            Create new artikel
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" method="POST" onSubmit={handleRegister}>
+          <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Title
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="Phone Number"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Phone Number
-              </label>
-              <div className="mt-2">
-                <input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="number"
-                  autoComplete="phoneNumber"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="Address"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="address"
-                  name="address"
+                  name="name"
                   type="text"
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Description
+              </label>
+              <div className="mt-2">
+                <textarea
+                  name="description"
+                  required
+                  rows="4" // Contoh: membuat textarea dengan tinggi awal untuk 4 baris teks
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="imgUrl"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Image URL
+              </label>
+              <div className="mt-2">
+                <input
+                  name="imgUrl"
+                  type="text"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={imgUrl}
+                  onChange={(e) => setImgUrl(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="category"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Category
+              </label>
+              <div className="mt-2">
+                <select
+                  name="category"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}>
+                  {category.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -145,20 +173,10 @@ function Register() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                Create
               </button>
             </div>
           </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Already has an account?{" "}
-            <a
-              href="/login"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Login
-            </a>
-          </p>
           <div id="error-container" className="text-red-400"></div>
         </div>
       </div>
@@ -166,4 +184,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default AddArtikel;
