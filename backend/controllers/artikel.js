@@ -41,7 +41,18 @@ module.exports = class ArtikelController {
 
   static async listArtikel(req, res, next) {
     try {
-      const artikel = await Artikel.findAll();
+      let artikel;
+      const { category } = req.query;
+      if (category) {
+        artikel = await Artikel.findAll({
+          where: {
+            CategoryId: category
+          }
+        });
+      } else {
+        artikel = await Artikel.findAll();
+      }
+      console.log(artikel)
       res.status(200).json(artikel);
     } catch (error) {
       next(error);
