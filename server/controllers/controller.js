@@ -142,8 +142,7 @@ class Controller {
   }
 
   static async playerRankings(req, res, next) {
-    // const { locationId } = req.params;
-    const { country } = req.params;
+    const { country } = req.body;
 
     const { items } = require("../data/locationId.json");
     let location = "";
@@ -157,10 +156,12 @@ class Controller {
     } else {
       location = "global";
     }
-    // console.log(location);
-    // res.json(location);
     const { limit, after, before } = req.query;
     let locationId = location;
+
+    if (!country) {
+      locationId = "global";
+    }
 
     try {
       let queryParams = `limit=${limit || 10}`;
@@ -175,7 +176,49 @@ class Controller {
 
       res.json(data);
     } catch (error) {
-      console.error(error);
+      console.log(error.message);
+      next(error);
+    }
+  }
+
+  static async clanRankings(req, res, next) {
+    const { country } = req.body;
+
+    const { items } = require("../data/locationId.json");
+    let location = "";
+
+    if (country != "global") {
+      items.forEach((element) => {
+        if (element.name === country) {
+          location = element.id;
+        }
+      });
+    } else {
+      location = "global";
+    }
+    const { limit, after, before } = req.query;
+    let locationId = location;
+
+    if (!country) {
+      locationId = "global";
+    }
+
+    console.log({ locationId });
+
+    try {
+      let queryParams = `limit=${limit || 10}`;
+      if (after) queryParams += `&after=${after}`;
+      if (before) queryParams += `&before=${before}`;
+
+      const { data } = await axios.get(`https://api.clashofclans.com/v1/locations/${locationId}/rankings/clans?${queryParams}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
+        },
+      });
+
+      res.json(data);
+    } catch (error) {
+      console.log(error.message);
       next(error);
     }
   }

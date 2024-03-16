@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import cocUrl from "../utils/axios";
 
-function PlayerRankings() {
+function ClanRankings() {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("global");
-  const [players, setPlayers] = useState([]);
+  const [clans, setClans] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
         const response = await cocUrl.get("/get-country");
+        console.log(response.data, "country");
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -22,19 +23,20 @@ function PlayerRankings() {
   }, []);
 
   useEffect(() => {
-    const fetchPlayerRankings = async () => {
+    const fetchClanRankings = async () => {
       try {
         setLoading(true);
-        const response = await cocUrl.get("/player-rankings", { country: selectedCountry });
-        setPlayers(response.data);
+        const response = await cocUrl.get("/clan-rankings", { country: selectedCountry });
+        console.log(response.data, "clan");
+        setClans(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching player rankings:", error);
+        console.error("Error fetching clan rankings:", error);
         setLoading(false);
       }
     };
 
-    fetchPlayerRankings();
+    fetchClanRankings();
   }, [selectedCountry]);
 
   const handleCountryChange = (event) => {
@@ -43,7 +45,7 @@ function PlayerRankings() {
 
   return (
     <div>
-      <h2>Player Rankings</h2>
+      <h2>Clan Rankings</h2>
       <div>
         <label htmlFor="countrySelect">Select Country:</label>
         <select id="countrySelect" value={selectedCountry} onChange={handleCountryChange}>
@@ -59,7 +61,7 @@ function PlayerRankings() {
         <p>Loading...</p>
       ) : (
         <div>
-          <h3>Player Rankings for {selectedCountry}</h3>
+          <h3>Clan Rankings for {selectedCountry}</h3>
           <table>
             <thead>
               <tr>
@@ -69,11 +71,11 @@ function PlayerRankings() {
               </tr>
             </thead>
             <tbody>
-              {players.items.map((player, index) => (
+              {clans.items.map((clan, index) => (
                 <tr key={index}>
-                  <td>{player.rank}</td>
-                  <td>{player.name}</td>
-                  <td>{player.level}</td>
+                  <td>{clan.rank}</td>
+                  <td>{clan.name}</td>
+                  <td>{clan.level}</td>
                 </tr>
               ))}
             </tbody>
@@ -84,4 +86,4 @@ function PlayerRankings() {
   );
 }
 
-export default PlayerRankings;
+export default ClanRankings;

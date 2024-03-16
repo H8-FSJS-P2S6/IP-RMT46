@@ -10,15 +10,31 @@ import MyAccounts from "../views/MyAccounts";
 import Register from "../views/Register";
 import ChangePassword from "../views/ChangePassword";
 import ImageGallery from "../views/ImageGallery";
+import ClanRankings from "../views/ClanRankings";
+import Navbar from "../components/Navbar";
 
 const router = createBrowserRouter([
   {
-    element: <Login />,
+    element: (
+      <>
+        <Navbar />
+        <Login />
+      </>
+    ),
     path: "/login",
   },
   {
     element: <Register />,
     path: "/register",
+  },
+  {
+    element: (
+      <>
+        <Navbar />
+        <Home />
+      </>
+    ),
+    path: "/",
   },
   {
     element: <ChangePassword />,
@@ -42,7 +58,11 @@ const router = createBrowserRouter([
   },
   {
     element: <PlayerRankings />,
-    path: "/player/rankings/:country",
+    path: "/player/rankings",
+  },
+  {
+    element: <ClanRankings />,
+    path: "/clan/rankings",
   },
   {
     element: <ImageGallery />,

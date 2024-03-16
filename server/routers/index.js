@@ -11,12 +11,13 @@ router.post("/google-login", Controller.googleLogin);
 router.post("/register", Controller.register); //
 router.get("/find-player/:tag", Controller.findPlayerByTag); //
 router.get("/find-clan/:tag", Controller.findClanByTag); //
-router.get("/player-rankings/:country", Controller.playerRankings); //
+router.get("/player-rankings", Controller.playerRankings); //
+router.get("/clan-rankings", Controller.clanRankings);
+router.get("/get-country", Controller.getCountry); //
 router.use(authentication);
 router.post("/players/:playerTag/verifytoken", Controller.verifyToken); //
 router.post("/add-account", Controller.addAccount); //
 router.get("/get-account", Controller.getAccount); //
-router.get("/get-country", Controller.getCountry);
 router.delete("/delete-account/:id", Controller.deleteAccount); //
 
 const multer = require("multer");
