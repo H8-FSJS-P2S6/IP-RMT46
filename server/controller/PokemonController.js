@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Pokemon, User } = require('../models');
 const axios = require('axios');
 
@@ -35,7 +36,6 @@ module.exports = class PokemonController {
                 UserId: req.user.id
             };
 
-
             if (pokemonData) {
                 const isCaptured = (probability) => {
                     const randomValue = Math.random() * 100;
@@ -54,8 +54,7 @@ module.exports = class PokemonController {
                     const capturedPokemon = await Pokemon.create(pokemonData);
                     res.status(201).json(capturedPokemon);
                 } else {
-                    res.status(200).json({ message: "Pokemon escaped. Find again!" });
-                    // throw { name: "CustomError", status: 400, message: "Pokemon escaped. Find again!" };
+                    res.status(200).json({ pokemonData, message: "Pokemon escaped. Find again!" });
                 }
             }
 
@@ -119,15 +118,64 @@ module.exports = class PokemonController {
 
     static async getMyPokemons(req, res, next) {
         try {
-            const pokemons = await Pokemon.findAll({
-                include: [
-                    {
-                        model: User,
-                        attributes: ["username", "email", "gender", "age"],
-                    }
-                ],
+            const { search, filter, sort, page } = req.query;
+
+            const paramsQuerySQL = {};
+
+            if (search) {
+                paramsQuerySQL.where = { name: { [Op.iLike]: `%${search.toLowerCase()}%` } };
+            }
+
+            if (filter !== "" && typeof filter !== "undefined") {
+                const query = filter.type
+                    .split(',')
+                    .map((name) => ({
+                        [Op.eq]: name,
+                    }));
+
+                paramsQuerySQL.where = {
+                    type: { [Op.or]: query },
+                };
+            }
+
+            if (sort !== "" && typeof sort !== "undefined") {
+                const ordering = sort[0] === '-' ? 'DESC' : 'ASC';
+                const columnName = ordering === 'DESC' ? sort.slice(1) : sort
+
+                paramsQuerySQL.order = [
+                    [columnName, ordering]
+                ]
+            }
+
+            let limit = 12;
+            let pageNumber = 1;
+
+            if (page) {
+                if (page.size) {
+                    limit = +page.size;
+                    paramsQuerySQL.limit = limit;
+                }
+
+                if (page.number) {
+                    pageNumber = +page.number;
+                    paramsQuerySQL.offset = limit * (pageNumber - 1);
+                }
+            }
+
+            const { count, rows } = await Pokemon.findAndCountAll({
+                where: { UserId: req.user.id },
+                ...paramsQuerySQL
             });
-            res.status(200).json(pokemons);
+
+            let result = {
+                total: count,
+                size: limit,
+                totalPage: Math.ceil(count / limit),
+                currentPage: pageNumber,
+                data: rows,
+            }
+
+            res.status(200).json(result);
         } catch (error) {
             next(error);
         }

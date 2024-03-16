@@ -18,7 +18,7 @@ router.use(authentication);
 
 router.post('/hunt', PokemonController.huntPokemon);
 router.post('/shop', PokemonController.shopPokemon);
-router.patch('/top-up', UserController.topUpCoins);
+router.post('/top-up', UserController.topUpCoins);
 router.get('/pokedex', PokemonController.getMyPokemons);
 router.get('/pokedex/:id', authorizationTrainer, PokemonController.getPokemonById);
 router.put('/pokedex/:id', authorizationTrainer, PokemonController.updatePokemonById);

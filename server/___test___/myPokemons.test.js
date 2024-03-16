@@ -29,17 +29,80 @@ const user_test_2 = {
 
 describe("GET /pokedex", () => {
     describe("Success", () => {
-        test("should return status 200 and array of product", async () => {
+        test("should return status 200 and array of pokedex", async () => {
             let { status, body } = await request(app)
                 .get("/pokedex")
                 .set("Authorization", "Bearer " + access_token_user_1)
 
             expect(status).toBe(200)
-            expect(body).toEqual(expect.any(Array));
-            expect(body).not.toHaveLength(0);
-            expect(body[0]).toHaveProperty("id", expect.any(Number));
-            expect(body[0]).toHaveProperty("name", expect.any(String));
+            expect(body).toEqual(expect.any(Object));
+            expect(body).toHaveProperty("total", expect.any(Number));
+            expect(body).toHaveProperty("size", expect.any(Number));
+            expect(body).toHaveProperty("totalPage", expect.any(Number));
+            expect(body).toHaveProperty("currentPage", expect.any(Number));
+            expect(body).toHaveProperty("data", expect.any(Array));
+            expect(body.data[0]).toHaveProperty("id", expect.any(Number));
+            expect(body.data[0]).toHaveProperty("name", expect.any(String));
         })
+
+        test("should return status 200 and array of pokedex", async () => {
+            let { status, body } = await request(app)
+                .get("/pokedex?sort=createdAt")
+                .set("Authorization", "Bearer " + access_token_user_1)
+
+            expect(status).toBe(200)
+            expect(body).toEqual(expect.any(Object));
+            expect(body).toHaveProperty("total", expect.any(Number));
+            expect(body).toHaveProperty("size", expect.any(Number));
+            expect(body).toHaveProperty("totalPage", expect.any(Number));
+            expect(body).toHaveProperty("currentPage", expect.any(Number));
+            expect(body).toHaveProperty("data", expect.any(Array));
+            expect(body.data[0]).toHaveProperty("id", expect.any(Number));
+            expect(body.data[0]).toHaveProperty("name", expect.any(String));
+        })
+
+        test("should return status 200 and array of pokedex", async () => {
+            let { status, body } = await request(app)
+                .get("/pokedex?search=a")
+                .set("Authorization", "Bearer " + access_token_user_1)
+
+            expect(status).toBe(200)
+            expect(body).toEqual(expect.any(Object));
+            expect(body).toHaveProperty("total", expect.any(Number));
+            expect(body).toHaveProperty("size", expect.any(Number));
+            expect(body).toHaveProperty("totalPage", expect.any(Number));
+            expect(body).toHaveProperty("currentPage", expect.any(Number));
+            expect(body).toHaveProperty("data", expect.any(Array));
+        })
+
+        test("should return status 200 and array of pokedex", async () => {
+            let { status, body } = await request(app)
+                .get("/pokedex?filter[type]=water")
+                .set("Authorization", "Bearer " + access_token_user_1)
+
+            expect(status).toBe(200)
+            expect(body).toEqual(expect.any(Object));
+            expect(body).toHaveProperty("total", expect.any(Number));
+            expect(body).toHaveProperty("size", expect.any(Number));
+            expect(body).toHaveProperty("totalPage", expect.any(Number));
+            expect(body).toHaveProperty("currentPage", expect.any(Number));
+            expect(body).toHaveProperty("data", expect.any(Array));
+        })
+
+        test("should return status 200 and array of pokedex", async () => {
+            let { status, body } = await request(app)
+                .get("/pokedex?page[size]=12&page[number]=1")
+                .set("Authorization", "Bearer " + access_token_user_1)
+
+            expect(status).toBe(200)
+            expect(body).toEqual(expect.any(Object));
+            expect(body).toHaveProperty("total", expect.any(Number));
+            expect(body).toHaveProperty("size", expect.any(Number));
+            expect(body).toHaveProperty("totalPage", expect.any(Number));
+            expect(body).toHaveProperty("currentPage", expect.any(Number));
+            expect(body).toHaveProperty("data", expect.any(Array));
+        })
+        
     })
 
     describe("Failed", () => {

@@ -107,11 +107,11 @@ module.exports = class UserController {
         try {
             const findUser = await User.findByPk(+req.user.id)
             if (!findUser) throw { name: "NotFound" }
-            let price = coinsToPurchase * 10_000;
+            let price = coinsToPurchase * 10000;
 
             let parameter = {
                 "transaction_details": {
-                    "order_id": "TRANSACTION_" + Math.floor(1_000_000 + Math.random() * 9_000_000),
+                    "order_id": "TRANSACTION_" + Math.floor(1000000 + Math.random() * 9000000),
                     "gross_amount": parseInt(price),
                     "currency": 'IDR'
                 },
@@ -124,12 +124,11 @@ module.exports = class UserController {
                 }
             };
 
+            const midtransToken = await snap.createTransaction(parameter)
 
             await findUser.increment({ coins: +coinsToPurchase });
 
-            const midtransToken = await snap.createTransaction(parameter)
-
-            res.status(200).json({ message: `Payment successfully. You add ${coinsToPurchase} coins`, midtransToken })
+            res.status(201).json({ message: `Payment successfully. You add ${coinsToPurchase} coins`, midtransToken })
         } catch (error) {
             next(error);
         }

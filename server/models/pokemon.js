@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        msg: "name must be unique"
+        msg: "Unlucky you already have the pokemon!"
       },
       validate: {
         notNull: {

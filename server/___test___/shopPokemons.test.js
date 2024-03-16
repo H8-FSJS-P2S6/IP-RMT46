@@ -7,6 +7,7 @@ const { sequelize } = require('../models/index.js');
 const { queryInterface } = sequelize;
 
 let access_token_user_1;
+let access_token_user_2;
 
 const user_test_1 = {
     username: "kocak",
@@ -69,6 +70,15 @@ describe("POST /shop", () => {
             expect(status).toBe(401)
             expect(body).toHaveProperty("message", "Invalid Token");
         })
+
+        test("should return status 400 and error message anc user need more coins", async () => {
+            let { status, body } = await request(app)
+                .post("/shop?quantity=1")
+                .set("Authorization", "Bearer " + access_token_user_2)
+
+            expect(status).toBe(400);
+            expect(body).toHaveProperty("message", `Sorry ${user_test_2.username}, you need more coins.`);
+        });
 
     })
 });
