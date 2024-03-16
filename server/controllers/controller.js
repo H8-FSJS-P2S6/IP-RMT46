@@ -291,7 +291,7 @@ class Controller {
 
   static async changePassword(req, res, next) {
     const { currentPassword, newPassword, confirmNewPassword } = req.body;
-    const { id } = req.params;
+    const id = req.user.id;
     try {
       const user = await User.findByPk(id);
 

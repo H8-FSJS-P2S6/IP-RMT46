@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import cocUrl from "../utils/axios";
 
 function MyAccounts() {
@@ -8,24 +7,50 @@ function MyAccounts() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await cocUrl.get("/get-account");
+        const response = await cocUrl.get("/get-account", { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } });
         setAccounts(response.data);
+        console.log(response.data);
       } catch (error) {
-        console.error("Error fetching accounts:", error);
+        console.log("Error fetching accounts:", error);
       }
     };
 
     fetchAccounts();
   }, []);
 
+  const handleDeleteAccount = async (id) => {
+    try {
+      await cocUrl.delete(`/delete-account/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } });
+      setAccounts(accounts.filter((account) => account.id !== id));
+    } catch (error) {
+      console.log("Error deleting account:", error);
+    }
+  };
+
   return (
     <div>
       <h2>All Accounts</h2>
-      <ul>
-        {accounts.map((account) => (
-          <li key={account.id}>{account.username}</li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {accounts.map((account) => (
+            <tr key={account.id}>
+              <td>{account.id}</td>
+              <td>{account.playerTag}</td>
+              <td>{account.imgId}</td>
+              <td>
+                <button onClick={() => handleDeleteAccount(account.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

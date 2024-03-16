@@ -14,7 +14,7 @@ function ChangePassword() {
     e.preventDefault();
     try {
       const response = await cocUrl.put(
-        `/change-password/${id}`,
+        `/change-password`,
         {
           currentPassword,
           newPassword,

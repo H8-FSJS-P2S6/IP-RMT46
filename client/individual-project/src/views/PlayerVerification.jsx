@@ -15,7 +15,17 @@ function PlayerVerification() {
         { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } }
       );
       setVerificationResult(response.data);
+
       console.log(response.data);
+
+      if (response.data.status != "invalid") {
+        const addAccount = await cocUrl.post(
+          "/add-account",
+          { playerTag: response.data.token },
+          { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } }
+        );
+        console.log(addAccount);
+      }
     } catch (error) {
       console.log(error);
     }
