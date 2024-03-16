@@ -74,14 +74,14 @@ export default function Login({ handleOnLogin, handleChangeInput }) {
                         <form action="" className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
                             <div className="pb-2 pt-4">
                                 <label className="flex justify-between mb-2" htmlFor="email">
-                                    Email<span className="text-red-500 fw-bold">*</span>
+                                    Email/Username<span className="text-red-500 fw-bold">*</span>
                                 </label>
                                 <input
                                     onChange={handleChangeInput}
-                                    type="email"
-                                    name="email"
+                                    type="text"
+                                    name="credential"
                                     id="email"
-                                    placeholder="Email"
+                                    placeholder="Email/Username"
                                     className="block w-full p-4 text-lg rounded-sm bg-black"
                                 />
                             </div>

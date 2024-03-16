@@ -31,7 +31,7 @@ function LoginPage() {
                 method: "POST",
                 data: userData,
             })
-            localStorage.setItem('token', data.access_token);
+            localStorage.setItem('access_token', data.access_token);
             navigate('/')
         } catch (error) {
             showToast(error.response?.data?.message || error.message, "error");
