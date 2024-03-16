@@ -278,10 +278,11 @@ class Controller {
 
   static async deleteImage(req, res, next) {
     const { id } = req.params;
+    // const { id } = req.body;
     try {
-      const account = await ProfileImage.findByPk(id);
-      account.destroy();
-      res.json("Test");
+      const image = await ProfileImage.findByPk(id);
+      image.destroy();
+      res.json(image);
     } catch (error) {
       console.log(error.message);
       next(error);

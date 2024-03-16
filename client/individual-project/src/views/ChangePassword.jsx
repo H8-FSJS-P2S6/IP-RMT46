@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import cocUrl from "../utils/axios";
+import { useParams } from "react-router-dom";
 
 function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
+  const { id } = useParams();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await cocUrl.put(
-        `/change-password/1`,
+        `/change-password/${id}`,
         {
           currentPassword,
           newPassword,

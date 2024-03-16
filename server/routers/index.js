@@ -20,7 +20,7 @@ router.delete("/delete-account/:id", Controller.deleteAccount);
 
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
-router.patch("/add-images", upload.array("images", 5), Controller.addImages); //admin
+router.patch("/add-images", upload.array("images", 5), Controller.addImages); // //admin
 router.get("/get-image", Controller.getImage);
 
 router.delete("/delete-image/:id", Controller.deleteImage); //admin

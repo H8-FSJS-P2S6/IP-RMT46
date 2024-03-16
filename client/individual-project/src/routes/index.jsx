@@ -9,6 +9,7 @@ import Login from "../views/Login";
 import MyAccounts from "../views/MyAccounts";
 import Register from "../views/Register";
 import ChangePassword from "../views/ChangePassword";
+import ImageGallery from "../views/ImageGallery";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     element: <ChangePassword />,
-    path: "/changepassword",
+    path: "/changepassword/:id",
   },
   {
     element: <MyAccounts />,
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     element: <PlayerRankings />,
     path: "/player/rankings/:country",
+  },
+  {
+    element: <ImageGallery />,
+    path: "/admin/images",
   },
   // {
   //   path: "/",
