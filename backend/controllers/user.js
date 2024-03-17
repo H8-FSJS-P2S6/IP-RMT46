@@ -41,7 +41,7 @@ module.exports = class UserController {
         sso: user.sso,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       next(error);
     }
   }
