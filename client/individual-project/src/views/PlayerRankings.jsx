@@ -96,7 +96,7 @@ function PlayerRankings() {
                     {player.clan ? (
                       <>
                         <Link to={`/clan/detail/${player.clan.tag.replace("#", "")}`}>
-                          <img src={player.clan.badgeUrls.small} alt="Clan Badge" style={{ maxWidth: "30px" }} />
+                          {/* <img src={player.clan.badgeUrls.small} alt="Clan Badge" style={{ maxWidth: "30px" }} /> */}
                           <span>{player.clan.name}</span>
                         </Link>
                       </>

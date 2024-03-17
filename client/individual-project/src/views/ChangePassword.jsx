@@ -30,7 +30,7 @@ function ChangePassword() {
 
   return (
     <div className="container mt-5">
-      <h2>Ubah Kata Sandi</h2>
+      <h2>Change Password</h2>
       {message && (
         <div className={`alert alert-${message.type}`} role="alert">
           {message.content}
@@ -39,7 +39,7 @@ function ChangePassword() {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="currentPassword" className="form-label">
-            Kata Sandi Saat Ini:
+            Current Password:
           </label>
           <input
             type="password"
@@ -51,7 +51,7 @@ function ChangePassword() {
         </div>
         <div className="mb-3">
           <label htmlFor="newPassword" className="form-label">
-            Kata Sandi Baru:
+            New Password:
           </label>
           <input
             type="password"
@@ -63,7 +63,7 @@ function ChangePassword() {
         </div>
         <div className="mb-3">
           <label htmlFor="confirmNewPassword" className="form-label">
-            Konfirmasi Kata Sandi Baru:
+            Confirm New Password:
           </label>
           <input
             type="password"
@@ -74,7 +74,7 @@ function ChangePassword() {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Simpan Perubahan
+          Save Changes
         </button>
       </form>
     </div>

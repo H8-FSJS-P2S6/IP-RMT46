@@ -67,23 +67,14 @@ const router = createBrowserRouter([
       {
         element: <ClanDetail />,
         path: "clan/detail/:clanTag",
-        loader: async () => {
-          return !localStorage.getItem("access_token") ? redirect("/login") : null;
-        },
       },
       {
         element: <PlayerRankings />,
         path: "/player-rankings",
-        loader: async () => {
-          return !localStorage.getItem("access_token") ? redirect("/login") : null;
-        },
       },
       {
         element: <ClanRankings />,
         path: "/clan-rankings",
-        loader: async () => {
-          return !localStorage.getItem("access_token") ? redirect("/login") : null;
-        },
       },
       {
         element: <ImageGallery />,

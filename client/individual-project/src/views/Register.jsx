@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import cocUrl from "../utils/axios";
 
 function Register() {
-  const [email, setEmail] = useState("user99@example.com");
-  const [password, setPassword] = useState("123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

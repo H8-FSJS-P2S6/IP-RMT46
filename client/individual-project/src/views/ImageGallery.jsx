@@ -57,7 +57,7 @@ function ImageGallery() {
 
   return (
     <div>
-      <h2>Galeri Gambar</h2>
+      <h2>Image Gallery</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -68,7 +68,7 @@ function ImageGallery() {
                 <img src={image.imgUrl} className="card-img-top" alt={`Image ${image.id}`} />
                 <div className="card-body">
                   <button onClick={() => handleImageDelete(image.id)} className="btn btn-danger">
-                    Hapus
+                    Delete
                   </button>
                 </div>
               </div>
@@ -76,10 +76,10 @@ function ImageGallery() {
           ))}
         </div>
       )}
-      <h2>Tambah Gambar</h2>
+      <h2>Add Images</h2>
       <input type="file" multiple onChange={handleImageChange} />
       <button onClick={handleImageUpload} className="btn btn-primary mt-2">
-        Unggah Gambar
+        Upload Image
       </button>
     </div>
   );
