@@ -1,9 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import baseUrl from "../utils/baseUrl";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "1018282106828-asg6232mcdiui0k50k36utu60oeq831p.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" } 
+      );
+      google.accounts.id.prompt();
+    }
+
+  }, []);
+
+  const handleCredentialResponse = async ({credential}) => {
+    // console.log(credential)
+    const response = await baseUrl.post("/auth/login/google", {
+      googleToken: credential
+    });
+    if (response.status === 200) {
+      localStorage.setItem("token", response.data.access_token);
+      window.location.href = "/dashboard";
+    }
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -118,6 +144,11 @@ function Login() {
             </a>
           </p>
           <div id="error-container" className="text-red-400"></div>
+          <br/>
+          <p className="text-center text-sm text-gray-500">Or sign in with Google</p><br/>
+          <div className="flex justify-center"> 
+            <div id="buttonDiv"></div>
+          </div>
         </div>
       </div>
     </>
