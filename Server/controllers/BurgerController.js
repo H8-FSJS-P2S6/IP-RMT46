@@ -38,25 +38,6 @@ module.exports = class BurgerController {
       next(error);
     }
 
-
-    // const options = {
-    //   method: 'GET',
-    //   url: `${burgersHubEndPoint}/burgers`,
-    //   headers: {
-    //     'X-RapidAPI-Key': process.env.BURGERS_HUB_API_KEY,
-    //     'X-RapidAPI-Host': 'burgers-hub.p.rapidapi.com'
-    //   }
-    // };
-
-    // try {
-    //   const response = await axios.request(options);
-    //   console.log(response.data);
-    //   res.status(200).json(response.data)
-    // } catch (error) {
-    //   console.error(error);
-    //   return res.status(500).json({ message: "Internal Server Error" });
-    // }
-
   }
 
   static async getBurgerById(req, res, next) {
@@ -72,25 +53,6 @@ module.exports = class BurgerController {
       console.log(error)
       next(error);
     }
-
-
-    // const options = {
-    //   method: 'GET',
-    //   url: `${burgersHubEndPoint}/burgers/${burgerId}`,
-    //   headers: {
-    //     'X-RapidAPI-Key': process.env.BURGERS_HUB_API_KEY,
-    //     'X-RapidAPI-Host': 'burgers-hub.p.rapidapi.com'
-    //   }
-    // };
-
-    // try {
-    //   const response = await axios.request(options);
-    //   console.log(response.data);
-    //   res.status(200).json(response.data)
-    // } catch (error) {
-    //   console.error(error);
-    //   return res.status(500).json({ message: "Internal Server Error" });
-    // }
   }
 
   static async getBurgerByName(req, res, next) {
@@ -236,7 +198,7 @@ module.exports = class BurgerController {
       }
       
       await Cart.destroy({ where: { BurgerId: req.params.burgerId } });
-      return res.status(201).json({ message: "Burger successfully removed from cart" });
+      return res.status(200).json({ message: "Burger successfully removed from cart" });
 
     } catch (error) {
       console.log(error);
@@ -330,9 +292,9 @@ module.exports = class BurgerController {
     try {
       const userData = await User.findByPk(req.user.id);
       const cartData = await Cart.findAll({ where: { UserId: userData.id } });
-      console.log(userData, cartData, "<<<<<")
+      console.log(userData, cartData)
       if (cartData.purchased) {
-        throw { name: "CustomPurchaseError" } // error code: 400
+        throw { name: "CustomPurchaseError" }
       }
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
@@ -355,7 +317,7 @@ module.exports = class BurgerController {
       };
 
       const midtransToken = await snap.createTransaction(parameter);
-      console.log(midtransToken, "<<<<")
+      console.log(midtransToken)
       res.status(201).json(midtransToken);
 
 

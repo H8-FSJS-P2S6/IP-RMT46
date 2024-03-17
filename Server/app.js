@@ -35,7 +35,7 @@ app.post("/google-login", BurgerController.googleLogin);
 
 app.get("/users", authentication, BurgerController.getUser); 
 app.patch("/users/profile", authentication, upload.single("image"), BurgerController.updateUserImage); 
-app.get("/cart", authentication,BurgerController.getMyBurger);
+app.get("/cart", authentication, BurgerController.getMyBurger);
 app.patch("/cart/purchase", authentication, BurgerController.purchaseBurger); 
 app.post("/cart/generateMidTransToken", authentication, BurgerController.generateMidTransToken); 
 app.post("/burgers", authentication, BurgerController.addBurger); 
