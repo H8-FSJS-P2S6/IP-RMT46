@@ -10,7 +10,7 @@ let user_1 = {
     password: "admin"
 }
 
-describe.skip("post /login", () => {
+describe("post /login", () => {
     describe("Success", () => {
         test("should return status 200 and access token", async () => {
             let {status, body} = await request(app)

@@ -6,11 +6,11 @@ const { hashPassword } = require("../helpers/bcrypt.js");
 const { signToken } = require("../helpers/jwt.js");
 const { User } = require("../models");
 
-describe.skip("get /userProfile", () => {
+describe("get /users", () => {
     describe("Success", () => {
         test("should return status 200 and object of user", async () => {
             let { status, body } = await request(app)
-                .get("/userProfile")
+                .get("/users")
                 .set("Authorization", `Bearer ${access_token}`)
             expect(status).toBe(200);
             expect(body).toHaveProperty("name", expect.any(String));
@@ -22,14 +22,14 @@ describe.skip("get /userProfile", () => {
     describe("Failed", () => {
         test("should return status 401 and token is required", async () => {
             let { status, body } = await request(app)
-            .get("/userProfile")
+            .get("/users")
                 .set("Authorization", `Bearer ${damaged_token}`)
             expect(status).toBe(401);
             expect(body).toHaveProperty("message", "Invalid token");
         })
         test("should return status 400 and invalid token", async () => {
             let { status, body } = await request(app)
-            .get("/userProfile")
+            .get("/users")
                 
                 .set("Authorization", `Beare ${access_token}`)
             expect(status).toBe(401);

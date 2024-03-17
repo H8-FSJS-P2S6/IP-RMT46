@@ -16,7 +16,7 @@ let user_1 = {
     role: "Admin"
 }
 
-describe.skip("post /register", () => {
+describe("post /register", () => {
     describe("Success", () => {
         test("should return status 201 and object of new user", async () => {
             let { status, body } = await request(app)

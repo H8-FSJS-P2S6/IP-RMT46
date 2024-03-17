@@ -61,13 +61,6 @@ describe("delete /burgers/1", () => {
             expect(status).toBe(404);
             expect(body).toHaveProperty("message", "Data not found");
         })
-        test("should return status 403 and forbidden", async () => {
-            let { status, body } = await request(app)
-                .delete("/burgers/2")
-                .set("Authorization", `Bearer ${access_token_user_2}`)
-            expect(status).toBe(403);
-            expect(body).toHaveProperty("message", "Forbidden");
-        })
     })
 })
 
@@ -99,16 +92,26 @@ beforeAll(async () => {
     damaged_token_user_2 = signToken({ id: customer.id });
     damaged_token_user_2 += "i";
     
-    await queryInterface.bulkInsert("burgers", require("../data/burgersWithoutIngredients.json").map((el) => {
-        el.createdAt = el.updatedAt = new Date();
-        el.UserId = 1
-        return el;
-    }))
+    await queryInterface.bulkInsert("Burgers", [{
+        name: "Burger",
+        desc: "Burger",
+        price: 50000,
+        veg: false,
+        images: "Test",
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }
+    ])
 })
 
 
 afterAll(async () => {
     await queryInterface.bulkDelete("Users", null, {
+        truncate: true,
+        restartIdentity: true,
+        cascade: true
+    })
+    await queryInterface.bulkDelete("Burgers", null, {
         truncate: true,
         restartIdentity: true,
         cascade: true

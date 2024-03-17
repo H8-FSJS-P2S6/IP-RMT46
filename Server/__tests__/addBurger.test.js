@@ -6,7 +6,7 @@ const { hashPassword } = require("../helpers/bcrypt.js");
 const { signToken } = require("../helpers/jwt.js");
 const { User } = require("../models");
 
-describe("post /burgers/add", () => {
+describe("post /burgers", () => {
     describe("Success", () => {
         test("should return status 201 and burgers data", async () => {
             const burgerData = {
@@ -17,10 +17,10 @@ describe("post /burgers/add", () => {
                 images: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Bacon-Egg-Cheese-Biscuit-Regular-Size-Biscuit-1:product-header-desktop?wid=829&hei=455&dpr=off"
             }
             let { status, body } = await request(app)
-                .post("/burgers/add")
+                .post("/burgers")
                 .set("Authorization", `Bearer ${access_token}`)
                 .send(burgerData)
-            console.log(body.burgerData, "<<<<<<")
+            console.log(body, "<<<<<<")
             expect(status).toBe(201);
             expect(body.burgerData).toHaveProperty("name", burgerData.name);
             expect(body.burgerData).toHaveProperty("desc", burgerData.desc);
@@ -34,7 +34,7 @@ describe("post /burgers/add", () => {
     describe("Failed", () => {
         test("should return status 401 and invalid token", async () => {
             let { status, body } = await request(app)
-                .post("/burgers/add")
+                .post("/burgers")
                 .send({
                     name: "Test",
                     desc: "sit amet justo morbi ut odio cras mi pede malesuada in imperdiet",
@@ -47,7 +47,7 @@ describe("post /burgers/add", () => {
         })
         test("should return status 400 and name is required", async () => {
             let { status, body } = await request(app)
-                .post("/burgers/add")
+                .post("/burgers")
                 .set("Authorization", `Bearer ${access_token}`)
                 .send({
                     name: "",
@@ -61,7 +61,7 @@ describe("post /burgers/add", () => {
         })
         test("should return status 401 and invalid token", async () => {
             let { status, body } = await request(app)
-                .post("/burgers/add")
+                .post("/burgers")
                 .set("Authorization", `Bearer ${damaged_token}`)
                 .send({
                     name: "Test",
@@ -76,7 +76,7 @@ describe("post /burgers/add", () => {
         })
         test("should return status 401 and invalid token", async () => {
             let { status, body } = await request(app)
-                .post("/burgers/add")
+                .post("/burgers")
                 .set("Authorization", `Beare ${access_token}`)
                 .send({
                     name: "Test",
