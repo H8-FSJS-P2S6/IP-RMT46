@@ -6,7 +6,7 @@ import axios from "axios"
 export default function Login({ handleOnLogin, handleChangeInput }) {
     const navigate = useNavigate();
     const handleCredentialResponse = async ({ credential }) => {
-        const { data } = await axios.post("http://localhost:3000/google-login", {
+        const { data } = await axios.post("https://poke-world-desu.wadesuuu.xyz/google-login", {
             googleToken: credential,
         })
         localStorage.setItem("access_token", data.access_token);
