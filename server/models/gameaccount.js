@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   GameAccount.init(
     {
       playerId: DataTypes.INTEGER,
+      userName: DataTypes.STRING,
       playerTag: DataTypes.STRING,
       imgId: DataTypes.INTEGER,
     },

@@ -1,50 +1,80 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import cocUrl from "../utils/axios";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
-  const [playerRankings, setPlayerRankings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [playerTag, setPlayerTag] = useState("");
+  const navigate = useNavigate();
 
-  const { country } = useParams();
+  const handleInputChange = (event) => {
+    setPlayerTag(event.target.value);
+  };
 
-  useEffect(() => {
-    const fetchPlayerRankings = async () => {
-      try {
-        const response = await cocUrl.get(`/player-rankings/${country}`, {
-          params: {
-            country: country,
-            limit: 10,
-          },
-        });
-        setPlayerRankings(response.data.items);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchPlayerRankings();
-  }, []);
+  const handleSearchPlayer = () => {
+    console.log("Searching for player with tag:", playerTag);
+    if (playerTag) {
+      navigate(`/player/detail/${playerTag.replace("#", "")}`);
+    }
+  };
 
   return (
-    <div>
-      <h1>Welcome to ClashInsight!</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <h2>Player Rankings</h2>
-          <ul>
-            {playerRankings.map((player, index) => (
-              <li key={index}>
-                {player.name} - {player.trophies} trophies
-              </li>
-            ))}
-          </ul>
+    <div className="container">
+      <h1>Welcome to ClashInsight</h1>
+      <div className="mb-3">
+        <input type="text" className="form-control" placeholder="Enter player tag..." value={playerTag} onChange={handleInputChange} />
+      </div>
+      <button className="btn btn-primary mb-3" onClick={handleSearchPlayer}>
+        Search Player
+      </button>
+      <div className="row">
+        <div className="col-md-4 mb-4">
+          <div className="card">
+            <img
+              src="https://res.cloudinary.com/dkuq6sef1/image/upload/v1710655634/z42tn5q5azqrloyhfrjq.png"
+              className="card-img-top"
+              alt="My Accounts"
+            />
+            <div className="card-body">
+              <h5 className="card-title">My Accounts</h5>
+              <p className="card-text">Manage your Clash of Clans accounts here.</p>
+              <Link to="/my-accounts" className="btn btn-primary">
+                Go to My Accounts
+              </Link>
+            </div>
+          </div>
         </div>
-      )}
+        <div className="col-md-4 mb-4">
+          <div className="card">
+            <img
+              src="https://res.cloudinary.com/dkuq6sef1/image/upload/v1710656690/qaahfp09yhc0pv5lwpdw.webp"
+              className="card-img-top"
+              alt="Player Rankings"
+            />
+            <div className="card-body">
+              <h5 className="card-title">Player Rankings</h5>
+              <p className="card-text">Explore the top players in Clash of Clans.</p>
+              <Link to="/player-rankings" className="btn btn-primary">
+                Go to Player Rankings
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4 mb-4">
+          <div className="card">
+            <img
+              src="https://res.cloudinary.com/dkuq6sef1/image/upload/v1710655990/dca9p7rqb8rl30wivxi5.png"
+              className="card-img-top"
+              alt="Clan Rankings"
+            />
+            <div className="card-body">
+              <h5 className="card-title">Clan Rankings</h5>
+              <p className="card-text">Discover the best clans in Clash of Clans.</p>
+              <Link to="/clan-rankings" className="btn btn-primary">
+                Go to Clan Rankings
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

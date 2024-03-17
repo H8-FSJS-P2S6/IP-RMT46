@@ -16,7 +16,11 @@ module.exports = {
           key: "id",
         },
       },
+      userName: {
+        type: Sequelize.STRING,
+      },
       playerTag: {
+        unique: true,
         type: Sequelize.STRING,
       },
       imgId: {

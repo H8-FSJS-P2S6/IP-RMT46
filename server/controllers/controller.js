@@ -164,7 +164,7 @@ class Controller {
     }
 
     try {
-      let queryParams = `limit=${limit || 10}`;
+      let queryParams = `limit=${limit || 100}`;
       if (after) queryParams += `&after=${after}`;
       if (before) queryParams += `&before=${before}`;
 
@@ -206,7 +206,7 @@ class Controller {
     console.log({ locationId });
 
     try {
-      let queryParams = `limit=${limit || 10}`;
+      let queryParams = `limit=${limit || 100}`;
       if (after) queryParams += `&after=${after}`;
       if (before) queryParams += `&before=${before}`;
 

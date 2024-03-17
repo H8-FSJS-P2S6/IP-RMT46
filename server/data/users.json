@@ -10,5 +10,11 @@
     "password": "123",
     "role": "user",
     "vip": "true"
+  },
+  {
+    "email": "user2@example.com",
+    "password": "123",
+    "role": "user",
+    "vip": "false"
   }
 ]

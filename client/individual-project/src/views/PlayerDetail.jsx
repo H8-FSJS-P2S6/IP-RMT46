@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import cocUrl from "../utils/axios";
 
 function PlayerDetail() {
@@ -11,11 +10,9 @@ function PlayerDetail() {
   useEffect(() => {
     const fetchPlayerDetails = async () => {
       try {
-        console.log(playerTag, "tagar");
         const response = await cocUrl.get(`/find-player/${playerTag}`);
         setPlayer(response.data);
         setLoading(false);
-        console.log(response.data, "data");
       } catch (error) {
         console.log(error);
       }
@@ -24,16 +21,28 @@ function PlayerDetail() {
     fetchPlayerDetails();
   }, [playerTag]);
 
+  const handleClaimAccount = () => {
+    console.log("Claim Account button clicked!");
+  };
+
   return (
-    <div>
-      <h1>Player Detail</h1>
+    <div className="container">
+      <h1 className="my-4">Player Detail</h1>
       {loading ? (
         <p>Loading...</p>
       ) : player ? (
         <div>
-          <p>Name: {player.name}</p>
-          <p>Tag: {player.tag}</p>
-          <p>Level: {player.expLevel}</p>
+          <img src={`/get-image?tag=${playerTag}`} alt="Profile" />
+          <td>
+            <Link to={`/player/detail/${player.tag.replace("#", "")}/verify`} className="btn btn-primary">
+              Claim Account
+            </Link>
+          </td>
+          {Object.entries(player).map(([key, value]) => (
+            <p key={key}>
+              {key}: {typeof value === "object" ? JSON.stringify(value) : value}
+            </p>
+          ))}
         </div>
       ) : (
         <p>Player not found</p>

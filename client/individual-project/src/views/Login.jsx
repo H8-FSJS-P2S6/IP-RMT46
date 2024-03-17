@@ -17,7 +17,7 @@ export default function Login() {
     console.log(data);
 
     localStorage.setItem("access_token", data.access_token);
-    navigate("/home");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function Login() {
             const { data } = await cocUrl.post("/login", { email, password });
             localStorage.setItem("access_token", data.access_token);
             console.log(data);
-            navigate("/login");
+            navigate("/");
           } catch (error) {
             console.log(error);
           }

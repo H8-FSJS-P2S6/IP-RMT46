@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import cocUrl from "../utils/axios";
 
 function PlayerVerification() {
   const { playerTag } = useParams();
   const [token, setToken] = useState("");
   const [verificationResult, setVerificationResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
   const handleVerifyToken = async () => {
     try {
+      setLoading(true);
       const response = await cocUrl.post(
         `players/%23${playerTag}/verifytoken`,
         { token },
@@ -16,18 +19,18 @@ function PlayerVerification() {
       );
       setVerificationResult(response.data);
 
-      console.log(response.data);
-
-      if (response.data.status != "invalid") {
-        const addAccount = await cocUrl.post(
+      if (response.data.status !== "invalid") {
+        await cocUrl.post(
           "/add-account",
-          { playerTag: response.data.token },
+          { playerTag: response.data.tag },
           { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } }
         );
-        console.log(addAccount);
+        navigate("/my-accounts");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,22 +40,31 @@ function PlayerVerification() {
   };
 
   return (
-    <div>
-      <h1>Player Verification</h1>
+    <div className="container mt-5">
+      <h1 className="mb-4">Player Verification</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Player Tag: {playerTag}</label>
+        <div className="mb-3">
+          <label htmlFor="playerTag" className="form-label">
+            Player Tag:
+          </label>
+          <input type="text" id="playerTag" className="form-control" value={playerTag} readOnly />
         </div>
-        <div>
-          <label>Token:</label>
-          <input type="text" value={token} onChange={(e) => setToken(e.target.value)} />
+        <div className="mb-3">
+          <label htmlFor="token" className="form-label">
+            Token:
+          </label>
+          <input type="text" id="token" className="form-control" value={token} onChange={(e) => setToken(e.target.value)} />
         </div>
-        <button type="submit">Verify Token</button>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "Verifying..." : "Verify Token"}
+        </button>
       </form>
       {verificationResult && (
-        <div>
+        <div className="mt-4">
           <h2>Verification Result</h2>
-          <p>Valid: {verificationResult.status ? verificationResult.status.toString() : "Not Available"}</p>
+          <p>
+            <strong>Status:</strong> {verificationResult.status ? verificationResult.status.toString() : "Not Available"}
+          </p>
         </div>
       )}
     </div>

@@ -20,6 +20,18 @@ module.exports = {
       return element;
     });
     await queryInterface.bulkInsert("Users", users, {});
+
+    const profileImages = require("../data/profileImages.json").map((element) => {
+      element.createdAt = element.updatedAt = new Date();
+      return element;
+    });
+    await queryInterface.bulkInsert("ProfileImages", profileImages, {});
+
+    const gameAccounts = require("../data/gameAccounts.json").map((element) => {
+      element.createdAt = element.updatedAt = new Date();
+      return element;
+    });
+    await queryInterface.bulkInsert("GameAccounts", gameAccounts, {});
   },
 
   async down(queryInterface, Sequelize) {

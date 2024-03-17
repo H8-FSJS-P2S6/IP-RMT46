@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import cocUrl from "../utils/axios";
+import { Link } from "react-router-dom";
 
 function MyAccounts() {
   const [accounts, setAccounts] = useState([]);
@@ -9,9 +10,8 @@ function MyAccounts() {
       try {
         const response = await cocUrl.get("/get-account", { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } });
         setAccounts(response.data);
-        console.log(response.data);
       } catch (error) {
-        console.log("Error fetching accounts:", error);
+        console.error("Error fetching accounts:", error);
       }
     };
 
@@ -23,29 +23,32 @@ function MyAccounts() {
       await cocUrl.delete(`/delete-account/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } });
       setAccounts(accounts.filter((account) => account.id !== id));
     } catch (error) {
-      console.log("Error deleting account:", error);
+      console.error("Error deleting account:", error);
     }
   };
 
   return (
-    <div>
-      <h2>All Accounts</h2>
-      <table>
+    <div className="container">
+      <h2 className="my-4">All My Accounts</h2>
+      <table className="table table-hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Username</th>
+            <th>No</th>
+            <th>Game Tag</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {accounts.map((account) => (
+          {accounts.map((account, index) => (
             <tr key={account.id}>
-              <td>{account.id}</td>
-              <td>{account.playerTag}</td>
-              <td>{account.imgId}</td>
+              <td>{index + 1}</td>
               <td>
-                <button onClick={() => handleDeleteAccount(account.id)}>Delete</button>
+                <Link to={`/player/detail/${account.playerTag.replace("#", "")}`}>{account.playerTag}</Link>
+              </td>
+              <td>
+                <button onClick={() => handleDeleteAccount(account.id)} className="btn btn-danger">
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

@@ -16,18 +16,41 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Registrasi Pengguna Baru</h2>
+    <div style={{ maxWidth: "400px", margin: "auto", marginTop: "50px" }}>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div style={{ marginBottom: "15px" }}>
+          <label htmlFor="exampleInputEmail1">Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ width: "100%", padding: "5px" }}
+            id="exampleInputEmail1"
+          />
         </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div style={{ marginBottom: "15px" }}>
+          <label htmlFor="exampleInputPassword1">Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "100%", padding: "5px" }}
+            id="exampleInputPassword1"
+          />
         </div>
-        <button type="submit">Register</button>
+        <button
+          type="submit"
+          style={{
+            padding: "10px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Register
+        </button>
       </form>
     </div>
   );

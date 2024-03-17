@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import cocUrl from "../utils/axios";
 import { useParams } from "react-router-dom";
 
@@ -7,6 +6,7 @@ function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const { id } = useParams();
 
@@ -22,29 +22,60 @@ function ChangePassword() {
         },
         { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } }
       );
-      console.log("Perubahan kata sandi berhasil:", response.data);
+      setMessage({ type: "success", content: "Perubahan kata sandi berhasil." });
     } catch (error) {
-      console.log("Perubahan kata sandi gagal:", error.response.data);
+      setMessage({ type: "danger", content: "Perubahan kata sandi gagal." });
     }
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <h2>Ubah Kata Sandi</h2>
+      {message && (
+        <div className={`alert alert-${message.type}`} role="alert">
+          {message.content}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Kata Sandi Saat Ini:</label>
-          <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+        <div className="mb-3">
+          <label htmlFor="currentPassword" className="form-label">
+            Kata Sandi Saat Ini:
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            id="currentPassword"
+          />
         </div>
-        <div>
-          <label>Kata Sandi Baru:</label>
-          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+        <div className="mb-3">
+          <label htmlFor="newPassword" className="form-label">
+            Kata Sandi Baru:
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            id="newPassword"
+          />
         </div>
-        <div>
-          <label>Konfirmasi Kata Sandi Baru:</label>
-          <input type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
+        <div className="mb-3">
+          <label htmlFor="confirmNewPassword" className="form-label">
+            Konfirmasi Kata Sandi Baru:
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            value={confirmNewPassword}
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            id="confirmNewPassword"
+          />
         </div>
-        <button type="submit">Simpan Perubahan</button>
+        <button type="submit" className="btn btn-primary">
+          Simpan Perubahan
+        </button>
       </form>
     </div>
   );

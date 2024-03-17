@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import cocUrl from "../utils/axios";
 
 function ClanRankings() {
@@ -12,7 +12,6 @@ function ClanRankings() {
     const fetchCountries = async () => {
       try {
         const response = await cocUrl.get("/get-country");
-        console.log(response.data, "country");
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -26,8 +25,7 @@ function ClanRankings() {
     const fetchClanRankings = async () => {
       try {
         setLoading(true);
-        const response = await cocUrl.get("/clan-rankings", { country: selectedCountry });
-        console.log(response.data, "clan");
+        const response = await cocUrl.post("/clan-rankings", { country: selectedCountry });
         setClans(response.data);
         setLoading(false);
       } catch (error) {
@@ -44,11 +42,13 @@ function ClanRankings() {
   };
 
   return (
-    <div>
-      <h2>Clan Rankings</h2>
-      <div>
-        <label htmlFor="countrySelect">Select Country:</label>
-        <select id="countrySelect" value={selectedCountry} onChange={handleCountryChange}>
+    <div className="container">
+      <h2 className="my-4">Clan Rankings</h2>
+      <div className="mb-3">
+        <label htmlFor="countrySelect" className="form-label">
+          Select Country:
+        </label>
+        <select id="countrySelect" className="form-select" value={selectedCountry} onChange={handleCountryChange}>
           <option value="global">Global</option>
           {countries.map((country) => (
             <option key={country.id} value={country.name}>
@@ -62,20 +62,30 @@ function ClanRankings() {
       ) : (
         <div>
           <h3>Clan Rankings for {selectedCountry}</h3>
-          <table>
+          <table className="table table-hover">
             <thead>
               <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Level</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Clan Level</th>
+                <th scope="col">Members</th>
+                <th scope="col">Clan Points</th>
               </tr>
             </thead>
             <tbody>
               {clans.items.map((clan, index) => (
                 <tr key={index}>
                   <td>{clan.rank}</td>
-                  <td>{clan.name}</td>
-                  <td>{clan.level}</td>
+                  <td>
+                    <img src={clan.badgeUrls.medium} alt="Clan Badge" style={{ width: 50, height: 50 }} />
+                    <Link to={`/clan/detail/${clan.tag.replace("#", "")}`}>{clan.name}</Link>
+                  </td>
+                  <td>{clan.location.name}</td>
+
+                  <td>{clan.clanLevel}</td>
+                  <td>{clan.members}</td>
+                  <td>{clan.clanPoints}</td>
                 </tr>
               ))}
             </tbody>

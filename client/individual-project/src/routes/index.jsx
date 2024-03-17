@@ -1,6 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Home from "../views/Home";
-import Layouts from "../views/Layouts";
 import PlayerDetail from "../views/PlayerDetail";
 import PlayerRankings from "../views/PlayerRankings";
 import ClanDetail from "../views/ClanDetail";
@@ -15,76 +14,86 @@ import Navbar from "../components/Navbar";
 
 const router = createBrowserRouter([
   {
-    element: (
-      <>
-        <Navbar />
-        <Login />
-      </>
-    ),
-    path: "/login",
-  },
-  {
-    element: <Register />,
-    path: "/register",
-  },
-  {
-    element: (
-      <>
-        <Navbar />
-        <Home />
-      </>
-    ),
     path: "/",
+    element: (
+      <>
+        <Navbar />
+      </>
+    ),
+    children: [
+      {
+        element: <Home />,
+        path: "/",
+      },
+      {
+        element: <Login />,
+        path: "/login",
+        loader: async () => {
+          return localStorage.getItem("access_token") ? redirect("/") : null;
+        },
+      },
+      {
+        element: <Register />,
+        path: "/register",
+      },
+      {
+        element: <ChangePassword />,
+        path: "/change-password",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <MyAccounts />,
+        path: "/my-accounts",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <PlayerDetail />,
+        path: "/player/detail/:playerTag",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <PlayerVerification />,
+        path: "/player/detail/:playerTag/verify",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <ClanDetail />,
+        path: "clan/detail/:clanTag",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <PlayerRankings />,
+        path: "/player-rankings",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <ClanRankings />,
+        path: "/clan-rankings",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <ImageGallery />,
+        path: "/admin/images",
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+    ],
   },
-  {
-    element: <ChangePassword />,
-    path: "/changepassword",
-  },
-  {
-    element: <MyAccounts />,
-    path: "/accounts",
-  },
-  {
-    element: <PlayerDetail />,
-    path: "/player/detail/:playerTag",
-  },
-  {
-    element: <PlayerVerification />,
-    path: "/player/detail/:playerTag/verify",
-  },
-  {
-    element: <ClanDetail />,
-    path: "clan/detail/:clanTag",
-  },
-  {
-    element: <PlayerRankings />,
-    path: "/player/rankings",
-  },
-  {
-    element: <ClanRankings />,
-    path: "/clan/rankings",
-  },
-  {
-    element: <ImageGallery />,
-    path: "/admin/images",
-  },
-  // {
-  //   path: "/",
-  //   element: (
-  //     <>
-  //       {/* <Navbar /> */}
-  //       {/* <Home /> */}
-  //       <Layouts />
-  //     </>
-  //   ),
-  //   children: [
-  //     {
-  //       element: <Home />,
-  //       // element: <PlayerDetail />,
-  //       // path: "/2290UCLVV",
-  //     },
-  //   ],
-  // },
 ]);
 
 export default router;

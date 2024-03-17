@@ -6,7 +6,6 @@ function ImageGallery() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedImages, setSelectedImages] = useState([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +23,7 @@ function ImageGallery() {
     };
 
     fetchImages();
-  }, [images]);
+  }, []);
 
   const handleImageChange = (event) => {
     setSelectedImages(Array.from(event.target.files));
@@ -39,6 +38,7 @@ function ImageGallery() {
       });
       console.log("Gambar berhasil diunggah:", response.data);
       setImages([...images, ...response.data]);
+      setSelectedImages([]);
     } catch (error) {
       console.log("Gagal mengunggah gambar:", error);
     }
@@ -61,32 +61,26 @@ function ImageGallery() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Gambar</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {images.map((image) => (
-              <tr key={image.id}>
-                <td>{image.id}</td>
-                <td>
-                  <img src={image.imgUrl} alt={`Image ${image.id}`} />
-                </td>
-                <td>
-                  <button onClick={() => handleImageDelete(image.id)}>Hapus</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="row">
+          {images.map((image) => (
+            <div key={image.id} className="col-md-4 mb-4">
+              <div className="card">
+                <img src={image.imgUrl} className="card-img-top" alt={`Image ${image.id}`} />
+                <div className="card-body">
+                  <button onClick={() => handleImageDelete(image.id)} className="btn btn-danger">
+                    Hapus
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
       <h2>Tambah Gambar</h2>
       <input type="file" multiple onChange={handleImageChange} />
-      <button onClick={handleImageUpload}>Unggah Gambar</button>
+      <button onClick={handleImageUpload} className="btn btn-primary mt-2">
+        Unggah Gambar
+      </button>
     </div>
   );
 }
