@@ -14,6 +14,9 @@ import Home from "../Pages/HomePage";
 import AddBurgerForm from "../Pages/AddBurgerForm.jsx";
 import EditBurgerForm from "../Pages/EditBurgerForm.jsx";
 import UpdateBurgerImage from "../Pages/UpdateBurgerImage.jsx";
+import Detail from "../Pages/BurgerDetails.jsx";
+import AdminProfilePage from "../Pages/AdminProfilePage.jsx";
+import UpdateAdminProfileImage from "../Pages/UpdateAdminProfileImage.jsx";
 
 import RootLayout from "../layouts/RootLayout";
 
@@ -77,43 +80,16 @@ const router = createBrowserRouter([
                 element: <CheckOut />
 
             },
-        //     {
+            {
+                path: "burgers/:burgerId",
+                element: <Detail />
 
-
-        //         path: "add",
-        //         element: <AddJob />,
-        //     },
-        //     {
-        //         path: "update/:id",
-        //         element: <UpdateJob />,
-        //     },
-        //     {
-        //         path: "updateImgUrl/:id",
-        //         element: <UpdateImage />,
-        //     },
-        //     {
-        //         path: "companies",
-        //         element: <CompaniesTable />,
-        //         children: [
-        //             {
-        //                 path: "add",
-        //                 element: <AddCompany />,
-        //             },
-        //             {
-        //                 path: "update",
-        //                 element: <CompaniesTable />,
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         path: "users",
-        //         element: <AddUser />
-        //     }
+            }
         ]
     },
     {
         path: "/adminpanel",
-        element: <RootLayout />,
+        element: "",
         errorElement: <ErrorPage />,
         loader: () => {
             return !localStorage.getItem("token") ? redirect("/login") : null;
@@ -136,7 +112,6 @@ const router = createBrowserRouter([
             },
             {
 
-
                 path: "add",
                 element: <AddBurgerForm />,
             },
@@ -150,14 +125,15 @@ const router = createBrowserRouter([
             },
             {
                 path: "adminprofile",
-                element: <ProfilePage />,
+                element: <AdminProfilePage />,
+            },
+            {
+                path: "updateAdminProfileImage",
+                element: <UpdateAdminProfileImage />,
             },
         ]
     }
-    // {
-    //     path: "/jobs/:id",
-    //     element: <Detail />,
-    // }
+    
 ])
 
 export default router;

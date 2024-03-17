@@ -59,13 +59,20 @@ html::-webkit-scrollbar{
     width: 10px;
 }
 body{
-    background-color: #f9f9fb;
+    background-color: white;
 }
 /* Navbar Start */
-.navbar{
-    padding: 16px 12.5%;
-    background-color: white;
-    width: 100%;
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px; 
+    background-color: #ffffff; 
+}
+
+.navbar-logo {
+    width: 100px; 
+    height: auto; 
+    margin-right: 20px; 
 }
 .content .logo img{
     width: 10%;
@@ -564,7 +571,6 @@ nav .content .links{
     max-width: 530px;
     height: auto;
     width: 100%;
-    background-color: #c28d56;
     border-radius: 10px;
     transition: all .50s ease;
     cursor: pointer;
@@ -834,7 +840,7 @@ form textarea{
 
 /* Admin Panel */
 
-body {
+/* body {
     margin: 0;
     font-family: 'NotoIKEA', 'Verdana', -apple-system, BlinkMacSystemFont,
       'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -844,7 +850,7 @@ body {
     color: #484848;
     text-align: left;
     background-color: #F9F9F9;
-  }
+  } */
   
   /*
    * Heading

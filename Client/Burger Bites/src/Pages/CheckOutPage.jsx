@@ -43,8 +43,9 @@ export default function BurgerTable() {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            setCartData(data)
-            console.log(data)
+            const unpurchasedCartData = data.filter(cartItem => !cartItem.purchased);
+            setCartData(unpurchasedCartData)
+            console.log(unpurchasedCartData)
         } catch (error) {
             console.log(error.response?.data.message || error.message)
             setError(error)
@@ -132,24 +133,43 @@ export default function BurgerTable() {
                     totalPrice: totalPrice // Pass the totalPrice to the backend
                 }
             });
-            console.log(data.token, "<<<<<<<<<<<<<<<<<<,")
+            console.log(data.token)
             // setTransactionToken(data.token)
             window.snap.pay(data.token, {
-                onSuccess: function(result){
+                onSuccess: async function(result){
                   /* You may add your own implementation here */
-                  alert("payment success!"); console.log(result);
+                  try {
+                    await localRequest({
+                        url: "/cart/purchase", // Adjust the URL to match your backend route
+                        method: "patch",
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        },
+                        data: {
+                            // Pass any necessary data here
+                        }
+                    });
+                    successToast("Payment successful!");
+                    setPurchased(true);
+                    setCartData([]); // Empty the cart after successful payment
+                } catch (error) {
+                    console.error("Error updating cart after payment:", error);
+                    errorAlert("Unable to update cart after payment");
+                }
+
+                successToast("Payment successful!"); console.log(result);
                 },
                 onPending: function(result){
                   /* You may add your own implementation here */
-                  alert("wating your payment!"); console.log(result);
+                  errorAlert("Waiting for your payment!"); console.log(result);
                 },
                 onError: function(result){
                   /* You may add your own implementation here */
-                  alert("payment failed!"); console.log(result);
+                  errorAlert("Payment failed!"); console.log(result);
                 },
                 onClose: function(){
                   /* You may add your own implementation here */
-                  alert('you closed the popup without finishing the payment');
+                  errorAlert('Payment not completed!');
                 },
                 
                 
@@ -220,7 +240,7 @@ export default function BurgerTable() {
                                                 {cart.quantity}
                                             </td>
 
-                                            <td className="fw-bold">{formatCreatedAt(burger.updatedAt)}</td>
+                                            <td className="fw-bold">{formatCreatedAt(cart.updatedAt)}</td>
 
                                             <td>
                                                 <span className="d-flex">

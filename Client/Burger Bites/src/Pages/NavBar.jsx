@@ -1,6 +1,12 @@
-import { Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
+import logo from "../assets/Logo.png"
 
 export default function NavBar() {
+  const nav = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        nav("/login")
+    }
   return (
     <>
       <div className="navbar">
@@ -15,6 +21,11 @@ export default function NavBar() {
               <img src="./images/logo" alt="" />
             </div>
             <ul className="links">
+            <li>
+                <Link to="/">
+                  <img src={logo} alt="" className="navbar-logo"/>
+                </Link>
+              </li>
               <li>
                 <Link to="/">
                   <a>Home</a>
@@ -38,33 +49,46 @@ export default function NavBar() {
                 </Link>
 
               </li>
-              <div className="ml-auto">
-              <Link to="/profile">
-                  <a className="nav-link">
+              <li>
+                <Link to="/profile">
+                  <button className="nav-link icon material-symbols-outlined me-2">person</button>
+                </Link>
 
-                    <span className="icon material-symbols-outlined me-2">
-                      person
-                    </span>
-                  </a>
-                </Link>
-              </div>
-              <div className="ml-auto">
-                <Link to="/login">
-                  <button className="btn btn-primary custom-login-btn">
-                    Login
-                  </button>
-                </Link>
-              </div>
-              <div className="ml-auto">
+              </li>
+              <li>
                 <Link to="/adminpanel">
                 <button className="icon material-symbols-outlined">
                   admin_panel_settings
                 </button>
                 </Link>
-              </div>
+
+              </li>
+              <li>
+                <Link to="/cart">
+                <button className="cart-button fas fa-shopping-cart cart-icon" style={{fontSize: "20px"}}></button>
+                </Link>
+
+              </li>
+              <li>
+                <Link to="/login">
+                <button className="btn btn-primary custom-login-btn">
+                    Login
+                  </button>
+                </Link>
+
+              </li>
+              <li>
+                
+                <button className="btn btn-danger" onClick={() => handleLogout()}>
+                    Logout
+                  </button>
+                
+
+              </li>
+
             </ul>
           </div>
-          <label htmlFor="show-search" className="search-icon">
+          {/* <label htmlFor="show-search" className="search-icon">
             <i className="fas fa-search" />
           </label>
           <form action="#" className="search-box">
@@ -76,12 +100,8 @@ export default function NavBar() {
             <button type="submit" className="go-icon">
               <i className="fas fa-long-arrow-alt-right" />
             </button>
-          </form>
-          <Link to="/cart">
-          <button className="cart-button" style={{fontSize: "20px"}}>
-      <i className="fas fa-shopping-cart cart-icon"></i>
-    </button>
-          </Link>
+          </form> */}
+          
         </nav>
       </div>
       {/* Navbar End */}

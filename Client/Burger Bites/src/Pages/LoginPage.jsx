@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { localRequest } from "../utils/axios"
 import { errorAlert, successToast } from "../utils/sweetAlert";
 import { useNavigate, Link } from "react-router-dom"
+import logo from "../assets/Logo.png"
 
 export default function Login() {
     const navigate = useNavigate()
@@ -40,7 +41,7 @@ export default function Login() {
             navigate("/")
         } catch (error) {
             console.log(error.response.data.message)
-            errorAlert(error.response.data.message);
+            errorAlert(error.response?.data?.message);
         }
     }
 
@@ -49,7 +50,7 @@ export default function Login() {
             googleToken: credential
         })
         localStorage.setItem("token", data.token);
-        console.log(data.message, "<<<<<")
+        console.log(data.message)
         successToast(data.message);
         navigate("/")
     }
@@ -74,15 +75,15 @@ export default function Login() {
             {/*--------------------- Main Container ------------------------*/}
             <div className="container d-flex justify-content-center align-items-center min-vh-100">
                 {/*--------------------- Login Container ------------------------*/}
-                <div className="row border rounded-5 p-3 bg-white shadow box-area">
+                <div className="row border rounded-5 p-3 bg-white shadow box-area" data-aos="fade-right">
                     {/*------------------------- Left Box ---------------------------*/}
                     <div
                         className="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-                        style={{ background: "#103cbe" }}
+                        style={{ background: "#210F04" }}
                     >
                         <div className="featured-image mb-3">
                             <img
-                                src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg"
+                                src={logo}
                                 className="img-fluid"
                                 style={{ width: 250 }}
                             />
@@ -169,7 +170,7 @@ export default function Login() {
                                 <small className="text-center">
                                     Don't have  an account?
                                     <Link to="/register">
-                                        <b>Sign Up</b>
+                                        <b> Sign Up</b>
                                     </Link>
 
                                 </small>

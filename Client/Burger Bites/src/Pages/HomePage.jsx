@@ -1,88 +1,27 @@
-// import { useState, useEffect } from "react"
-// import NavBar from "./NavBar"
-// import SearchBar from "../components/SearchBar"
-// import SortBy from "../components/SortBy"
-// import Card from "./Card"
-// import { localRequest } from "../../utils/axios"
+import { useState, useEffect } from "react"
+import { localRequest } from "../utils/axios"
+import { Link } from "react-router-dom"
+import Image from "../assets/about-img.png"
+import Icon1 from "../assets/i1.png"
+import Icon2 from "../assets/i2.png"
+import Icon3 from "../assets/i3.png"
 
 export default function Home() {
-    // const [jobsData, setJobsData] = useState([])
-    // const [filteredJobs, setFilteredJobs] = useState([])
-    // const [searchTerm, setSearchTerm] = useState("");
-    // const [sortOrder, setSortOrder] = useState("asc");
-    // const [currentPage, setCurrentpage] = useState(1);
-    // const [totalPages, setTotalPages] = useState(1);
-    // const [filterJobType, setFilterJobType] = useState("");
-    // const [companiesData, setCompaniesData] = useState([]);
-    // const [filterCompanyId, setFilterCompanyId] = useState("");
-    // useEffect(() => {
-    //     async function getJobs() {
-    //         try {
-    //             const response = await localRequest.get(`https://career-portal-api.dhirenkirpalani.com/pub/jobs?filter=${filterCompanyId}&search=${searchTerm}`);
-    //             setJobsData(response.data.data)
-    //             setFilteredJobs(response.data.data)
-    //             setTotalPages(response.data.totalPage)
-    //             console.log(response);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //     getJobs()
-    // }, [filterCompanyId, searchTerm]);
-
-    // useEffect(() => {
-    //     async function getCompanies() {
-    //         try {
-    //             const response = await localRequest.get('https://career-portal-api.dhirenkirpalani.com/pub/companies');
-    //             setCompaniesData(response.data)
-    //             console.log(response);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //     getCompanies()
-    // }, []);
-
-
-    // const handleSearch = (term) => {
-    //     setSearchTerm(term);
-    // }
-
-    // const handleSort = (order) => {
-    //     setSortOrder(order);
-    //     const sortedJobs = [...filteredJobs].sort((a, b) => {
-    //         if (order === "asc") {
-    //             return new Date(a.createdAt) - new Date(b.createdAt);
-    //         } else {
-    //             return new Date(b.createdAt) - new Date(a.createdAt);
-    //         }
-    //     });
-    //     setFilteredJobs(sortedJobs);
-    // };
-
-    // const handlePageChange = (pageNumber) => {
-    //     setCurrentpage(pageNumber);
-    //     window.scrollTo(0, 0)
-    // }
-
-    // const handleFilterJobType = (jobType) => {
-    //     setFilterJobType(jobType);
-    //     if (jobType === "") {
-    //         setFilteredJobs(jobsData);
-    //     } else {
-    //         const filtered = jobsData.filter((job) => job.jobType === jobType);
-    //         setFilteredJobs(filtered);
-    //     }
-    // }
-
-    // const handleFilterCompany = (companyId) => {
-    //     setFilterCompanyId(companyId);
-    // };
-
-    // const startIndex = (currentPage - 1) * 10
-    // const endIndex = startIndex + 10
-
-    // console.log({ companiesData });
+  const [burgerData, setBurgerData] = useState([])
+  useEffect(() => {
+    async function getBurgers() {
+      
+        try {
+            const response = await localRequest.get(`/burgers`);
+            setBurgerData(response.data);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+        
+    }
+    getBurgers()
+}, []);
 
     return (
         <>
@@ -106,7 +45,7 @@ export default function Home() {
       </button>
     </div>
     <div className="img" data-aos="fade-left">
-      <img src="./images/bg-img" alt="" />
+      <img src={Image} alt="" />
     </div>
   </section>
   {/* Home Section End */}
@@ -122,9 +61,9 @@ export default function Home() {
         <span>What</span> We Serve
       </h3>
     </div>
-    <div className="card-content">
+    <div className="card-content" data-aos="fade-up">
       <div className="row">
-        <img src="./images/i1.png" alt="" />
+        <img src={Icon1} alt="" />
         <div className="card-body">
           <h3>High Quality Burger</h3>
           <p>
@@ -135,7 +74,7 @@ export default function Home() {
         </div>
       </div>
       <div className="row">
-        <img src="./images/i2.png" alt="" />
+        <img src={Icon2} alt="" />
         <div className="card-body">
           <h3>Fresh and Premium Ingredients</h3>
           <p>
@@ -146,7 +85,7 @@ export default function Home() {
         </div>
       </div>
       <div className="row">
-        <img src="./images/i3.png" alt="" />
+        <img src={Icon3} alt="" />
         <div className="card-body">
           <h3>Locally Sourced Ingredients</h3>
           <p>
@@ -166,154 +105,39 @@ export default function Home() {
         <span>Our</span> Burger Menu
       </h1>
     </div>
+    {burgerData.map((burger) => (
     <div className="card-content" data-aos="fade-up" data-aos-duration={1500}>
       <div className="row">
         <div className="card-body">
           <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
+            <img src={burger.images} alt="Burger Image" />
           </div>
           <h3>
-            Burger <i className="fa-solid fa-star" />
+            {burger.name} <i className="fa-solid fa-star" />
             <i className="fa-solid fa-star" />
             <i className="fa-solid fa-star" />
             <i className="fa-solid fa-star" />
             <i className="fa-solid fa-star" />
           </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
+          <div className="container" style={{ width: "90%", height: "50px", margin: "auto" }}>
+                    <div className="d-flex justify-content-center">
+                        <div>
+                            <Link to={`/burgers/${burger.id}`}>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-sm ms-auto details-button"
+                                    style={{ backgroundColor: "black", borderRadius: 15 }}
+                                >
+                                    Details
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
         </div>
       </div>
     </div>
-    <div className="card-content" data-aos="fade-up" data-aos-duration={1500}>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card-body">
-          <div className="img">
-            <img src="https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Crispy-Chicken-Burger-square-FS-4518.jpg" alt="" />
-          </div>
-          <h3>
-            Burger <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-            <i className="fa-solid fa-star" />
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-            eligendi?
-          </p>
-        </div>
-      </div>
-    </div>
+    ))}
   </section>
   {/* Our Menu End */}
   {/* Footer Start */}
@@ -326,10 +150,6 @@ export default function Home() {
       </div>
     </div>
   </footer>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-      </script>
 </>
 
     )

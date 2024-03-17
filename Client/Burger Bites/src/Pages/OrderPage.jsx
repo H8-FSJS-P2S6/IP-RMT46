@@ -1,31 +1,16 @@
-import { useState, useEffect } from "react"
-import { localRequest } from "../utils/axios"
+import { useEffect } from "react"
 import Card from "./Card";
+import { useDispatch, useSelector } from "react-redux";
+import {getBurgers} from "../features/burger/burgerSlice"
 
-export default function Home() {
-    const [burgerData, setBurgerData] = useState([])
-    const [loading, setLoading] = useState(false);
-    // const [filteredJobs, setFilteredJobs] = useState([])
-    // const [searchTerm, setSearchTerm] = useState("");
-    // const [sortOrder, setSortOrder] = useState("asc");
-    // const [currentPage, setCurrentpage] = useState(1);
-    // const [totalPages, setTotalPages] = useState(1);
-    // const [filterJobType, setFilterJobType] = useState("");
-    // const [companiesData, setCompaniesData] = useState([]);
-    // const [filterCompanyId, setFilterCompanyId] = useState("");
+export default function Order() {
+    const dispatch = useDispatch()
+    const burgerData = useSelector((state) => state.burgerData.list);
+    const loading = useSelector((state) => state.burgerData.loading);
+    console.log(burgerData)
+    
     useEffect(() => {
-        async function getBurgers() {
-          setLoading(true);
-            try {
-                const response = await localRequest.get(`/burgers`);
-                setBurgerData(prevData => [...prevData, ...response.data]);
-                console.log(response);
-            } catch (error) {
-                console.error(error);
-            }
-            setLoading(false);
-        }
-        getBurgers()
+        dispatch(getBurgers())
 
         window.addEventListener("scroll", handleScroll);
 
@@ -39,63 +24,9 @@ export default function Home() {
           window.innerHeight + document.documentElement.scrollTop ===
           document.documentElement.offsetHeight
       ) {
-        getBurgers();
+        dispatch(getBurgers())
       }
   };
-
-    // useEffect(() => {
-    //     async function getCompanies() {
-    //         try {
-    //             const response = await localRequest.get('https://career-portal-api.dhirenkirpalani.com/pub/companies');
-    //             setCompaniesData(response.data)
-    //             console.log(response);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //     getCompanies()
-    // }, []);
-
-
-    // const handleSearch = (term) => {
-    //     setSearchTerm(term);
-    // }
-
-    // const handleSort = (order) => {
-    //     setSortOrder(order);
-    //     const sortedJobs = [...filteredJobs].sort((a, b) => {
-    //         if (order === "asc") {
-    //             return new Date(a.createdAt) - new Date(b.createdAt);
-    //         } else {
-    //             return new Date(b.createdAt) - new Date(a.createdAt);
-    //         }
-    //     });
-    //     setFilteredJobs(sortedJobs);
-    // };
-
-    // const handlePageChange = (pageNumber) => {
-    //     setCurrentpage(pageNumber);
-    //     window.scrollTo(0, 0)
-    // }
-
-    // const handleFilterJobType = (jobType) => {
-    //     setFilterJobType(jobType);
-    //     if (jobType === "") {
-    //         setFilteredJobs(jobsData);
-    //     } else {
-    //         const filtered = jobsData.filter((job) => job.jobType === jobType);
-    //         setFilteredJobs(filtered);
-    //     }
-    // }
-
-    // const handleFilterCompany = (companyId) => {
-    //     setFilterCompanyId(companyId);
-    // };
-
-    // const startIndex = (currentPage - 1) * 10
-    // const endIndex = startIndex + 10
-
-    // console.log({ companiesData });
 
     return (
         <>
@@ -134,7 +65,9 @@ export default function Home() {
       </h1>
     </div>
       {burgerData.map((burger) => (
-        <Card 
+        <Card
+        key={burger.id}
+        burgerId={burger.id}
         id={burger.id}
         name={burger.name}
         desc={burger.desc}
@@ -156,10 +89,6 @@ export default function Home() {
       </div>
     </div>
   </footer>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-      </script>
 </>
 
     )

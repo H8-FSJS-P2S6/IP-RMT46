@@ -27,7 +27,11 @@ export default function Card({ burgerId, name, desc, price, veg, images, title =
     const handleAddToCart = async () => {
         if (quantity > 0) {
             try {
-                const response = await localRequest.post(`/cart/${burgerId}`, { quantity });
+                const response = await localRequest.post(`/cart/${burgerId}`, { quantity }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
                 console.log("Added to cart:", response.data);
                 successToast(`${name} Burger successfully added to cart!`);
                 

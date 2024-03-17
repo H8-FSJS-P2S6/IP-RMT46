@@ -4,6 +4,9 @@
 // import SortBy from "../components/SortBy"
 // import Card from "./Card"
 // import { localRequest } from "../../utils/axios"
+import Avatar1 from "../assets/Avatar Image.png"
+import Avatar2 from "../assets/Avatar Image (1).png"
+import Avatar3 from "../assets/Avatar Image (2).png"
 
 export default function Home() {
     // const [jobsData, setJobsData] = useState([])
@@ -111,7 +114,7 @@ export default function Home() {
           blanditiis commodi et?
         </p>
         <h6>
-          <img src="./images/Avatar Image.png" alt="" />
+          <img src={Avatar1} alt="" />
           Elon Musk
         </h6>
       </div>
@@ -129,7 +132,7 @@ export default function Home() {
           blanditiis commodi et?
         </p>
         <h6>
-          <img src="./images/Avatar Image (1).png" alt="" />
+          <img src={Avatar2} alt="" />
           Elon Musk
         </h6>
       </div>
@@ -147,7 +150,7 @@ export default function Home() {
           blanditiis commodi et?
         </p>
         <h6>
-          <img src="./images/Avatar Image (2).png" alt="" />
+          <img src={Avatar3} alt="" />
           Elon Musk
         </h6>
       </div>

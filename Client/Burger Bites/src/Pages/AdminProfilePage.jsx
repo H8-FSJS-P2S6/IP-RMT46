@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { localRequest } from "../utils/axios"
 import { Link, useNavigate, Outlet } from "react-router-dom"
 
-export default function ProfilePage() {
+export default function AdminProfilePage() {
     function formatCreatedAt(updatedAt) {
         const date = new Date(updatedAt);
         return date.toLocaleDateString("en-us", {
@@ -73,14 +73,14 @@ export default function ProfilePage() {
                     <p className="card-text">
                         Updated at: {formatCreatedAt(userData.updatedAt)}
                     </p>
-                    <Link to="/updateProfileImage">
+                    <Link to="/adminpanel/updateAdminProfileImage">
                     <button className="btn btn-primary mt-3">Update Image</button>
                     </Link>
                         </div>
                         <div className="container" style={{ width: "90%", height: "50px", margin: "auto" }}>
                             <div className="d-flex justify-content-center">
                                 <div>
-                                    <Link to={`/`}>
+                                    <Link to="/adminpanel">
                                         <button
                                             type="button"
                                             className="btn btn-primary btn-sm ms-auto details-button"
