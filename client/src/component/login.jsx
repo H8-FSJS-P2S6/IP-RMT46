@@ -3,6 +3,7 @@ import logo from "../assets/logo.png"
 import { useEffect } from "react";
 import axios from "axios"
 
+
 export default function Login({ handleOnLogin, handleChangeInput }) {
     const navigate = useNavigate();
     const handleCredentialResponse = async ({ credential }) => {
@@ -16,7 +17,7 @@ export default function Login({ handleOnLogin, handleChangeInput }) {
     useEffect(() => {
         onload = () => {
             google.accounts.id.initialize({
-                client_id: import.meta.env.VITE_CLIENT_ID,
+                client_id: "783905238833-dqtso2f208s3nsicfscl4vcv8pa9b9i5.apps.googleusercontent.com",
                 callback: handleCredentialResponse,
             });
 
