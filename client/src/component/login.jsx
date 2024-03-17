@@ -17,7 +17,7 @@ export default function Login({ handleOnLogin, handleChangeInput }) {
     useEffect(() => {
         onload = () => {
             google.accounts.id.initialize({
-                client_id: "783905238833-dqtso2f208s3nsicfscl4vcv8pa9b9i5.apps.googleusercontent.com",
+                client_id: import.meta.env.VITE_CLIENT_ID,
                 callback: handleCredentialResponse,
             });
 
