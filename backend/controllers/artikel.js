@@ -52,7 +52,7 @@ module.exports = class ArtikelController {
       } else {
         artikel = await Artikel.findAll();
       }
-      console.log(artikel)
+      // console.log(artikel)
       res.status(200).json(artikel);
     } catch (error) {
       next(error);
