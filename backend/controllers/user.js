@@ -1,6 +1,8 @@
 const { User } = require("../models");
 const { comparePassword } = require("../helpers/bycrypt");
 const { signToken } = require("../helpers/jwt");
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 module.exports = class UserController {
   static async registerUserBasic(req, res, next) {
@@ -106,6 +108,32 @@ module.exports = class UserController {
         address: user.address,
         sso: user.sso,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async loginGoogle(req, res, next) {
+    try {
+      const sso = true;
+      const { googleToken } = req.body;
+      const ticket = await client.verifyIdToken({
+        idToken: googleToken,
+        audience: process.env.GOOGLE_CLIENT_ID
+      });
+      const { email } = ticket.getPayload();
+      const [user] = await User.findOrCreate({
+        where: { email },
+        defaults: {
+          email,
+          password: Math.random().toString(),
+          sso
+        }
+      });
+      const token = signToken({
+        id: user.id,
+      });
+      res.status(200).json({ access_token: token });
     } catch (error) {
       next(error);
     }
