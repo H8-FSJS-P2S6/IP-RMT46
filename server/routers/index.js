@@ -4,7 +4,7 @@ const authentication = require("../middlewares/authentication");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.json([{ message: "Clash Of Clans API" }]);
+  res.json([{ message: "Clash Of Clans API V2" }]);
 });
 router.post("/login", Controller.login); //
 router.post("/google-login", Controller.googleLogin); //
