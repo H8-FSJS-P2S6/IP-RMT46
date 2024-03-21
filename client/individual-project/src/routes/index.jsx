@@ -11,6 +11,7 @@ import ChangePassword from "../views/ChangePassword";
 import ImageGallery from "../views/ImageGallery";
 import ClanRankings from "../views/ClanRankings";
 import Navbar from "../components/Navbar";
+import UnlockVip from "../views/UnlockVip";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       {
         element: <MyAccounts />,
         path: "/my-accounts",
+        protected: true,
         loader: async () => {
           return !localStorage.getItem("access_token") ? redirect("/login") : null;
         },
@@ -53,6 +55,7 @@ const router = createBrowserRouter([
       {
         element: <PlayerDetail />,
         path: "/player/detail/:playerTag",
+        protected: true,
         loader: async () => {
           return !localStorage.getItem("access_token") ? redirect("/login") : null;
         },
@@ -60,6 +63,7 @@ const router = createBrowserRouter([
       {
         element: <PlayerVerification />,
         path: "/player/detail/:playerTag/verify",
+        protected: true,
         loader: async () => {
           return !localStorage.getItem("access_token") ? redirect("/login") : null;
         },
@@ -79,6 +83,15 @@ const router = createBrowserRouter([
       {
         element: <ImageGallery />,
         path: "/admin/images",
+        protected: true,
+        loader: async () => {
+          return !localStorage.getItem("access_token") ? redirect("/login") : null;
+        },
+      },
+      {
+        element: <UnlockVip />,
+        path: "/unlock-vip",
+        protected: true,
         loader: async () => {
           return !localStorage.getItem("access_token") ? redirect("/login") : null;
         },

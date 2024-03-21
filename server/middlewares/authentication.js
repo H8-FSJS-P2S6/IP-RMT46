@@ -8,7 +8,7 @@ async function authentication(req, res, next) {
     }
 
     const [type, token] = req.headers.authorization.split(" ");
-    console.log({ type, token });
+    // console.log({ type, token });
 
     if (!type === "Bearer") {
       throw { name: "Unauthorized", message: "Invalid token" };

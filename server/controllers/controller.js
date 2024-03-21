@@ -1,11 +1,18 @@
 const { User, GameAccount, ProfileImage } = require("../models");
 const { signToken } = require("../helpers/jwt");
 const { comparePassword, hashPassword } = require("../helpers/bcrypt");
+const midtransClient = require("midtrans-client");
 
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client();
 
 const axios = require("axios");
+
+const snap = new midtransClient.Snap({
+  isProduction: false,
+  serverKey: process.env.MIDTRANS_SERVER_KEY,
+  clientKey: process.env.MIDTRANS_CLIENT_KEY,
+});
 
 class Controller {
   static async login(req, res, next) {
@@ -68,7 +75,6 @@ class Controller {
 
   static async register(req, res, next) {
     const { email, password } = req.body;
-
     try {
       if (!email) {
         throw { name: "ValidationError", message: "Email is required" };
@@ -80,7 +86,6 @@ class Controller {
       if (existingUser) {
         throw { name: "ValidationError", message: "Email is already registered" };
       }
-
       const user = await User.create(req.body);
       res.status(201).json({
         id: user.id,
@@ -95,22 +100,19 @@ class Controller {
   static async findPlayerByTag(req, res, next) {
     const { tag } = req.params;
     let accountTag = "";
-    // console.log(tag, "......");
     try {
-      if (tag[0] === "#") {
-        const [theTag, str] = tag.split("#");
-        // console.log({ theTag, str });
-        accountTag = str;
-      } else {
-        accountTag = tag;
-      }
+      accountTag = tag.startsWith("#") ? tag.slice(1) : tag;
 
-      const { data } = await axios.get(`https://api.clashofclans.com/v1/players/%23${accountTag}`, {
+      const response = await axios.get(`https://api.clashofclans.com/v1/players/%23${accountTag}`, {
         headers: {
           Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
         },
       });
-      res.json(data);
+      if (response.status === 200) {
+        res.json(response.data);
+      } else {
+        throw { name: "AxiosError", message: "Player Not Found" };
+      }
     } catch (error) {
       console.log(error);
       next(error);
@@ -121,22 +123,20 @@ class Controller {
     const { tag } = req.params;
     let clanTag = "";
     try {
-      if (tag[0] === "#") {
-        const [theTag, str] = tag.split("#");
-        console.log({ theTag, str });
-        clanTag = str;
-      } else {
-        clanTag = tag;
-      }
+      clanTag = tag.startsWith("#") ? tag.slice(1) : tag;
 
-      const { data } = await axios.get(`https://api.clashofclans.com/v1/clans/%23${clanTag}`, {
+      const response = await axios.get(`https://api.clashofclans.com/v1/clans/%23${clanTag}`, {
         headers: {
           Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
         },
       });
-      res.json(data);
+      if (response.status === 200) {
+        res.json(response.data);
+      } else {
+        throw new Error(`Failed to fetch clan data. Status: ${response.status}`);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       next(error);
     }
   }
@@ -147,7 +147,7 @@ class Controller {
     const { items } = require("../data/locationId.json");
     let location = "";
 
-    if (country != "global") {
+    if (country !== "global") {
       items.forEach((element) => {
         if (element.name === country) {
           location = element.id;
@@ -168,13 +168,13 @@ class Controller {
       if (after) queryParams += `&after=${after}`;
       if (before) queryParams += `&before=${before}`;
 
-      const { data } = await axios.get(`https://api.clashofclans.com/v1/locations/${locationId}/rankings/players?${queryParams}`, {
+      const response = await axios.get(`https://api.clashofclans.com/v1/locations/${locationId}/rankings/players?${queryParams}`, {
         headers: {
           Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
         },
       });
 
-      res.json(data);
+      res.status(200).json(response.data);
     } catch (error) {
       console.log(error.message);
       next(error);
@@ -187,7 +187,7 @@ class Controller {
     const { items } = require("../data/locationId.json");
     let location = "";
 
-    if (country != "global") {
+    if (country !== "global") {
       items.forEach((element) => {
         if (element.name === country) {
           location = element.id;
@@ -203,20 +203,22 @@ class Controller {
       locationId = "global";
     }
 
-    console.log({ locationId });
-
     try {
       let queryParams = `limit=${limit || 100}`;
       if (after) queryParams += `&after=${after}`;
       if (before) queryParams += `&before=${before}`;
 
-      const { data } = await axios.get(`https://api.clashofclans.com/v1/locations/${locationId}/rankings/clans?${queryParams}`, {
+      const response = await axios.get(`https://api.clashofclans.com/v1/locations/${locationId}/rankings/clans?${queryParams}`, {
         headers: {
           Authorization: `Bearer ${process.env.CLASH_OF_CLANS_API}`,
         },
       });
 
-      res.json(data);
+      if (response.status === 200) {
+        res.status(200).json(response.data);
+      } else {
+        throw new Error(`Failed to fetch clan rankings data. Status: ${response.status}`);
+      }
     } catch (error) {
       console.log(error.message);
       next(error);
@@ -228,10 +230,8 @@ class Controller {
     const { token } = req.body;
     let accountTag = "";
     try {
-      if (playerTag[0] === "#") {
-        const [theTag, str] = playerTag.split("#");
-        console.log({ theTag, str });
-        accountTag = str;
+      if (playerTag.startsWith("#")) {
+        accountTag = playerTag.slice(1);
       } else {
         accountTag = playerTag;
       }
@@ -251,10 +251,12 @@ class Controller {
         },
       };
 
-      // const response = await axios.post(url, data, config);
       const response = await axios.post(url, data, config);
-      console.log("Response:", response.data);
-      res.json(response.data);
+      if (response.status === 200) {
+        res.status(200).json(response.data);
+      } else {
+        throw new Error(`Failed to verify token. Status: ${response.status}`);
+      }
     } catch (error) {
       console.log(error.message);
       next(error);
@@ -265,8 +267,13 @@ class Controller {
     const { playerTag } = req.body;
 
     try {
-      const account = await GameAccount.create({ playerTag: playerTag, playerId: req.user.id });
-      res.json(account);
+      const existingAccount = await GameAccount.findOne({ where: { playerTag } });
+      if (existingAccount) {
+        return res.status(400).json({ message: "Player tag already exists" });
+      }
+      const account = await GameAccount.create({ playerTag, playerId: req.user.id });
+
+      res.status(201).json(account);
     } catch (error) {
       console.log(error.message);
       next(error);
@@ -353,6 +360,17 @@ class Controller {
     }
   }
 
+  static async getImageByTag(req, res, next) {
+    const { id } = req.params;
+    try {
+      const images = await ProfileImage.findByPk(id);
+      res.json(images);
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
   static async deleteImage(req, res, next) {
     const { id } = req.params;
     // const { id } = req.body;
@@ -386,6 +404,49 @@ class Controller {
       res.json({ email: account.email });
     } catch (error) {
       console.log(error.message);
+      next(error);
+    }
+  }
+
+  static async createTransaction(req, res, next) {
+    try {
+      const { gross_amount, order_id, description } = req.body;
+
+      const amount = +gross_amount;
+
+      if (typeof amount !== "number") {
+        return res.status(400).json({ error: "Gross amount must be a number" });
+      }
+
+      if (!order_id || !description) {
+        return res.status(400).json({ error: "Order ID and description are required" });
+      }
+
+      const parameter = {
+        transaction_details: {
+          order_id,
+          gross_amount: amount,
+          description,
+        },
+      };
+
+      const transaction = await snap.createTransaction(parameter);
+
+      res.status(200).json(transaction);
+    } catch (error) {
+      console.log(error.message);
+      next(error);
+    }
+  }
+
+  static async updateVip(req, res, next) {
+    const id = req.user.id;
+    const { vip } = req.body;
+    try {
+      const user = await User.findByPk(id);
+      const output = await user.update({ vip: vip });
+      res.json(output);
+    } catch (error) {
       next(error);
     }
   }

@@ -54,6 +54,9 @@ function PlayerVerification() {
             Token:
           </label>
           <input type="text" id="token" className="form-control" value={token} onChange={(e) => setToken(e.target.value)} />
+          <div style={{ fontSize: "small" }}>
+            Please enter your API token. You can find it in the game, under Settings - More Settings - API Token.
+          </div>
         </div>
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? "Verifying..." : "Verify Token"}

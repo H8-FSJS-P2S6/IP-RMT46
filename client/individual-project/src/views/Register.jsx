@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import cocUrl from "../utils/axios";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -38,6 +39,11 @@ function Register() {
             style={{ width: "100%", padding: "5px" }}
             id="exampleInputPassword1"
           />
+        </div>
+        <div style={{ marginBottom: "15px" }}>
+          <Link to={"/login"} style={{ textDecoration: "none" }}>
+            Login
+          </Link>
         </div>
         <button
           type="submit"

@@ -42,15 +42,23 @@ function Navbar() {
                 </Link>
               </li>
 
-              <li className="nav-item">
-                <Link className="nav-link" to="/change-password">
-                  Change Password
-                </Link>
-              </li>
+              {isLoggedIn && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/change-password">
+                    Change Password
+                  </Link>
+                </li>
+              )}
 
               <li className="nav-item">
                 <Link className="nav-link" to="/admin/images">
                   Image Gallery
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to="/unlock-vip">
+                  Unlock VIP
                 </Link>
               </li>
             </ul>

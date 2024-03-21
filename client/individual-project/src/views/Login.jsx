@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 import cocUrl from "../utils/axios";
 
 export default function Login() {
@@ -47,9 +49,19 @@ export default function Login() {
             const { data } = await cocUrl.post("/login", { email, password });
             localStorage.setItem("access_token", data.access_token);
             console.log(data);
+            Swal.fire({
+              icon: "success",
+              title: "Login Successful",
+              text: "You have successfully logged in!",
+            });
             navigate("/");
           } catch (error) {
             console.log(error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Invalid email or password!",
+            });
           }
         }}
       >
@@ -78,12 +90,6 @@ export default function Login() {
             style={{ width: "100%", padding: "5px" }}
             id="exampleInputPassword1"
           />
-        </div>
-        <div style={{ marginBottom: "15px", display: "flex", alignItems: "center" }}>
-          <input type="checkbox" style={{ marginRight: "5px" }} id="exampleCheck1" />
-          <label htmlFor="exampleCheck1" style={{ marginBottom: 0 }}>
-            Remember me
-          </label>
         </div>
         <div style={{ marginBottom: "15px" }}>
           <Link to={"/register"} style={{ textDecoration: "none" }}>
