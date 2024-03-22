@@ -1,7 +1,11 @@
 import React from "react";
 
 function AdminDashboard() {
-  window.location.href = "/dashboard/artikel";
+  if (localStorage.getItem("token") === null) {
+    window.location.href = "/login";
+  } else {
+    window.location.href = "/dashboard/artikel";
+  }
 }
 
 export default AdminDashboard;
