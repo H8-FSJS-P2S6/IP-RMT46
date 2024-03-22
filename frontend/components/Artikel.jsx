@@ -5,6 +5,10 @@ import baseURL from "../utils/baseUrl";
 function Artikel() {
   const [artikel, setArtikel] = useState([]);
 
+  if (localStorage.getItem("token") === null) {
+    window.location.href = "/login";
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
