@@ -1,0 +1,18 @@
+node_modules
+coverage
+IP-mf.pem
+.env
+notes.txt
+
+module.exports = {
+    apps: {
+        name: "IP-mf",
+        script: "./app.js",
+        env: {
+            NODE_ENV: "production",
+            PORT: 80,
+            JWT_SECRET:"secret",
+            DATABASE_URL:"//postgres.xjogikziohkbupghmroe:X1XqhCoAH8NtK1ZY@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+        }
+    }
+}
